@@ -11,10 +11,10 @@ export const SITE = {
 
 export const NAV_ITEMS = [
   { label: "Beranda", href: "/" },
-  { label: "Agenda", href: "/agenda" },
   { label: "Sejarah", href: "/sejarah/serbuan-kotabaru" },
   { label: "UMKM", href: "/umkm" },
   { label: "Kompitu", href: "/kompitu" },
+  { label: "Agenda", href: "/agenda" },
   { label: "Peta", href: "/peta" },
 ];
 

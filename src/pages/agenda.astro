@@ -23,7 +23,7 @@ const agendasByFrequency = ROUTINE_FREQUENCIES.map((frequency) => ({
   ...frequency,
   agendas: PUBLISHED_ROUTINE_AGENDAS.filter((agenda) => agenda.frequency === frequency.value),
 }));
-const defaultAgendaMode: string = CONFIRMED_NEXT_AGENDAS.length > 0 ? "nearest" : "routine";
+const defaultAgendaMode: string = "routine";
 ---
 
 <BaseLayout title="Agenda Rutin Warga" description="Jadwal rutin kegiatan warga RW 3 Kotabaru.">
