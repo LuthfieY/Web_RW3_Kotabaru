@@ -1,0 +1,122 @@
+---
+import { ArrowRight, Landmark, Map, MapPin, MessageCircle, Sprout, Store } from "lucide-astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HeroTriptych from "../components/HeroTriptych.astro";
+import { KOMPITU_IMAGES } from "../data/kompitu";
+import { UMKM } from "../data/umkm";
+
+const stats = [
+  ["20+", "POI RW Terdata"],
+  ["15", "UMKM Warga"],
+  ["8", "Titik Sampah"],
+  ["4", "Materi Edukasi"],
+  ["50+", "Tanaman Kompitu"],
+];
+
+const focusCards = [
+  { number: "01", label: "WILAYAH", title: "Peta & Fasilitas", subtitle: "Layanan Warga", href: "/peta", icon: Map, image: "https://lh3.googleusercontent.com/aida-public/AB6AXuC99-UrXooPMMSQoJYbY3CpqPCDrWPiUNpiQWBeR0chcs5HkvODrer_wfYvOR-VOT7FInyErv5enKlmb3laZOZ3sxzEDP-bLCPuYqDBPG9TqhnQepYcTpERvGUE7nDTTD4S7ZJR9dHf7vjztGFGsqx1fetCYjIMr-efofU7jId0VMQnqhv3MInxZXJZv5uwFcjplu8Sy0KcjdGOdA3uQXIYfQTap5OMfsz96c0zdXLt8ZcnZDURUVaeoQ", alt: "Peta dan fasilitas RW 3 Kotabaru" },
+  { number: "02", label: "SEJARAH", title: "Monumen Serbuan", subtitle: "Warisan Sejarah", href: "/sejarah/serbuan-kotabaru", icon: Landmark, image: "/images/sejarah/monumen.webp", alt: "Monumen Serbuan Kotabaru" },
+  { number: "03", label: "LINGKUNGAN", title: "Kompitu", subtitle: "Taman Hijau & Edukasi", href: "/kompitu", icon: Sprout, image: "/images/kompitu/kompitu_depan_crop.webp", alt: "Kompitu sebagai taman hijau dan ruang edukasi" },
+  { number: "04", label: "EKONOMI", title: "UMKM Warga", subtitle: "Produk Lokal", href: "/umkm", icon: Store, image: "/images/umkm/teras_roso.webp", alt: "Produk lokal UMKM warga RW 3" },
+];
+
+const educationCards = [
+  { number: "01", label: "DARI SAMPAH JADI PUPUK", title: "Pembuatan Kompos", text: "Pelajari proses pengolahan sampah organik warga hingga menjadi pupuk yang bermanfaat bagi tanaman Kompitu.", href: "/edukasi/kompos", image: KOMPITU_IMAGES.komposMix },
+  { number: "02", label: "TANAMAN KOMPITU", title: "Kenali Tanaman Kompitu", text: "Temukan berbagai jenis tanaman yang dibudidayakan, manfaatnya, serta cara perawatannya.", href: "/edukasi/katalog-tanaman", image: KOMPITU_IMAGES.hero },
+  { number: "03", label: "BAHAN ALAMI", title: "Pestisida Nabati dari Bahan Sekitar", text: "Pelajari cara membuat pestisida ramah lingkungan dari bahan-bahan alami yang mudah ditemukan di sekitar.", href: "/edukasi/pestisida-nabati", image: KOMPITU_IMAGES.pesticideTest },
+  { number: "04", label: "HEMAT AIR", title: "Irigasi Tetes yang Hemat Air", text: "Sistem penyiraman hemat air yang mengalirkan air langsung ke akar tanaman secara perlahan.", href: "/edukasi/irigasi-tetes", image: KOMPITU_IMAGES.irrigationFlush },
+];
+
+const featuredUmkm = UMKM.slice(0, 3).map((umkm, index) => ({ ...umkm, address: ["RT 01 RW 03", "RT 02 RW 03", "RT 03 RW 03"][index] }));
+---
+
+<BaseLayout title="Beranda" description="Portal informasi RW 3 Kotabaru untuk merawat sejarah, ruang hijau, dan potensi warga." image="/images/galeri/asrama_kompi.webp">
+  <main data-home-page>
+    <section class="hero-contour relative flex min-h-[620px] items-center justify-center overflow-hidden md:h-[650px]">
+      <div class="container-shell relative z-10 flex h-full w-full flex-col items-center justify-between gap-12 py-12 md:flex-row md:py-0">
+        <div class="order-2 flex w-full flex-col items-start md:order-1 md:w-1/2">
+          <HeroTriptych
+            src="/images/galeri/asrama_kompi.webp"
+            alt="Gerbang Monumen Serbuan Kota Baru di Kotabaru, Yogyakarta"
+            location="Kotabaru, Yogyakarta"
+          />
+        </div>
+        <div class="order-1 flex w-full flex-col items-start justify-center md:order-2 md:w-[45%]">
+          <span class="rounded-full bg-rw-mint/50 px-3 py-1 text-[0.68rem] font-bold uppercase tracking-wider text-rw-forest">Kampung Sejarah, Hijau, dan Berdaya</span>
+          <h1 class="mt-4 font-display text-4xl font-bold leading-tight text-rw-forest md:text-[44px]">RW 3 Kotabaru: Jejak Sejarah, Warga Berdaya, Lingkungan Lestari</h1>
+          <p class="mt-4 max-w-xl text-base leading-relaxed text-gray-700">Jelajahi peta interaktif, UMKM warga, fasilitas umum, program lingkungan Kompitu, dan sejarah Monumen Serbuan Kotabaru.</p>
+          <div class="mt-8 flex w-full flex-col gap-4 sm:w-auto sm:flex-row">
+            <a href="/peta" class="inline-flex items-center justify-center gap-2 rounded-full bg-rw-terracotta px-8 py-3 text-sm font-bold text-white shadow-md transition hover:-translate-y-1 hover:bg-rw-terracotta-dark">Buka Peta Interaktif <Map size={16} aria-hidden="true" /></a>
+            <a href="/kompitu" class="inline-flex items-center justify-center gap-2 rounded-full border-2 border-rw-forest px-6 py-3 text-sm font-bold text-rw-forest transition hover:bg-rw-forest hover:text-white">Jelajahi Kompitu</a>
+          </div>
+          <a href="/umkm" class="mt-4 inline-flex items-center gap-1 text-sm font-bold text-rw-forest transition hover:text-rw-terracotta-dark hover:underline">Lihat UMKM Warga <ArrowRight size={15} aria-hidden="true" /></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="w-full bg-rw-green py-12 text-white">
+      <div class="container-shell grid grid-cols-2 gap-6 text-center md:grid-cols-5 md:divide-x md:divide-rw-mint/10">
+        {stats.map(([value, label]) => <div class="flex flex-col items-center justify-center"><span class="font-display text-4xl font-bold text-rw-parchment md:text-5xl">{value}</span><span class="mt-1 text-[0.68rem] font-bold uppercase tracking-[0.1em] text-rw-mint">{label}</span></div>)}
+      </div>
+    </section>
+
+    <section class="w-full bg-[#f7f4ee] py-[72px]"><div class="container-shell"><div class="mx-auto flex max-w-[820px] flex-col items-center text-center"><h2 class="font-display text-4xl font-bold leading-tight text-rw-forest">Tentang RW 3 Kotabaru</h2><p class="mt-5 text-[15px] leading-relaxed text-rw-muted md:text-base">Berada di kawasan bersejarah Kotabaru, RW 3 tumbuh sebagai lingkungan yang menjaga warisan sejarah sekaligus mendorong ruang hijau, kebersamaan warga, dan usaha lokal. Semangat Serbuan Kotabaru terus hidup dalam berbagai kegiatan dan inisiatif warga.</p></div></div></section>
+
+    <section id="jelajahi" class="w-full bg-[#f5f1ea] px-4 py-[72px] md:px-0 md:py-[88px]"><div class="container-shell"><div class="mb-12 flex flex-col items-center text-center"><span class="text-[0.68rem] font-bold uppercase tracking-[0.2em] text-rw-forest">JELAJAHI RW 3</span><h2 class="mt-3 font-display text-4xl text-rw-forest">Fokus Komunitas</h2><p class="mt-4 max-w-[620px] text-[15px] leading-relaxed text-rw-muted md:text-base">Temukan fasilitas wilayah, jejak sejarah, kegiatan lingkungan, serta usaha yang dikembangkan oleh warga RW 3 Kotabaru.</p></div><div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">{focusCards.map((card) => { const Icon = card.icon; return <a href={card.href} class="group relative block aspect-[16/10] overflow-hidden rounded-[20px] shadow-sm transition hover:-translate-y-1 sm:aspect-[4/5]"><span class="hidden"><Icon size={1} aria-hidden="true" /></span><img src={card.image} alt={card.alt} class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" /><div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition group-hover:from-black/90"></div><div class="absolute left-4 top-4"><span class="rounded-full bg-rw-forest/85 px-3 py-1 text-[0.62rem] font-bold tracking-wider text-white">{card.number} — {card.label}</span></div><div class="absolute bottom-0 left-0 flex w-full items-end justify-between p-5"><div><h3 class="font-display text-[22px] text-white">{card.title}</h3><p class="mt-1 text-[13px] text-white/80">{card.subtitle}</p></div><ArrowRight class="text-white transition group-hover:translate-x-1" size={20} aria-hidden="true" /></div></a>; })}</div></div></section>
+
+    <section class="w-full bg-[#f7f4ee]"><div class="container-shell flex flex-col items-center gap-12 py-[72px] md:flex-row md:gap-16 md:py-[88px]"><div class="w-full md:w-[45%]"><span class="block text-xs font-bold uppercase tracking-[0.2em] text-rw-forest/70">JELAJAHI WILAYAH</span><h2 class="mt-4 font-display text-4xl leading-tight text-rw-forest">Peta Potensi RW 3</h2><p class="mt-5 max-w-xl text-[15px] leading-relaxed text-rw-muted md:text-base">Temukan fasilitas umum, UMKM, titik sampah, serta berbagai lokasi penting di lingkungan RW 3 melalui peta interaktif.</p><div class="mt-7 flex flex-wrap gap-2"><a href="/peta" class="rounded-full bg-rw-forest px-4 py-2 text-xs font-medium text-rw-parchment">Semua Lokasi</a><a href="/peta#sampah" class="rounded-full bg-rw-mint/40 px-4 py-2 text-xs font-medium text-rw-forest">Fasilitas</a><a href="/umkm" class="rounded-full bg-rw-mint/40 px-4 py-2 text-xs font-medium text-rw-forest">UMKM</a><a href="/peta#sampah" class="rounded-full bg-rw-mint/40 px-4 py-2 text-xs font-medium text-rw-forest">Titik Sampah</a></div><a href="/peta" class="mt-8 inline-flex items-center gap-2 rounded-full bg-rw-terracotta px-8 py-3 text-sm font-bold text-rw-parchment shadow-md transition hover:-translate-y-1 hover:bg-rw-terracotta-dark"><Map size={19} aria-hidden="true" />Buka Peta Interaktif <ArrowRight size={17} aria-hidden="true" /></a></div><div class="group w-full md:w-[55%]"><div class="relative aspect-[16/10] overflow-hidden rounded-3xl bg-white shadow-md transition duration-500 group-hover:scale-[1.02]"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC99-UrXooPMMSQoJYbY3CpqPCDrWPiUNpiQWBeR0chcs5HkvODrer_wfYvOR-VOT7FInyErv5enKlmb3laZOZ3sxzEDP-bLCPuYqDBPG9TqhnQepYcTpERvGUE7nDTTD4S7ZJR9dHf7vjztGFGsqx1fetCYjIMr-efofU7jId0VMQnqhv3MInxZXJZv5uwFcjplu8Sy0KcjdGOdA3uQXIYfQTap5OMfsz96c0zdXLt8ZcnZDURUVaeoQ" alt="Pratinjau peta interaktif RW 3 Kotabaru" class="h-full w-full object-cover" loading="lazy" /></div></div></div></section>
+
+    <section class="w-full bg-[#f5f1ea]"><div class="container-shell grid items-center gap-12 py-[88px] lg:grid-cols-2 lg:gap-16"><div class="order-2 group lg:order-1"><div class="relative aspect-[4/5] overflow-hidden rounded-3xl shadow-md transition duration-300 group-hover:scale-[1.02]"><img src="/images/sejarah/monumen.webp" alt="Monumen Serbuan Kota Baru" class="h-full w-full object-cover" loading="lazy" /><span class="absolute left-6 top-6 rounded-xl bg-rw-forest px-5 py-2.5 text-xs uppercase tracking-widest text-rw-parchment">01 — MONUMEN SEJARAH</span></div></div><div class="order-1 lg:order-2"><span class="block text-xs font-bold uppercase tracking-[0.2em] text-rw-forest">SEJARAH RW 3</span><h2 class="mt-4 font-display text-4xl leading-tight text-rw-forest md:text-[46px]">Jejak Perjuangan di Kotabaru</h2><p class="mt-2 text-lg font-semibold text-rw-terracotta">Monumen Serbuan Kota Baru</p><p class="mt-5 max-w-xl text-base leading-relaxed text-rw-muted">Monumen Serbuan Kota Baru menjadi saksi perjuangan para pejuang Indonesia dalam mempertahankan kemerdekaan. Monumen ini memperingati peristiwa penyerbuan markas Jepang di Kotabaru pada 7 Oktober 1945.</p><div class="relative mt-7 max-w-[480px] overflow-hidden rounded-2xl border-l-[6px] border-rw-terracotta bg-white p-6 shadow-sm"><span class="absolute -bottom-6 -right-4 font-display text-[100px] text-rw-forest opacity-[0.05]">1945</span><div class="relative"><span class="block font-display text-3xl text-rw-forest">7 OKTOBER 1945</span><p class="mt-2 text-sm leading-6 text-rw-muted">Peristiwa penyerbuan markas Jepang di Kotabaru oleh para pejuang Indonesia.</p></div></div><a href="/sejarah/serbuan-kotabaru" class="mt-7 inline-flex items-center gap-2 rounded-full bg-rw-forest px-6 py-3 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-rw-green">Baca Kisah Lengkap <ArrowRight size={17} aria-hidden="true" /></a></div></div></section>
+
+    <section class="w-full bg-[#f7f4ee]"><div class="container-shell py-[72px] md:py-[88px]"><div class="mb-12"><span class="block text-xs font-bold uppercase tracking-[0.2em] text-rw-forest">KOMPITU SEBAGAI RUANG BELAJAR</span><h2 class="mt-4 max-w-3xl font-display text-4xl font-bold leading-tight text-rw-forest md:text-5xl">Belajar Langsung dari Kebun Warga</h2><p class="mt-5 max-w-[680px] text-base leading-relaxed text-rw-muted">Kompitu bukan sekadar taman. Di sini warga belajar mengenali tanaman, mengolah sampah organik, membuat pestisida alami, serta menggunakan air secara lebih hemat.</p></div><div class="grid gap-6 lg:grid-cols-2"><a href={educationCards[0].href} class="group flex min-h-[500px] flex-col overflow-hidden rounded-[28px] bg-rw-forest text-white shadow-sm transition hover:-translate-y-1"><div class="h-[28rem] overflow-hidden md:h-[32rem]"><img src={educationCards[0].image} alt={educationCards[0].title} class="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" /></div><div class="flex flex-1 flex-col p-6"><span class="text-xs uppercase tracking-widest opacity-80">{educationCards[0].number} — {educationCards[0].label}</span><h3 class="mt-2 font-display text-3xl leading-tight">{educationCards[0].title}</h3><p class="mt-3 text-[15px] leading-relaxed opacity-90">{educationCards[0].text}</p><div class="mt-4 flex flex-wrap items-center gap-1.5 rounded-xl border border-white/5 bg-white/10 p-3 text-xs font-medium"><span>Sampah organik</span><ArrowRight size={13} class="opacity-70" aria-hidden="true" /><span>Pengolahan</span><ArrowRight size={13} class="opacity-70" aria-hidden="true" /><span>Kompos</span><ArrowRight size={13} class="opacity-70" aria-hidden="true" /><span>Tanaman</span></div><p class="mt-2 text-xs opacity-75">Hasil kompos digunakan kembali untuk tanaman dan kebun warga.</p><span class="mt-auto inline-flex items-center gap-2 pt-4 text-sm font-medium transition group-hover:gap-3">Lihat prosesnya <ArrowRight size={15} aria-hidden="true" /></span></div></a><div class="flex flex-col gap-6"><a href={educationCards[1].href} class="group flex flex-1 flex-col overflow-hidden rounded-[28px] border border-rw-line bg-white shadow-sm transition hover:-translate-y-1"><div class="relative h-56 overflow-hidden"><img src={educationCards[1].image} alt={educationCards[1].title} class="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" /><span class="absolute right-5 top-5 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-xs font-semibold text-rw-forest shadow-sm"><MapPin size={14} aria-hidden="true" />Kebun Kompitu, RW 3</span></div><div class="flex flex-1 flex-col p-8"><span class="text-xs uppercase tracking-widest text-rw-forest">{educationCards[1].number} — {educationCards[1].label}</span><h3 class="mt-3 font-display text-3xl leading-tight text-rw-forest">{educationCards[1].title}</h3><p class="mt-4 text-base leading-relaxed text-rw-muted">{educationCards[1].text}</p><span class="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold text-rw-forest transition group-hover:gap-3">Buka katalog <ArrowRight size={15} aria-hidden="true" /></span></div></a><div class="grid gap-6 md:grid-cols-2"><a href={educationCards[2].href} class="group flex flex-col overflow-hidden rounded-[28px] border border-rw-line bg-white p-8 shadow-sm transition hover:-translate-y-1"><div class="-mx-8 -mt-8 mb-6 h-48 overflow-hidden"><img src={educationCards[2].image} alt={educationCards[2].title} class="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" /></div><span class="text-xs uppercase tracking-widest text-rw-forest">{educationCards[2].number} — {educationCards[2].label}</span><h3 class="mt-3 font-display text-2xl leading-tight text-rw-forest">{educationCards[2].title}</h3><p class="mt-4 text-sm leading-relaxed text-rw-muted">{educationCards[2].text}</p><span class="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold text-rw-forest">Pelajari racikannya <ArrowRight size={15} aria-hidden="true" /></span></a><a href={educationCards[3].href} class="group flex flex-col overflow-hidden rounded-[28px] border border-rw-line bg-white p-8 shadow-sm transition hover:-translate-y-1"><div class="-mx-8 -mt-8 mb-6 h-48 overflow-hidden"><img src={educationCards[3].image} alt={educationCards[3].title} class="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" /></div><span class="text-xs uppercase tracking-widest text-rw-forest">{educationCards[3].number} — {educationCards[3].label}</span><h3 class="mt-3 font-display text-2xl leading-tight text-rw-forest">{educationCards[3].title}</h3><p class="mt-4 text-sm leading-relaxed text-rw-muted">{educationCards[3].text}</p><span class="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-bold text-rw-forest">Lihat cara kerjanya <ArrowRight size={15} aria-hidden="true" /></span></a></div></div></div></div></section>
+
+    <section class="w-full bg-[#f5f1ea]"><div class="container-shell py-[72px] md:py-[88px]"><div class="mb-12 flex flex-col items-start justify-between md:flex-row md:items-end"><div><h2 class="font-display text-4xl text-rw-forest">Karya &amp; Rasa Warga</h2><p class="mt-2 text-base text-rw-muted">Mendukung ekonomi lokal RW 3.</p></div><a href="/umkm" class="mt-4 hidden items-center gap-2 text-sm font-bold text-rw-forest transition hover:text-rw-terracotta md:inline-flex">Lihat Semua UMKM <ArrowRight size={17} aria-hidden="true" /></a></div><div class="grid gap-8 md:grid-cols-3">{featuredUmkm.map((umkm) => <article class="flex flex-col overflow-hidden rounded-3xl border border-rw-line/70 bg-white shadow-sm transition hover:-translate-y-1"><a href={`/umkm/${umkm.slug}`} class="relative block h-[220px] overflow-hidden"><img src={umkm.photo} alt={umkm.name} class="h-full w-full object-cover" loading="lazy" /><span class="absolute left-5 top-5 rounded-full bg-rw-terracotta px-4 py-1.5 text-xs font-bold text-white">{umkm.category}</span></a><div class="flex flex-1 flex-col p-8"><h3 class="font-display text-2xl text-rw-forest">{umkm.name}</h3><div class="mt-3 flex items-center gap-1.5 text-sm text-rw-muted"><MapPin size={16} aria-hidden="true" />{umkm.address}</div><p class="mt-4 flex-1 text-[15px] leading-relaxed text-rw-muted">{umkm.description}</p><a href={`/umkm/${umkm.slug}`} class="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-rw-forest py-3.5 text-sm font-bold text-white transition hover:bg-rw-green"><MessageCircle size={17} aria-hidden="true" />Lihat Profil UMKM</a></div></article>)}</div><a href="/umkm" class="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full border-2 border-rw-forest py-3.5 text-sm font-bold text-rw-forest transition hover:bg-rw-forest hover:text-white md:hidden">Lihat Semua UMKM <ArrowRight size={17} aria-hidden="true" /></a></div></section>
+  </main>
+</BaseLayout>
+
+<script>
+  const homePage = document.querySelector<HTMLElement>("[data-home-page]");
+  const revealTargets = [...(homePage?.querySelectorAll<HTMLElement>("section:not(.hero-contour)") ?? [])];
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (homePage && revealTargets.length) {
+    homePage.classList.add("home-reveal-enabled");
+    const reveal = (element: HTMLElement) => element.classList.add("is-visible");
+
+    if (reducedMotion || !("IntersectionObserver" in window)) {
+      revealTargets.forEach(reveal);
+    } else {
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            reveal(entry.target as HTMLElement);
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: "0px 0px -10% 0px" });
+
+      revealTargets.forEach((target) => revealObserver.observe(target));
+    }
+  }
+</script>
+
+<style>
+  .home-reveal-enabled > section:not(.hero-contour) > * {
+    opacity: 0;
+    transform: translate3d(0, 1.5rem, 0);
+    transition: opacity 700ms ease, transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .home-reveal-enabled > section:not(.hero-contour).is-visible > * {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-reveal-enabled > section:not(.hero-contour) > * {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

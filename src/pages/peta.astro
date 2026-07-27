@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import InteractiveMap from "../components/InteractiveMap.astro";
+import { POIS } from "../data/pois";
+
+const draftCount = POIS.filter((poi) => poi.status === "draft").length;
+---
+
+<BaseLayout title="Peta Interaktif" description="Jelajahi lokasi sejarah, Kompitu, fasilitas, UMKM, dan titik kelola sampah RW 3 Kotabaru.">
+  <section class="border-b border-rw-line bg-[#f7f4ee]">
+    <div class="container-shell">
+      <InteractiveMap />
+      <div class="flex flex-wrap gap-3 border-t border-rw-line pb-8 text-xs text-rw-muted">
+        <span class="rounded-full bg-rw-mint/60 px-3 py-2 font-semibold">{POIS.length} titik disiapkan</span>
+        <span class="rounded-full bg-rw-terracotta/10 px-3 py-2 font-semibold text-rw-terracotta-dark">{draftCount} masih perlu verifikasi</span>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

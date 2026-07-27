@@ -1,0 +1,92 @@
+---
+import { Search, SlidersHorizontal } from "lucide-astro";
+import { PLANT_CATALOG } from "../data/kompitu";
+
+const categories = ["Semua Tanaman", "Herbal", "Sayuran", "Tanaman Hias", "Pohon Peneduh"];
+const splitScientificName = (value: string) => {
+  const match = value.match(/^(.*?)(\s+)(sp\.)$/i);
+  return match ? { base: match[1], suffix: match[3] } : { base: value, suffix: "" };
+};
+---
+
+<div class="bg-[#f7f4ee] pb-16 sm:pb-20">
+  <section class="bg-[#f7f4ee] px-4 py-16 sm:py-20 md:px-12 md:py-20">
+    <div class="container-shell text-center">
+      <p class="eyebrow justify-center">Kompitu sebagai ruang belajar</p>
+      <h1 class="mt-4 font-display text-4xl font-bold text-rw-forest sm:text-5xl">Katalog Tanaman Kompitu</h1>
+      <p class="mx-auto mt-4 max-w-2xl text-sm leading-7 text-rw-muted sm:text-base">Jelajahi keanekaragaman flora lokal di RW 3 Kotabaru. Dari tanaman obat tradisional hingga penghijauan lingkungan, kenali manfaat dan cara merawatnya.</p>
+    </div>
+  </section>
+
+  <div class="container-shell grid gap-8 py-10 lg:grid-cols-[16rem_minmax(0,1fr)] lg:py-12">
+    <aside class="border-b border-rw-line pb-8 lg:sticky lg:top-24 lg:h-fit lg:border-b-0 lg:border-r lg:pb-0 lg:pr-8">
+      <div class="mb-8">
+        <h2 class="font-display text-2xl text-rw-forest">Pencarian</h2>
+        <label class="relative mt-4 block"><span class="sr-only">Cari nama tanaman</span><Search size={16} class="absolute left-3 top-1/2 -translate-y-1/2 text-rw-muted" aria-hidden="true" /><input id="plant-search" type="search" placeholder="Cari nama tanaman..." class="w-full rounded-lg border border-rw-line bg-white py-3 pl-10 pr-3 text-sm outline-none focus:ring-2 focus:ring-rw-forest/20" /></label>
+      </div>
+      <div>
+        <h2 class="border-b border-rw-line pb-2 font-display text-2xl text-rw-forest">Kategori</h2>
+        <div class="mt-4 space-y-3">
+          {categories.map((category, index) => <label class="flex cursor-pointer items-center gap-3 text-sm text-rw-muted transition hover:text-rw-forest"><input type="checkbox" data-plant-category={category} checked={index === 0} class="size-4 accent-rw-forest" /><span>{category}</span></label>)}
+        </div>
+      </div>
+    </aside>
+
+    <section>
+      <div class="mb-5 flex flex-wrap items-center justify-between gap-3"><p id="plant-count" class="text-sm text-rw-muted">Menampilkan {PLANT_CATALOG.length} tanaman</p><button id="plant-sort" type="button" class="inline-flex items-center gap-2 rounded-lg border border-rw-line bg-white px-4 py-2 text-sm font-semibold text-rw-forest transition hover:bg-rw-mint/30"><SlidersHorizontal size={16} aria-hidden="true" />Urutkan</button></div>
+      <div id="plant-grid" class="grid gap-5 md:grid-cols-2">
+        {PLANT_CATALOG.map((plant) => { const scientificName = splitScientificName(plant.scientificName); return <article data-plant-card data-name={`${plant.name} ${plant.scientificName} ${plant.benefit}`} data-category={plant.category} class="group flex flex-col overflow-hidden rounded-xl border border-rw-forest/10 bg-[#e9dab4]/40 shadow-[0_4px_20px_rgba(27,67,50,0.03)] transition duration-300 hover:shadow-[0_4px_20px_rgba(27,67,50,0.08)]">
+          <div class="relative h-56 overflow-hidden"><img src={plant.photo} alt={plant.name} class="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" /><span class="absolute right-4 top-4 rounded-full bg-rw-terracotta px-3 py-1 text-[11px] font-bold text-white">{plant.category}</span></div>
+          <div class="flex flex-1 flex-col p-5 sm:p-6"><h2 class="font-display text-2xl text-rw-forest">{plant.name}</h2><p class="mt-1 text-sm text-rw-muted"><em class="plant-scientific-name">{scientificName.base}</em>{scientificName.suffix && <span> {scientificName.suffix}</span>}</p><div class="mt-5 flex-1"><h3 class="text-[11px] font-bold uppercase tracking-wider text-rw-muted">Manfaat utamanya</h3><p class="mt-2 text-sm leading-6 text-rw-ink">{plant.benefit}</p></div></div>
+        </article>; })}
+      </div>
+      <div id="plant-empty" class="mt-5 hidden rounded-xl border border-dashed border-rw-line bg-rw-parchment p-10 text-center text-sm text-rw-muted">Belum ada tanaman yang cocok dengan pencarian.</div>
+    </section>
+  </div>
+</div>
+
+<script>
+  const plantSearch = document.querySelector<HTMLInputElement>("#plant-search");
+  const plantCards = [...document.querySelectorAll<HTMLElement>("[data-plant-card]")];
+  const plantFilters = [...document.querySelectorAll<HTMLInputElement>("[data-plant-category]")];
+  const plantCount = document.querySelector<HTMLElement>("#plant-count");
+  const plantEmpty = document.querySelector<HTMLElement>("#plant-empty");
+  const plantGrid = document.querySelector<HTMLElement>("#plant-grid");
+  const plantSort = document.querySelector<HTMLButtonElement>("#plant-sort");
+  let ascending = true;
+
+  const renderPlants = () => {
+    const query = plantSearch?.value.trim().toLowerCase() ?? "";
+    const selected = plantFilters.filter((filter) => filter.checked).map((filter) => filter.dataset.plantCategory);
+    const allSelected = selected.includes("Semua Tanaman") || selected.length === 0;
+    let visible = 0;
+    plantCards.forEach((card) => {
+      const categoryMatch = allSelected || selected.includes(card.dataset.category);
+      const textMatch = (card.dataset.name ?? "").toLowerCase().includes(query);
+      const show = categoryMatch && textMatch;
+      card.classList.toggle("hidden", !show);
+      if (show) visible += 1;
+    });
+    if (plantCount) plantCount.textContent = `Menampilkan ${visible} tanaman`;
+    plantEmpty?.classList.toggle("hidden", visible !== 0);
+  };
+
+  plantSearch?.addEventListener("input", renderPlants);
+  plantFilters.forEach((filter) => filter.addEventListener("change", () => {
+    const all = plantFilters[0];
+    if (filter === all && all.checked) plantFilters.slice(1).forEach((item) => { item.checked = false; });
+    if (filter !== all && filter.checked) all.checked = false;
+    if (!plantFilters.some((item) => item.checked)) all.checked = true;
+    renderPlants();
+  }));
+  plantSort?.addEventListener("click", () => {
+    const sorted = [...plantCards].sort((a, b) => {
+      const first = a.dataset.name ?? "";
+      const second = b.dataset.name ?? "";
+      return ascending ? first.localeCompare(second, "id") : second.localeCompare(first, "id");
+    });
+    sorted.forEach((card) => plantGrid?.append(card));
+    ascending = !ascending;
+    renderPlants();
+  });
+</script>

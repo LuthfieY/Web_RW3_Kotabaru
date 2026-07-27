@@ -1,0 +1,31 @@
+---
+import { MapPin } from "lucide-astro";
+import { SITE } from "../data/site";
+---
+
+<footer class="bg-rw-forest text-white">
+  <div class="mx-auto grid max-w-7xl gap-12 px-4 py-16 md:grid-cols-3 md:px-12">
+    <div class="flex flex-col gap-6">
+      <div class="font-display text-3xl text-rw-parchment">RW 3 Kotabaru</div>
+      <p class="max-w-sm text-sm leading-relaxed text-white/80">Portal informasi RW 3 Asrama Kompi, Kotabaru. Merawat sejarah, menghijaukan lingkungan, serta mendukung kegiatan dan usaha warga.</p>
+      <div class="flex items-center gap-2 text-sm text-white/80"><MapPin size={18} aria-hidden="true" />Kotabaru, Yogyakarta</div>
+    </div>
+    <div>
+      <h2 class="mb-6 text-xs font-bold uppercase tracking-widest text-rw-mint">Tautan Cepat</h2>
+      <ul class="space-y-3 text-sm text-white/80">
+        <li><a class="transition hover:text-rw-parchment" href="/peta">Peta Interaktif</a></li>
+        <li><a class="transition hover:text-rw-parchment" href="/sejarah/serbuan-kotabaru">Sejarah</a></li>
+        <li><a class="transition hover:text-rw-parchment" href="/kompitu">Kompitu</a></li>
+        <li><a class="transition hover:text-rw-parchment" href="/umkm">UMKM Warga</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="mb-6 text-xs font-bold uppercase tracking-widest text-rw-mint">Informasi Warga</h2>
+      <ul class="space-y-3 text-sm text-white/80">
+        <li><a class="transition hover:text-rw-parchment" href="/peta#sampah">Fasilitas Umum</a></li>
+        <li><a class="transition hover:text-rw-parchment" href="/agenda">Agenda Warga</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-white/10 px-4 py-6 text-center text-xs text-white/60 md:px-12">© {new Date().getFullYear()} {SITE.name}. Portal informasi dan potensi warga.</div>
+</footer>

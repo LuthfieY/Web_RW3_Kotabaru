@@ -1,0 +1,36 @@
+---
+import { ArrowUpRight, Bug, Droplets, Recycle, Settings, Sprout } from "lucide-astro";
+
+interface Props {
+  entry: {
+    id: string;
+    data: {
+      title: string;
+      excerpt: string;
+      category: string;
+      icon: string;
+      duration?: string;
+      status: "draft" | "published";
+    };
+  };
+}
+
+const { entry } = Astro.props;
+const Icon = {
+  bug: Bug,
+  droplets: Droplets,
+  recycle: Recycle,
+  settings: Settings,
+  sprout: Sprout,
+}[entry.data.icon] ?? Sprout;
+---
+
+<article class="group flex h-full flex-col rounded-xl border border-rw-line bg-white p-6 transition hover:border-rw-terracotta/50 hover:shadow-[0_16px_32px_rgba(27,67,50,0.08)]">
+  <div class="flex items-start justify-between gap-4">
+    <span class="grid size-12 place-items-center rounded-full bg-rw-mint/55 text-rw-forest"><Icon size={23} strokeWidth={1.8} aria-hidden="true" /></span>
+    <span class="text-[0.68rem] font-extrabold uppercase tracking-[0.1em] text-rw-terracotta-dark">{entry.data.category}</span>
+  </div>
+  <h3 class="mt-7 font-display text-2xl font-bold leading-tight text-rw-forest">{entry.data.title}</h3>
+  <p class="mt-3 flex-1 text-sm leading-6 text-rw-muted">{entry.data.excerpt}</p>
+  <a href={`/edukasi/${entry.id}`} class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-rw-terracotta-dark transition hover:text-rw-forest">Baca materi <ArrowUpRight size={17} aria-hidden="true" /></a>
+</article>

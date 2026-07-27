@@ -1,0 +1,70 @@
+---
+import { Menu, X } from "lucide-astro";
+import { NAV_ITEMS, SITE } from "../data/site";
+
+const currentPath = Astro.url.pathname;
+
+const isActive = (href: string) => currentPath === href || (href === "/kompitu" && currentPath.startsWith("/edukasi")) || (href === "/umkm" && currentPath.startsWith("/umkm/"));
+---
+
+<header class="sticky top-0 z-50 border-b border-rw-line/70 bg-rw-cream/95 backdrop-blur-md">
+  <div class="container-shell flex min-h-20 items-center justify-between gap-6">
+    <a href="/" class="group shrink-0 font-display text-xl font-bold leading-tight tracking-tight text-rw-forest sm:text-2xl" aria-label={`Kembali ke beranda ${SITE.name}`}>
+      RW 3 Kotabaru
+    </a>
+
+    <nav class="hidden items-center gap-1 md:flex" aria-label="Navigasi utama">
+      {NAV_ITEMS.map((item) => (
+        <a
+          href={item.href}
+          class:list={["nav-link px-3 py-2 text-sm font-semibold", isActive(item.href) ? "is-active" : ""]}
+          >{item.label}</a
+        >
+      ))}
+    </nav>
+
+    <button
+      id="mobile-menu-toggle"
+      type="button"
+      class="inline-grid size-11 place-items-center rounded-full text-rw-forest transition hover:bg-rw-mint/50 md:hidden"
+      aria-label="Buka menu navigasi"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <Menu id="mobile-menu-open-icon" size={24} aria-hidden="true" />
+      <X id="mobile-menu-close-icon" class="hidden" size={24} aria-hidden="true" />
+    </button>
+  </div>
+
+  <div id="mobile-menu" class="hidden border-t border-rw-line/70 bg-rw-forest text-white md:hidden" aria-hidden="true">
+    <nav class="container-shell flex flex-col py-5" aria-label="Navigasi mobile">
+      {NAV_ITEMS.map((item) => (
+        <a href={item.href} class="border-b border-white/15 py-4 font-display text-2xl text-rw-parchment">{item.label}</a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>("#mobile-menu-toggle");
+  const menu = document.querySelector<HTMLElement>("#mobile-menu");
+  const openIcon = document.querySelector<HTMLElement>("#mobile-menu-open-icon");
+  const closeIcon = document.querySelector<HTMLElement>("#mobile-menu-close-icon");
+
+  const setMenu = (open: boolean) => {
+    if (!toggle || !menu || !openIcon || !closeIcon) return;
+    menu.classList.toggle("hidden", !open);
+    menu.setAttribute("aria-hidden", String(!open));
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Tutup menu navigasi" : "Buka menu navigasi");
+    openIcon.classList.toggle("hidden", open);
+    closeIcon.classList.toggle("hidden", !open);
+    document.body.classList.toggle("overflow-hidden", open);
+  };
+
+  toggle?.addEventListener("click", () => setMenu(toggle.getAttribute("aria-expanded") !== "true"));
+  menu?.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setMenu(false)));
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setMenu(false);
+  });
+</script>

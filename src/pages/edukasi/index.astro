@@ -1,0 +1,14 @@
+---
+import { ArrowRight } from "lucide-astro";
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import EducationCard from "../../components/EducationCard.astro";
+
+const entries = (await getCollection("education")).filter((entry) => entry.data.status === "published").sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title="Edukasi Lingkungan" description="Materi edukasi lingkungan dari Kompitu RW 3 Kotabaru.">
+  <section class="texture-paper border-b border-rw-line"><div class="container-shell section-space"><SectionHeading eyebrow="Belajar bersama" title="Edukasi lingkungan RW 3" description="Materi awal tentang tanaman, kompos, pestisida nabati, irigasi tetes, dan penggunaan pencacah daun." /><a href="/kompitu" class="mt-7 inline-flex items-center gap-2 text-sm font-bold text-rw-terracotta-dark hover:text-rw-forest">Kembali ke portal Kompitu <ArrowRight size={17} aria-hidden="true" /></a></div></section>
+  <section class="section-space"><div class="container-shell grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{entries.map((entry) => <EducationCard entry={entry} />)}</div></section>
+</BaseLayout>

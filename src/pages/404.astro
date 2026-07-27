@@ -1,0 +1,8 @@
+---
+import { ArrowLeft, Map } from "lucide-astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Halaman tidak ditemukan" noindex>
+  <section class="texture-paper"><div class="container-shell flex min-h-[60vh] flex-col items-start justify-center py-20"><p class="eyebrow">404</p><h1 class="mt-4 max-w-xl font-display text-5xl font-bold leading-tight text-rw-forest">Halaman ini belum ada di peta.</h1><p class="mt-5 max-w-lg text-base leading-7 text-rw-muted">Mungkin tautannya berubah, atau informasi tersebut masih dalam proses pendataan.</p><div class="mt-8 flex flex-wrap gap-3"><a href="/" class="inline-flex items-center gap-2 rounded-full bg-rw-forest px-5 py-3 text-sm font-bold text-white"><ArrowLeft size={17} aria-hidden="true" />Ke beranda</a><a href="/peta" class="inline-flex items-center gap-2 rounded-full border-2 border-rw-forest px-5 py-3 text-sm font-bold text-rw-forest"><Map size={17} aria-hidden="true" />Buka peta</a></div></div></section>
+</BaseLayout>

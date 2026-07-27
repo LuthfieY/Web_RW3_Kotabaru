@@ -1,0 +1,140 @@
+---
+import { MapPin } from "lucide-astro";
+
+interface Props {
+  src: string;
+  alt: string;
+  location?: string;
+}
+
+const { src, alt, location } = Astro.props;
+const panels = [
+  { name: "left", offset: "0%" },
+  { name: "center", offset: "-100%" },
+  { name: "right", offset: "-200%" },
+];
+---
+
+<figure
+  class="hero-triptych"
+  role="img"
+  aria-label={alt}
+>
+  <div class="hero-triptych__panels">
+    {
+      panels.map((panel) => (
+        <div
+          class={`hero-triptych__panel hero-triptych__panel--${panel.name}`}
+          style={`--panel-offset: ${panel.offset};`}
+          aria-hidden="true"
+        >
+          <img
+            src={src}
+            alt=""
+            aria-hidden="true"
+            width="5184"
+            height="3456"
+            loading="eager"
+            decoding="async"
+            fetchpriority={panel.name === "left" ? "high" : "auto"}
+          />
+        </div>
+      ))
+    }
+  </div>
+  {
+    location && (
+      <figcaption class="relative z-20 mt-2 inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 text-xs font-semibold tracking-wide text-rw-forest shadow-sm">
+        <MapPin size={14} aria-hidden="true" />
+        {location}
+      </figcaption>
+    )
+  }
+</figure>
+
+<style>
+  .hero-triptych {
+    position: relative;
+    width: 100%;
+  }
+
+  .hero-triptych__panels {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    aspect-ratio: 3 / 2;
+    gap: 0.75rem;
+    overflow: visible;
+  }
+
+  .hero-triptych__panel {
+    position: relative;
+    overflow: hidden;
+    min-width: 0;
+    border-radius: 1.5rem;
+    background-color: transparent;
+    --panel-end: none;
+    --panel-hover: translateY(-0.25rem);
+    opacity: 1;
+    transform: var(--panel-end);
+    filter: none;
+    box-shadow: 0 18px 42px rgba(27, 67, 50, 0.12);
+    transition:
+      transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .hero-triptych__panel--center {
+    z-index: 2;
+    --panel-end: translateY(-1rem);
+    --panel-hover: translateY(-1.25rem);
+    box-shadow:
+      0 24px 48px rgba(27, 67, 50, 0.24),
+      0 8px 18px rgba(27, 67, 50, 0.12);
+  }
+
+  .hero-triptych__panel img {
+    position: absolute;
+    top: 0;
+    left: var(--panel-offset);
+    width: 300%;
+    max-width: none;
+    height: calc(100% - var(--image-lift, 0rem));
+    object-fit: cover;
+    transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .hero-triptych__panel--left img,
+  .hero-triptych__panel--right img {
+    top: -0.75rem;
+    --image-lift: -0.75rem;
+  }
+
+  @media (hover: hover) {
+    .hero-triptych__panel:hover {
+      z-index: 3;
+      transform: var(--panel-hover) !important;
+    }
+
+    .hero-triptych__panel:hover img {
+      transform: scale(1.05);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-triptych__panel img,
+    .hero-triptych__panel:hover img {
+      transform: none;
+      transition: none;
+    }
+
+    .hero-triptych__panel { transition: none; }
+  }
+
+  @media (max-width: 767px) {
+    .hero-triptych__panels {
+      gap: 0.4rem;
+    }
+
+  }
+</style>

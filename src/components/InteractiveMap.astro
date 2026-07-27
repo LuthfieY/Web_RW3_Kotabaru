@@ -1,0 +1,172 @@
+---
+import { LocateFixed, MapPin, RotateCcw } from "lucide-astro";
+import { MAP_CENTER, mapReadyPois, POI_CATEGORY_COLORS, POI_CATEGORY_LABELS } from "../data/pois";
+
+const poisForMap = mapReadyPois.map((poi) => ({
+  slug: poi.slug,
+  name: poi.name,
+  category: poi.category,
+  categoryLabel: POI_CATEGORY_LABELS[poi.category],
+  color: POI_CATEGORY_COLORS[poi.category],
+  description: poi.description,
+  photo: poi.photo,
+  latitude: poi.latitude,
+  longitude: poi.longitude,
+  status: poi.status,
+}));
+
+const categoryGroups = [
+  ["umkm", "UMKM"],
+  ["kompitu", "Kompitu Hijau"],
+  ["sejarah", "Sejarah & Warisan"],
+  ["budaya", "Budaya"],
+  ["ibadah", "Ibadah"],
+  ["fasilitas", "Fasilitas Umum"],
+  ["sampah", "Titik Sampah"],
+] as const;
+---
+
+<div id="sampah" class="grid min-h-[38rem] gap-6 py-10 md:grid-cols-[20rem_minmax(0,1fr)] md:py-12">
+  <aside class="flex flex-col gap-4 md:max-h-[calc(100vh-9rem)] md:overflow-y-auto md:pr-2">
+    <div>
+      <h1 class="font-display text-4xl font-bold leading-tight text-rw-forest">Peta Interaktif</h1>
+      <p class="mt-3 text-sm leading-6 text-rw-muted">Jelajahi titik-titik penting, UMKM, dan inisiatif hijau di RW 3 Kotabaru.</p>
+    </div>
+
+    <div class="rounded-xl border border-rw-line bg-white p-4">
+      <h2 class="text-xs font-extrabold uppercase tracking-[0.13em] text-rw-forest">Kategori</h2>
+      <div class="mt-3 flex flex-col gap-2">
+        {categoryGroups.slice(0, 6).map(([category, label]) => (
+          <button type="button" data-map-filter={category} aria-pressed="true" class="map-filter group flex items-center gap-3 rounded-md px-1 py-1 text-left text-sm text-rw-forest transition hover:bg-white">
+            <span class="grid size-5 place-items-center rounded border border-rw-forest bg-rw-forest text-xs font-black text-white transition" data-filter-check="true">✓</span>
+            <span class="flex items-center gap-2"><span class="size-2.5 rounded-full" style={`background:${POI_CATEGORY_COLORS[category]}`}></span>{label}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <div class="rounded-xl border border-rw-line bg-white p-4">
+      <h2 class="text-xs font-extrabold uppercase tracking-[0.13em] text-rw-forest">Manajemen Limbah</h2>
+      <div class="mt-3 flex flex-col gap-2">
+        {categoryGroups.filter(([category]) => category === "sampah").map(([category, label]) => (
+          <button type="button" data-map-filter={category} aria-pressed="true" class="map-filter group flex items-center gap-3 rounded-md px-1 py-1 text-left text-sm text-rw-forest transition hover:bg-white">
+            <span class="grid size-5 place-items-center rounded border border-rw-forest bg-rw-forest text-xs font-black text-white transition" data-filter-check="true">✓</span>
+            <span class="flex items-center gap-2"><span class="size-2.5 rounded-full" style={`background:${POI_CATEGORY_COLORS[category]}`}></span>{label}</span>
+          </button>
+        ))}
+        <p class="mt-2 text-xs leading-5 text-rw-muted">Titik sampah masih berupa data awal dan perlu disepakati bersama pengelola.</p>
+      </div>
+    </div>
+
+    <div class="mt-1">
+      <div class="flex items-center justify-between gap-3">
+        <h2 class="text-xs font-extrabold uppercase tracking-[0.13em] text-rw-forest">Lokasi Tersorot</h2>
+        <span id="map-result-count" class="text-xs text-rw-muted">{poisForMap.length} lokasi</span>
+      </div>
+      <div id="map-poi-list" class="mt-3 flex flex-col gap-2"></div>
+    </div>
+  </aside>
+
+  <section class="relative h-[43rem] overflow-hidden rounded-2xl border border-rw-line bg-white shadow-[0_4px_20px_rgba(27,67,50,0.07)] md:h-[52rem]">
+    <div class="flex items-center justify-between gap-3 border-b border-rw-line px-4 py-3">
+      <p class="flex items-center gap-2 text-sm font-bold text-rw-forest"><MapPin size={17} class="text-rw-terracotta" aria-hidden="true" />Lokasi RW 3 Kotabaru</p>
+      <div class="flex gap-2">
+        <button type="button" data-map-reset class="grid size-9 place-items-center rounded-lg border border-rw-line text-rw-forest transition hover:border-rw-forest" title="Kembalikan tampilan awal" aria-label="Kembalikan tampilan awal"><RotateCcw size={15} aria-hidden="true" /></button>
+        <button type="button" data-map-locate class="grid size-9 place-items-center rounded-lg border border-rw-line text-rw-forest transition hover:border-rw-forest" title="Gunakan lokasi saya" aria-label="Gunakan lokasi saya"><LocateFixed size={15} aria-hidden="true" /></button>
+      </div>
+    </div>
+    <div id="interactive-map" class="h-[39.5rem] md:h-[48.5rem]" data-pois={JSON.stringify(poisForMap)} data-center={JSON.stringify(MAP_CENTER)}>
+      <noscript><div class="p-6 text-sm leading-6 text-rw-muted">Peta interaktif membutuhkan JavaScript. Gunakan daftar lokasi di sebelah kiri.</div></noscript>
+    </div>
+  </section>
+</div>
+
+<script>
+  import L from "leaflet";
+  import "leaflet/dist/leaflet.css";
+
+  const root = document.querySelector<HTMLElement>("#interactive-map");
+  if (root) {
+    type MapPoi = {
+      slug: string;
+      name: string;
+      category: string;
+      categoryLabel: string;
+      color: string;
+      description: string;
+      photo: string;
+      latitude: number;
+      longitude: number;
+      status: string;
+    };
+
+    const pois = JSON.parse(root.dataset.pois ?? "[]") as MapPoi[];
+    const center = JSON.parse(root.dataset.center ?? "[-7.7839, 110.3682]") as [number, number];
+    const map = L.map(root, { scrollWheelZoom: false, zoomControl: true }).setView(center, 19);
+    const tileUrl = import.meta.env.PUBLIC_MAP_TILE_URL ?? "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+    const attribution = import.meta.env.PUBLIC_MAP_ATTRIBUTION ?? "&copy; OpenStreetMap contributors";
+    L.tileLayer(tileUrl, { attribution, maxZoom: 20 }).addTo(map);
+
+    const markers = new Map<string, L.Marker>();
+    const list = document.querySelector<HTMLElement>("#map-poi-list");
+    const resultCount = document.querySelector<HTMLElement>("#map-result-count");
+    const filters = [...document.querySelectorAll<HTMLButtonElement>("[data-map-filter]")];
+    const visibleCategories = new Set(filters.map((filter) => filter.dataset.mapFilter).filter(Boolean));
+    const markerIcons: Record<string, string> = {
+      sejarah: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 21h18"/><path d="M5 21V10h14v11"/><path d="m3 10 9-7 9 7"/><path d="M9 21v-5h6v5"/></svg>',
+      umkm: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 10h18"/><path d="m4 10 1-6h14l1 6"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>',
+      kompitu: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21V9"/><path d="M12 13a5 5 0 0 0-5-5 5 5 0 0 0 5 5"/><path d="M12 17a5 5 0 0 1 5-5 5 5 0 0 1-5 5"/><path d="M12 9a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/></svg>',
+      budaya: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>',
+      ibadah: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 21h18"/><path d="M5 21V10h14v11"/><path d="m3 10 9-7 9 7"/><path d="M9 21v-5h6v5"/></svg>',
+      fasilitas: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18"/><path d="M6 12H4a2 2 0 0 0-2 2v8h20v-8a2 2 0 0 0-2-2h-2"/><path d="M10 6h4M10 10h4M10 14h4M10 18h4"/></svg>',
+      sampah: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v5M14 11v5"/></svg>',
+    };
+
+    const renderList = () => {
+      const visiblePois = pois.filter((poi) => visibleCategories.has(poi.category));
+      if (resultCount) resultCount.textContent = `${visiblePois.length} lokasi`;
+      if (list) {
+        list.innerHTML = visiblePois.map((poi) => `<a href="/poi/${poi.slug}" class="block rounded-lg border border-rw-line bg-white p-3 transition hover:border-rw-terracotta/60 hover:shadow-sm"><span class="block text-sm font-bold text-rw-forest">${poi.name}</span><span class="mt-1 block text-xs leading-5 text-rw-muted">${poi.categoryLabel}</span></a>`).join("");
+      }
+      pois.forEach((poi) => markers.get(poi.slug)?.setOpacity(visibleCategories.has(poi.category) ? 1 : 0));
+    };
+
+    pois.forEach((poi) => {
+      const markerIcon = markerIcons[poi.category] ?? markerIcons.fasilitas;
+      const icon = L.divIcon({ className: "custom-map-marker", html: `<span class="map-pin" style="background:${poi.color}">${markerIcon}</span>`, iconSize: [32, 32], iconAnchor: [16, 30], popupAnchor: [0, -26] });
+      const marker = L.marker([poi.latitude, poi.longitude], { icon }).addTo(map);
+      marker.bindPopup(`<div style="max-width:220px"><img src="${poi.photo}" alt="" style="width:100%;height:90px;object-fit:cover;margin-bottom:10px" /><strong style="font-family:Georgia,serif;font-size:18px;color:#003d2b">${poi.name}</strong><p style="font-size:12px;line-height:1.5;margin:7px 0;color:#5e6661">${poi.description}</p><a href="/poi/${poi.slug}" style="font-size:12px;font-weight:700;color:#b64a3b">Buka detail lokasi →</a></div>`);
+      markers.set(poi.slug, marker);
+    });
+
+    filters.forEach((filter) => filter.addEventListener("click", () => {
+      const category = filter.dataset.mapFilter;
+      if (!category) return;
+      const active = visibleCategories.has(category);
+      if (active && visibleCategories.size === 1) return;
+      active ? visibleCategories.delete(category) : visibleCategories.add(category);
+      filter.setAttribute("aria-pressed", String(!active));
+      filter.querySelector("[data-filter-check]")?.classList.toggle("bg-rw-forest", !active);
+      filter.querySelector("[data-filter-check]")?.classList.toggle("text-white", !active);
+      filter.querySelector("[data-filter-check]")?.classList.toggle("bg-white", active);
+      filter.querySelector("[data-filter-check]")?.classList.toggle("text-transparent", active);
+      renderList();
+    }));
+
+    document.querySelector<HTMLButtonElement>("[data-map-reset]")?.addEventListener("click", () => {
+      map.setView(center, 19);
+      filters.forEach((filter) => {
+        const category = filter.dataset.mapFilter;
+        if (category) visibleCategories.add(category);
+        filter.setAttribute("aria-pressed", "true");
+        const check = filter.querySelector("[data-filter-check]");
+        check?.classList.add("bg-rw-forest", "text-white");
+        check?.classList.remove("bg-white", "text-transparent");
+      });
+      renderList();
+    });
+
+    document.querySelector<HTMLButtonElement>("[data-map-locate]")?.addEventListener("click", () => map.locate({ setView: true, maxZoom: 19, enableHighAccuracy: true }));
+    renderList();
+  }
+</script>

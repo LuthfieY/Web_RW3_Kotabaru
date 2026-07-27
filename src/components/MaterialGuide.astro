@@ -1,0 +1,171 @@
+---
+import { ArrowLeft, Check, Clock3, Leaf, Signal, X } from "lucide-astro";
+import type { CollectionEntry } from "astro:content";
+import { KOMPITU_IMAGES, MATERIAL_IMAGES } from "../data/kompitu";
+
+interface Props {
+  entry: CollectionEntry<"education">;
+}
+
+type MaterialStep = {
+  id: string;
+  title: string;
+  description: string;
+  photo: string;
+  alt: string;
+  layout?: "image" | "split";
+  reverse?: boolean;
+  tips?: string;
+  good?: string[];
+  avoid?: string[];
+  checklist?: string[];
+  diagram?: boolean;
+};
+
+const { entry } = Astro.props;
+const images = MATERIAL_IMAGES[entry.id as keyof typeof MATERIAL_IMAGES] ?? [KOMPITU_IMAGES.hero];
+const imageAt = (index: number) => images[index] ?? KOMPITU_IMAGES.hero;
+const materialSteps: Record<string, MaterialStep[]> = {
+  kompos: [
+    { id: "step1", title: "Pilah Bahan Kompos", description: "Siapkan bahan kaya karbon dan nitrogen, lalu singkirkan semua kontaminan sebelum pencampuran.", photo: imageAt(0), alt: "Pemilahan bahan organik untuk kompos", good: ["Daun kering dan ranting kecil", "Rumput segar dan sisa sayur", "Ampas kopi atau teh tanpa plastik"], avoid: ["Plastik, kaca, dan logam", "Daging, minyak, dan susu", "Bahan terkena pestisida yang tidak diketahui"] },
+    { id: "step2", title: "Siapkan Wadah Berpori", description: "Gunakan karung, keranjang, atau wadah yang memiliki lubang udara dan drainase. Letakkan di tempat teduh dan terlindung dari hujan langsung.", photo: imageAt(1), alt: "Wadah kompos di kebun warga", layout: "split", tips: "Gunakan sekop kecil, baskom atau ember, sarung tangan, dan masker bila bahan berdebu. Jangan menutup wadah rapat tanpa ventilasi." },
+    { id: "step3", title: "Campur dan Rawat", description: "Campurkan sekitar 2–3 bagian bahan cokelat dengan 1 bagian bahan hijau. Tambahkan air sedikit demi sedikit hingga lembap, tidak menetes deras, lalu aduk minimal satu kali per minggu.", photo: imageAt(2), alt: "Bahan organik dalam proses pengomposan", layout: "split", tips: "Jangan memadatkan tumpukan. Tambahkan daun kering bila terlalu basah atau berbau, dan tambahkan sedikit air bila terlalu kering." },
+    { id: "step4", title: "Periksa Kematangan", description: "Lanjutkan pematangan sampai bahan awal sulit dikenali, berwarna gelap, suhunya mendekati suhu lingkungan, dan aromanya seperti tanah.", photo: imageAt(3), alt: "Kompos matang siap digunakan", layout: "split", reverse: true, checklist: ["Tidak lagi panas atau berbau busuk", "Teksturnya remah dan tidak menggumpal", "Gunakan sebagai campuran media atau lapisan tipis"] },
+  ],
+  "pestisida-nabati": [
+    { id: "step1", title: "Kenali Hama Sasaran", description: "Amati tanaman dan catat hama, gejala, serta bagian yang terdampak sebelum memilih larutan.", photo: imageAt(0), alt: "Bahan alami untuk pestisida nabati", good: ["Dahulukan sanitasi kebun", "Pangkas bagian terserang bila perlu", "Catat hasil pengamatan"], avoid: ["Menyemprot tanpa sasaran jelas", "Mengabaikan musuh alami", "Menganggap larutan selalu aman"] },
+    { id: "step2", title: "Buat Larutan Kulit Bawang", description: "Masukkan 2 genggam kulit bawang merah bersih ke dalam 1 liter air. Rendam 24–48 jam di tempat teduh, lalu saring sebelum dipindahkan ke botol semprot.", photo: imageAt(1), alt: "Kulit bawang dan bahan alami untuk pestisida nabati", layout: "split", tips: "Gunakan kulit bawang yang tidak berjamur. Pakai wadah dan botol khusus bahan pertanian, bukan wadah makanan atau minuman." },
+    { id: "step3", title: "Siapkan Formula Kombinasi", description: "Cuci, potong, dan haluskan bawang putih, serai, daun pepaya, serta cabai dengan 1 liter air. Takaran masing-masing bahan harus diisi setelah disepakati dan diuji.", photo: imageAt(2), alt: "Bahan tanaman untuk formula pestisida nabati", layout: "split", tips: "Gunakan sarung tangan saat menangani cabai. Saring larutan, beri label, dan jangan membuat campuran terlalu pekat." },
+    { id: "step4", title: "Uji, Semprot, dan Simpan", description: "Uji pada 2–3 daun atau 1 tanaman selama 24–48 jam. Jika aman, semprot tipis pada pagi atau sore, lalu catat hasil dan kondisi larutan.", photo: imageAt(3), alt: "Pengujian dan penyemprotan larutan pestisida nabati", layout: "split", reverse: true, checklist: ["Hindari hujan, angin, dan polinator aktif", "Hentikan bila daun terbakar atau layu", "Gunakan larutan segar dan berlabel"] },
+  ],
+  "irigasi-tetes": [
+    { id: "step1", title: "Kenali Komponen", description: "Siapkan sumber air dan filter, saluran primer, manifold, saluran lateral, emitter, penyangga, dan penutup ujung jaringan.", photo: imageAt(0), alt: "Sistem irigasi tetes di kebun Kompitu", layout: "split", tips: "Rancangan awal menggunakan 20 pot cabai, selang PE 16 mm, satu emitter per pot, dan debit nominal 2 liter per jam." },
+    { id: "step2", title: "Pasang dan Bilas Jaringan", description: "Pasang filter, rapikan selang utama, buat cabang menuju pot, dan letakkan emitter 5–10 cm dari pangkal batang. Buka ujung jaringan untuk membilasnya.", photo: imageAt(1), alt: "Pemasangan jaringan irigasi tetes", layout: "split", tips: "Hindari selang tertekuk atau terjepit. Emitter tidak boleh menempel pada batang dan seluruh pot perlu mendapat aliran." },
+    { id: "step3", title: "Uji Debit dan Atur Durasi", description: "Tampung air dari beberapa emitter selama 10 menit dan bandingkan volumenya. Mulai dari 15–20 menit saat sejuk, 25–30 menit saat cerah, atau 35–45 menit saat sangat panas.", photo: imageAt(2), alt: "Pengujian tetesan pada tanaman", layout: "split", tips: "Debit aktual dipengaruhi tekanan, panjang selang, ketinggian, dan sumbatan. Sesuaikan durasi dengan kelembapan media dan drainase." },
+    { id: "step4", title: "Periksa dan Rawat", description: "Buka keran perlahan, periksa semua emitter, lalu amati kebocoran, pot tergenang, dan media yang terlalu kering selama penggunaan.", photo: imageAt(3), alt: "Pemeriksaan dan perawatan sistem irigasi tetes", layout: "split", reverse: true, checklist: ["Bersihkan filter dan bilas ujung jaringan", "Periksa sambungan dan selang", "Catat waktu, kondisi, dan perubahan durasi"] },
+  ],
+  "pencacah-daun": [
+    { id: "step1", title: "Siapkan Lokasi dan Operator", description: "Gunakan lantai rata, kering, terang, dan berventilasi. Pastikan operator terlatih dan anak-anak, hewan, serta penonton berada di luar zona kerja.", photo: imageAt(0), alt: "Penggunaan pencacah daun di Kompitu", good: ["Pakai pakaian pas badan dan sepatu tertutup", "Gunakan kacamata kerja dan masker bila berdebu", "Siapkan wadah hasil, P3K, dan sapu"], avoid: ["Bekerja di tempat basah", "Membiarkan kabel melintang", "Mengoperasikan alat tanpa arahan"] },
+    { id: "step2", title: "Periksa Sebelum Menyalakan", description: "Saat alat belum terhubung listrik, periksa pelindung, corong, keluaran, kabel, steker, baut, dan bahan yang akan dicacah.", photo: imageAt(1), alt: "Pemeriksaan alat pencacah daun", layout: "split", tips: "Singkirkan batu, logam, kaca, plastik, tali, dan bahan terkontaminasi. Jangan menganggap semua bahan organik aman untuk dicacah." },
+    { id: "step3", title: "Masukkan Bahan Bertahap", description: "Nyalakan sesuai urutan pada petunjuk alat, lalu masukkan bahan sedikit demi sedikit. Gunakan pendorong nonlogam yang disetujui produsen bila diperlukan.", photo: imageAt(2), alt: "Bahan daun untuk proses pencacahan", layout: "split", tips: "Jangan memasukkan tangan atau benda logam ke corong. Hentikan alat bila muncul suara, getaran, bau, atau panas yang tidak normal." },
+    { id: "step4", title: "Matikan dan Rawat", description: "Hentikan pemasukan, matikan sakelar, cabut steker, dan tunggu pisau berhenti total sebelum membersihkan atau memindahkan alat.", photo: imageAt(3), alt: "Mematikan dan merawat alat pencacah daun", layout: "split", reverse: true, checklist: ["Bersihkan dengan kuas atau sikat", "Jangan menyemprot motor, sakelar, atau kabel dengan air", "Catat penggunaan, gangguan, dan perawatan"] },
+  ],
+};
+const steps = materialSteps[entry.id] ?? materialSteps.kompos;
+const readingDuration = (entry.data.duration ?? "5 menit membaca").replace(/\s*membaca$/i, "");
+---
+
+<div data-material-guide class="bg-[#f7f4ee]">
+  <section class="px-4 py-16 sm:py-20 md:px-12 md:py-20"><div class="container-shell"><header><a href="/kompitu" class="mb-8 flex w-fit items-center gap-2 text-sm font-bold text-rw-forest transition hover:text-rw-terracotta-dark"><ArrowLeft size={16} aria-hidden="true" />Kembali ke Kompitu</a><p class="eyebrow">Panduan praktis Kompitu</p><h1 class="mt-4 max-w-4xl font-display text-4xl font-bold leading-tight text-rw-forest sm:text-5xl">{entry.id === "kompos" ? "Membuat Kompos Organik dari Rumah" : entry.data.title}</h1><p class="mt-5 max-w-3xl text-base leading-8 text-rw-muted sm:text-lg">{entry.data.excerpt}</p><div class="mt-6 flex flex-wrap items-center gap-4 text-xs font-semibold text-rw-muted sm:text-sm"><span class="inline-flex items-center gap-2"><Clock3 size={16} class="text-rw-forest" aria-hidden="true" />Durasi membaca: {readingDuration}</span><span class="text-rw-line">|</span><span class="inline-flex items-center gap-2"><Signal size={16} class="text-rw-forest" aria-hidden="true" />Tingkat: Pemula</span><span class="text-rw-line">|</span><span class="inline-flex items-center gap-2"><Leaf size={16} class="text-rw-forest" aria-hidden="true" />Materi Kompitu</span></div></header></div></section>
+
+  <section class="bg-[#f5f1ea] px-4 py-12 sm:py-16 md:px-12 md:py-20"><div class="container-shell grid gap-8 lg:grid-cols-12 lg:gap-10">
+    <aside class="h-fit lg:sticky lg:top-24 lg:col-span-3"><div class="rounded-2xl border border-rw-forest/20 bg-white p-5 shadow-[0_4px_20px_rgba(27,67,50,0.06)] sm:p-6"><h2 class="border-b border-rw-line pb-4 font-display text-2xl text-rw-forest">Panduan ringkas</h2><ol class="relative mt-5 space-y-5 before:absolute before:inset-y-0 before:left-3.5 before:w-0.5 before:bg-rw-forest/15">{steps.map((step, index) => <li class="relative pl-11"><span data-guide-step data-active={index === 0 ? "true" : "false"} class="absolute left-0 top-0 grid size-7 place-items-center rounded-full border border-rw-line bg-white text-xs font-bold text-rw-forest">{index + 1}</span><a data-guide-link href={`#${step.id}`} class="text-sm font-semibold text-rw-ink transition hover:text-rw-terracotta-dark">{step.title}</a></li>)}</ol></div></aside>
+    <div class="space-y-8 lg:col-span-9">
+      {steps.map((step, index) => <section data-guide-section id={step.id} class="overflow-hidden rounded-[20px] border border-rw-forest/15 bg-white shadow-[0_4px_20px_rgba(27,67,50,0.06)]">
+        {step.layout === "split" ? <div class:list={["grid md:grid-cols-2", step.reverse ? "md:flex md:flex-row-reverse" : ""]}><div class="h-64 bg-rw-mint/25 md:h-auto"><img src={step.photo} alt={step.alt} class="h-full w-full object-cover" loading="lazy" /></div><div class="p-6 sm:p-8"><span class="text-[11px] font-bold uppercase tracking-widest text-rw-terracotta-dark">Langkah {String(index + 1).padStart(2, "0")}</span><h2 class="mt-2 font-display text-3xl leading-tight text-rw-forest">{step.title}</h2><p class="mt-4 text-sm leading-7 text-rw-muted sm:text-base">{step.description}</p>{step.tips && <div class="mt-5 rounded-r-lg border-l-4 border-rw-mint bg-rw-cream p-4"><h3 class="text-xs font-bold uppercase tracking-wider text-rw-forest">Tips Kompitu</h3><p class="mt-2 text-sm leading-6 text-rw-muted">{step.tips}</p></div>}{step.checklist && <div class="mt-5 rounded-lg border border-rw-line bg-rw-cream p-4"><h3 class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-rw-forest"><Check size={15} aria-hidden="true" />Yang perlu diperhatikan</h3><ul class="mt-3 space-y-2 text-sm leading-6 text-rw-muted">{step.checklist.map((item) => <li class="flex items-start gap-2"><span class="mt-[0.55rem] size-1.5 shrink-0 rounded-full bg-rw-forest" aria-hidden="true"></span>{item}</li>)}</ul></div>}</div></div> : <><div class="h-64 bg-rw-mint/25"><img src={step.photo} alt={step.alt} class="h-full w-full object-cover" loading="lazy" /></div><div class="p-6 sm:p-8"><span class="text-[11px] font-bold uppercase tracking-widest text-rw-terracotta-dark">Langkah {String(index + 1).padStart(2, "0")}</span><h2 class="mt-2 font-display text-3xl leading-tight text-rw-forest">{step.title}</h2><p class="mt-4 text-sm leading-7 text-rw-muted sm:text-base">{step.description}</p>{step.good && step.avoid && <div class="mt-5 grid gap-4 rounded-lg border border-rw-line bg-rw-cream p-5 sm:grid-cols-2"><div><h3 class="flex items-center gap-1 text-xs font-bold text-rw-forest"><Check size={15} aria-hidden="true" />Yang dapat digunakan</h3><ul class="mt-3 list-disc space-y-1 pl-5 text-sm leading-6 text-rw-muted">{step.good.map((item) => <li>{item}</li>)}</ul></div><div><h3 class="flex items-center gap-1 text-xs font-bold text-rw-terracotta-dark"><X size={15} aria-hidden="true" />Hindari</h3><ul class="mt-3 list-disc space-y-1 pl-5 text-sm leading-6 text-rw-muted">{step.avoid.map((item) => <li>{item}</li>)}</ul></div></div>}{step.diagram && <div class="mt-5 rounded-lg border border-rw-line bg-rw-cream p-5"><h3 class="text-center text-xs font-bold uppercase tracking-wider text-rw-forest">Diagram lapisan kompos</h3><div class="mt-4 space-y-2 text-center text-xs font-semibold"><div class="rounded bg-[#8b5a2b] p-2 text-white">1. Tanah / kompos lama</div><div class="rounded bg-[#4caf50] p-2 text-white">2. Material hijau</div><div class="rounded bg-[#d2b48c] p-2 text-rw-ink">3. Daun kering</div><div class="rounded bg-[#654321] p-2 text-white">4. Ranting kayu</div></div></div>}</div></>}
+      </section>)}
+    </div>
+  </div></section>
+</div>
+
+<script>
+  const materialGuide = document.querySelector<HTMLElement>("[data-material-guide]");
+  const guideSections = [...(materialGuide?.querySelectorAll<HTMLElement>("[data-guide-section]") ?? [])];
+  const guideSteps = [...(materialGuide?.querySelectorAll<HTMLElement>("[data-guide-step]") ?? [])];
+  const guideLinks = [...(materialGuide?.querySelectorAll<HTMLAnchorElement>("[data-guide-link]") ?? [])];
+  const materialRevealTargets = [...(materialGuide?.querySelectorAll<HTMLElement>("[data-guide-section]") ?? [])];
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (materialGuide && materialRevealTargets.length) {
+    materialRevealTargets.forEach((target, index) => target.style.setProperty("--material-reveal-delay", `${Math.min(index * 60, 180)}ms`));
+    materialGuide.classList.add("material-reveal-enabled");
+    const revealMaterial = (target: HTMLElement) => target.classList.add("material-revealed");
+
+    if (reducedMotion || !("IntersectionObserver" in window)) {
+      materialRevealTargets.forEach(revealMaterial);
+    } else {
+      const materialRevealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            revealMaterial(entry.target as HTMLElement);
+            materialRevealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -10% 0px" });
+
+      materialRevealTargets.forEach((target) => materialRevealObserver.observe(target));
+    }
+  }
+
+  if (guideSections.length && guideSteps.length) {
+    const setActiveStep = (activeIndex: number) => {
+      guideSteps.forEach((step, index) => step.dataset.active = String(index === activeIndex));
+      guideLinks.forEach((link, index) => {
+        if (index === activeIndex) link.setAttribute("aria-current", "step");
+        else link.removeAttribute("aria-current");
+      });
+    };
+
+    let framePending = false;
+    const updateActiveStep = () => {
+      framePending = false;
+      const triggerY = window.innerHeight * 0.35;
+      let activeIndex = 0;
+      guideSections.forEach((section, index) => {
+        if (section.getBoundingClientRect().top <= triggerY) activeIndex = index;
+      });
+      setActiveStep(activeIndex);
+    };
+    const requestUpdate = () => {
+      if (framePending) return;
+      framePending = true;
+      window.requestAnimationFrame(updateActiveStep);
+    };
+
+    guideLinks.forEach((link, index) => link.addEventListener("click", () => setActiveStep(index)));
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+    updateActiveStep();
+  }
+</script>
+
+<style>
+  .material-reveal-enabled [data-guide-section] {
+    opacity: 0;
+    transform: translate3d(0, 0.9rem, 0);
+    transition: opacity 480ms ease, transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--material-reveal-delay, 0ms);
+  }
+
+  .material-reveal-enabled [data-guide-section].material-revealed {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  [data-guide-step] {
+    transition: background-color 240ms ease, border-color 240ms ease, color 240ms ease;
+  }
+
+  [data-guide-step][data-active="true"] {
+    border-color: var(--color-rw-forest);
+    background-color: var(--color-rw-forest);
+    color: white;
+  }
+
+  @media (min-width: 768px) {
+    /* Trim the left edge of the maturity photo to the requested alignment. */
+    [data-material-guide] #step4 > div > div:first-child {
+      padding-left: 3rem;
+      background-color: white;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .material-reveal-enabled [data-guide-section] {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+</style>

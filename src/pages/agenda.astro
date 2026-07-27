@@ -1,0 +1,116 @@
+---
+import { ArrowRight, CalendarDays, Clock3, MapPin } from "lucide-astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import {
+  CONFIRMED_NEXT_AGENDAS,
+  PUBLISHED_ROUTINE_AGENDAS,
+  ROUTINE_FREQUENCIES,
+} from "../data/agenda";
+
+const frequencyLabels = {
+  mingguan: "Mingguan",
+  bulanan: "Bulanan",
+  berkala: "Berkala",
+} as const;
+const formatAgendaDate = (date: string) => new Intl.DateTimeFormat("id-ID", {
+  weekday: "long",
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  timeZone: "Asia/Jakarta",
+}).format(new Date(`${date}T00:00:00+07:00`));
+const agendasByFrequency = ROUTINE_FREQUENCIES.map((frequency) => ({
+  ...frequency,
+  agendas: PUBLISHED_ROUTINE_AGENDAS.filter((agenda) => agenda.frequency === frequency.value),
+}));
+const defaultAgendaMode: string = CONFIRMED_NEXT_AGENDAS.length > 0 ? "nearest" : "routine";
+---
+
+<BaseLayout title="Agenda Rutin Warga" description="Jadwal rutin kegiatan warga RW 3 Kotabaru.">
+  <main data-agenda-page class="bg-[#f7f4ee]">
+    <section class="border-b border-rw-line bg-[#f7f4ee] px-4 py-16 sm:py-20 md:px-12 md:py-24">
+      <div class="container-shell">
+        <p class="eyebrow">Informasi warga</p>
+        <h1 class="mt-4 max-w-4xl font-display text-5xl font-bold leading-tight text-rw-forest sm:text-6xl">Agenda Rutin Warga</h1>
+        <p class="mt-6 max-w-2xl text-base leading-8 text-rw-muted sm:text-lg">Temukan jadwal kegiatan rutin RW 3 Kotabaru, mulai dari kegiatan lingkungan, keamanan, keagamaan, kesehatan, hingga aktivitas Kompitu.</p>
+      </div>
+    </section>
+
+    <section class="bg-[#f5f1ea] px-4 py-10 sm:py-12 md:px-12 md:py-16">
+      <div class="container-shell">
+        <div class="mb-8 flex gap-2 overflow-x-auto rounded-full border border-black/5 bg-[#efeeea] p-2 shadow-[0_4px_20px_rgba(27,67,50,0.04)]" role="tablist" aria-label="Mode tampilan agenda">
+          <button type="button" role="tab" data-agenda-mode="routine" aria-selected={defaultAgendaMode === "routine"} aria-controls="agenda-view-routine" class:list={["agenda-mode-button", defaultAgendaMode === "routine" && "is-active"]}>Agenda Rutin</button>
+          <button type="button" role="tab" data-agenda-mode="nearest" aria-selected={defaultAgendaMode === "nearest"} aria-controls="agenda-view-nearest" class:list={["agenda-mode-button", defaultAgendaMode === "nearest" && "is-active"]}>Jadwal Terdekat</button>
+        </div>
+
+        <div id="agenda-list" class="space-y-12">
+          <section id="agenda-view-nearest" data-agenda-view="nearest" aria-labelledby="nearest-agenda-title" class:list={[defaultAgendaMode !== "nearest" && "hidden"]}>
+            <div class="mb-5 flex items-end justify-between gap-4 border-b border-rw-line pb-4"><h2 id="nearest-agenda-title" class="font-display text-3xl text-rw-forest">Jadwal Terdekat</h2><span class="text-xs font-bold uppercase tracking-widest text-rw-muted">{CONFIRMED_NEXT_AGENDAS.length} terkonfirmasi</span></div>
+            {CONFIRMED_NEXT_AGENDAS.length > 0 ? <div class="space-y-3">{CONFIRMED_NEXT_AGENDAS.map((agenda) => <article data-agenda-card class="flex flex-col gap-4 rounded-xl border border-rw-line bg-white p-5 text-rw-ink shadow-[0_4px_20px_rgba(27,67,50,0.04)] transition hover:-translate-y-0.5 sm:flex-row sm:items-center sm:justify-between"><div class="min-w-0"><time datetime={agenda.nextDate} class="text-sm font-bold text-rw-terracotta-dark">{formatAgendaDate(agenda.nextDate!)}</time><h3 class="mt-1 font-display text-2xl leading-tight text-rw-forest">{agenda.title}</h3></div>{agenda.location && <p class="flex items-start gap-2 text-sm leading-6 text-rw-muted sm:max-w-[18rem] sm:text-right"><MapPin size={16} class="mt-0.5 shrink-0 text-rw-terracotta" aria-hidden="true" />{agenda.location}</p>}</article>)}</div> : <div class="rounded-xl border border-rw-line bg-white p-8 text-sm leading-7 text-rw-muted">Belum ada jadwal terdekat yang dikonfirmasi oleh pengelola RW 3.</div>}
+          </section>
+
+          <section id="agenda-view-routine" data-agenda-view="routine" aria-labelledby="agenda-routine-title" class:list={[defaultAgendaMode !== "routine" && "hidden"]}>
+            <h2 id="agenda-routine-title" class="sr-only">Agenda Rutin</h2>
+            <div class="space-y-12">
+              {agendasByFrequency.map((group) => <section data-agenda-group data-frequency={group.value}>
+                <div class="mb-5 flex items-end justify-between gap-4 border-b border-rw-line pb-4"><h3 class="font-display text-3xl text-rw-forest">{group.label}</h3><span class="text-xs font-bold uppercase tracking-widest text-rw-muted">{group.agendas.length} kegiatan</span></div>
+                {group.agendas.length > 0 ? <div class="grid gap-4 md:grid-cols-2">{group.agendas.map((agenda) => <article data-agenda-card class="rounded-xl border border-rw-line bg-white p-5 shadow-[0_4px_20px_rgba(27,67,50,0.04)] sm:p-6"><div class="flex items-start justify-between gap-4"><span class="text-xs font-bold uppercase tracking-wider text-rw-muted">{frequencyLabels[agenda.frequency]}</span></div><h3 class="mt-5 font-display text-2xl leading-tight text-rw-forest">{agenda.title}</h3><p class="mt-3 text-sm leading-6 text-rw-muted">{agenda.description}</p><div class="mt-5 space-y-2 border-t border-rw-line pt-4 text-sm text-rw-muted"><p class="flex items-start gap-2"><CalendarDays size={16} class="mt-0.5 shrink-0 text-rw-terracotta" aria-hidden="true" />{agenda.schedule}</p>{agenda.time && <p class="flex items-start gap-2"><Clock3 size={16} class="mt-0.5 shrink-0 text-rw-terracotta" aria-hidden="true" />{agenda.time}</p>}{agenda.location && <p class="flex items-start gap-2"><MapPin size={16} class="mt-0.5 shrink-0 text-rw-terracotta" aria-hidden="true" />{agenda.location}</p>}</div></article>)}</div> : <div class="rounded-xl border border-rw-line bg-white p-8 text-sm leading-7 text-rw-muted">Belum ada agenda terverifikasi pada frekuensi ini.</div>}
+              </section>)}
+            </div>
+          </section>
+        </div>
+
+        {PUBLISHED_ROUTINE_AGENDAS.length === 0 && <div class="mt-12 rounded-2xl border border-rw-line bg-white px-6 py-14 text-center shadow-[0_4px_20px_rgba(27,67,50,0.04)] sm:px-10"><CalendarDays size={34} class="mx-auto text-rw-terracotta" aria-hidden="true" /><h2 class="mt-5 font-display text-3xl text-rw-forest">Jadwal sedang disiapkan</h2><p class="mx-auto mt-3 max-w-xl text-sm leading-7 text-rw-muted">Agenda rutin warga akan ditampilkan setelah jadwalnya dikonfirmasi oleh pengelola RW 3. Sampaikan koreksi atau informasi terbaru melalui halaman kontak.</p><a href="/galeri" class="mt-6 inline-flex items-center gap-2 rounded-full bg-rw-forest px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-rw-green">Hubungi pengelola <ArrowRight size={16} aria-hidden="true" /></a></div>}
+      </div>
+    </section>
+
+  </main>
+</BaseLayout>
+
+<script>
+  const agendaPage = document.querySelector<HTMLElement>("[data-agenda-page]");
+  const agendaCards = [...(agendaPage?.querySelectorAll<HTMLElement>("[data-agenda-card]") ?? [])];
+  const agendaModes = [...(agendaPage?.querySelectorAll<HTMLButtonElement>("[data-agenda-mode]") ?? [])];
+  const agendaViews = [...(agendaPage?.querySelectorAll<HTMLElement>("[data-agenda-view]") ?? [])];
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const setAgendaMode = (mode: string) => {
+    agendaModes.forEach((button) => {
+      const active = button.dataset.agendaMode === mode;
+      button.setAttribute("aria-selected", String(active));
+      button.classList.toggle("is-active", active);
+    });
+    agendaViews.forEach((view) => {
+      const active = view.dataset.agendaView === mode;
+      view.classList.toggle("hidden", !active);
+      if (active) view.querySelectorAll<HTMLElement>("[data-agenda-card]").forEach((card) => card.classList.add("is-visible"));
+    });
+  };
+
+  agendaModes.forEach((button) => button.addEventListener("click", () => setAgendaMode(button.dataset.agendaMode ?? "routine")));
+
+  if (agendaPage && agendaCards.length && !reducedMotion && "IntersectionObserver" in window) {
+    agendaPage.classList.add("agenda-reveal-enabled");
+    const agendaObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          agendaObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+    agendaCards.forEach((card) => agendaObserver.observe(card));
+  }
+
+</script>
+
+<style>
+  .agenda-mode-button { min-height: 2.25rem; flex: 0 0 auto; border-radius: 999px; padding: 0.55rem 1rem; color: var(--color-rw-forest); font-size: 0.72rem; font-weight: 700; white-space: nowrap; transition: background-color 220ms ease, color 220ms ease, transform 220ms ease; }
+  .agenda-mode-button:hover { transform: translateY(-1px); background: rgba(255, 255, 255, 0.82); }
+  .agenda-mode-button.is-active { background: var(--color-rw-forest); color: white; }
+  .agenda-reveal-enabled [data-agenda-card] { opacity: 0; transform: translate3d(0, 1rem, 0); transition: opacity 560ms ease, transform 620ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .agenda-reveal-enabled [data-agenda-card].is-visible { opacity: 1; transform: translate3d(0, 0, 0); }
+  @media (prefers-reduced-motion: reduce) {
+    .agenda-reveal-enabled [data-agenda-card] { opacity: 1; transform: none; transition: none; }
+  }
+</style>

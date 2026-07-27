@@ -1,0 +1,20 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import MaterialGuide from "../../components/MaterialGuide.astro";
+import PlantCatalog from "../../components/PlantCatalog.astro";
+import { KOMPITU_IMAGES } from "../../data/kompitu";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("education");
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const cover = entry.id === "kompos" ? KOMPITU_IMAGES.komposLayers : entry.id === "pestisida-nabati" ? KOMPITU_IMAGES.pesticide : entry.id === "irigasi-tetes" ? KOMPITU_IMAGES.irrigation : entry.id === "pencacah-daun" ? KOMPITU_IMAGES.shredder : KOMPITU_IMAGES.hero;
+---
+
+<BaseLayout title={entry.data.title} description={entry.data.excerpt} image={cover}>
+  {entry.id === "katalog-tanaman" && <PlantCatalog />}
+  {entry.id !== "katalog-tanaman" && <MaterialGuide entry={entry} />}
+</BaseLayout>

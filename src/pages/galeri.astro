@@ -1,0 +1,49 @@
+---
+import { Mail, MapPin, MessageCircle, Send } from "lucide-astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE } from "../data/site";
+
+const gallery = [
+  { title: "Peringatan Serbuan Kotabaru", category: "Sejarah", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBAC22-4uPdYYtBpySjcZ5KDHvFqeVcOE8yIqLjPVPQaoQ3AaEpKduPN7aglK9cMOcphIh4dH9C7Y4JcS3oyv3KiOSLNsPSnsj3flXjJyt87k7AOpC3diqC6UeYJLpHGKGgmodcK6f3_TStAbiK5nhv9E83DetpjuXOwqf8u2TwXAYK--wadFIjIToVfYp7HxRKxBE7Uj_-tVx3YI79z0fNEFuN5HuDE3bueG5fmF9KN4lv0GHD1JE5UA", featured: true },
+  { title: "Inisiatif Kebun Warga", category: "Lingkungan", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAMX82PDf1sdXDQ3y5hnNfDkFiIBFVgmNqJieTmQzLUyDqK2C6qX47exg_m7PpbOs_YUef8MN6BQW8zKajncJV5wz4l2ErrKN6_95ixyROvG4_RitGur_sbPztLNHPOCFdJgmaxrFFKn-cJEBff7RoYyfmSmW8La-T22xw7A2S1oAWGqd4etWzxuHGvgVQaOh-1bth-Vrzcw8DMCHCFQOz1OXN3_WU91-SsvdTF12iI2isLe-g1o1Qs-Q" },
+  { title: "Bazar Lokal", category: "UMKM", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuD2QrBlICBgVZClEqVUb073Hl9OwJWlLCsB5-nOXW2YwEUvSoHglQMpuXafGOT474tidiVIJSomVahg9SUlMw2rFdTmilwQS8MunVdhi5VZVGumfUaWn_lhKCxIm2LFu0_63dFoG_wL3SS8zDn9obx6_J_ARXS-FGA5yW_mhJgaxXATL7UfwzajpHQkanwGV0dmxyqM4XTsNV81UVLe0_oDXy7W7T8ZNSr0G2niyuktLq8eMSjn-gYdRQ" },
+  { title: "Rapat Warga RW 3", category: "Komunitas", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuB-KBW5nNqRL34lEclZorB6Jw7D-0SUfBXgBJG-YNNG_C8cK7fME_fQ1aAF3HDgohVC-D4LmUdy2tjWDJ1R-xu8w4q3unVeA3uW_Atyou7d5sgC3iuzo-2dSPl9Ibx0rwDzF5EFgmtvl0rcpD2P3Gj7r6IkYJoiN-Dpw-F06f0jGnJM_Vu2bJpSzMknBhfJLPkKbmVIxdkTtOWVOzX9JIJqaH9uAJOwLcVEqzvEubPqvA7gyh9D7sKbig" },
+];
+---
+
+<BaseLayout title="Galeri & Kontak" description="Galeri dokumentasi kegiatan dan kanal kontak RW 3 Kotabaru.">
+  <main class="container-shell flex flex-col gap-12 py-10 md:py-14">
+    <header class="text-center"><h1 class="font-display text-4xl font-bold text-rw-forest sm:text-5xl">Galeri & Kontak</h1><p class="mx-auto mt-3 max-w-2xl text-sm leading-6 text-rw-muted">Menyimpan momen, berbagi cerita, dan membuka ruang kolaborasi untuk warga RW 3 Kotabaru.</p></header>
+
+    <section>
+      <div class="mb-6 flex items-end justify-between gap-4"><h2 class="font-display text-3xl font-bold text-rw-forest">Rekam Jejak Kotabaru</h2><span class="rounded-full bg-rw-mint/60 px-3 py-1 text-xs font-bold text-rw-forest">{gallery.length} dokumentasi awal</span></div>
+      <div class="grid auto-rows-[10rem] grid-cols-2 gap-3 md:auto-rows-[11rem] md:grid-cols-4">
+        {gallery.map((item) => <figure class:list={["group relative overflow-hidden rounded-xl", item.featured ? "row-span-2 md:col-span-2 md:row-span-2" : "md:col-span-1"]}><img src={item.image} alt={item.title} class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" loading={item.featured ? "eager" : "lazy"} /><div class="absolute inset-0 bg-gradient-to-t from-rw-forest/90 via-rw-forest/10 to-transparent"></div><figcaption class="absolute bottom-0 left-0 right-0 p-4 text-white"><p class="text-[0.65rem] font-extrabold uppercase tracking-[0.12em] text-rw-parchment">{item.category}</p><h3 class="mt-1 font-display text-xl font-bold">{item.title}</h3></figcaption></figure>)}
+      </div>
+    </section>
+
+    <section class="grid items-start gap-8 border-t border-rw-line pt-10 lg:grid-cols-2">
+      <div class="rounded-xl border border-rw-line bg-rw-parchment p-6 sm:p-8">
+        <h2 class="font-display text-3xl font-bold text-rw-forest">Informasi Kontak</h2>
+        <p class="mt-3 text-sm leading-6 text-rw-muted">Sampaikan koreksi data, usulan dokumentasi, atau ajakan kolaborasi untuk portal RW 3.</p>
+        <div class="mt-6 space-y-4">
+          <a href={`mailto:${SITE.email}`} class="flex items-start gap-3 rounded-lg bg-white p-4 transition hover:shadow-sm"><span class="grid size-9 shrink-0 place-items-center rounded-full bg-rw-forest text-white"><Mail size={16} aria-hidden="true" /></span><span><strong class="block text-sm text-rw-forest">Email tim</strong><span class="mt-1 block text-xs text-rw-muted">{SITE.email}</span></span></a>
+          <div class="flex items-start gap-3 rounded-lg bg-white p-4"><span class="grid size-9 shrink-0 place-items-center rounded-full bg-rw-forest text-white"><MapPin size={16} aria-hidden="true" /></span><span><strong class="block text-sm text-rw-forest">Lokasi</strong><span class="mt-1 block text-xs leading-5 text-rw-muted">Kotabaru, Yogyakarta</span></span></div>
+          <div class="flex items-start gap-3 rounded-lg bg-white p-4"><span class="grid size-9 shrink-0 place-items-center rounded-full bg-rw-forest text-white"><MessageCircle size={16} aria-hidden="true" /></span><span><strong class="block text-sm text-rw-forest">Kebutuhan</strong><span class="mt-1 block text-xs leading-5 text-rw-muted">POI, UMKM, dokumentasi, edukasi, dan informasi QR lokasi.</span></span></div>
+        </div>
+        <a href="/peta" class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-rw-terracotta px-5 py-3 text-sm font-bold text-white transition hover:bg-rw-terracotta-dark"><MapPin size={16} aria-hidden="true" />Lihat lokasi di peta</a>
+      </div>
+
+      <div class="rounded-xl border border-rw-line bg-white p-6 shadow-[0_4px_20px_rgba(27,67,50,0.04)] sm:p-8">
+        <h2 class="font-display text-3xl font-bold text-rw-forest">Kirim Pesan</h2>
+        <p class="mt-3 text-sm leading-6 text-rw-muted">Formulir ini menyiapkan pesan email. Tim akan menindaklanjuti setelah data terverifikasi.</p>
+        <form class="mt-6 space-y-4" action={`mailto:${SITE.email}`} method="post" enctype="text/plain">
+          <label class="block text-xs font-bold text-rw-forest">Nama<input name="nama" required class="mt-2 w-full rounded-lg border border-rw-line bg-rw-cream px-4 py-3 text-sm outline-none focus:border-rw-forest focus:ring-2 focus:ring-rw-mint" placeholder="Nama Anda" /></label>
+          <label class="block text-xs font-bold text-rw-forest">Email<input name="email" type="email" required class="mt-2 w-full rounded-lg border border-rw-line bg-rw-cream px-4 py-3 text-sm outline-none focus:border-rw-forest focus:ring-2 focus:ring-rw-mint" placeholder="nama@email.com" /></label>
+          <label class="block text-xs font-bold text-rw-forest">Pesan<textarea name="pesan" required rows="4" class="mt-2 w-full resize-y rounded-lg border border-rw-line bg-rw-cream px-4 py-3 text-sm outline-none focus:border-rw-forest focus:ring-2 focus:ring-rw-mint" placeholder="Tuliskan kebutuhan Anda"></textarea></label>
+          <button type="submit" class="inline-flex w-full items-center justify-center gap-2 rounded-full bg-rw-forest px-5 py-3 text-sm font-bold text-white transition hover:bg-rw-green"><Send size={16} aria-hidden="true" />Kirim Pesan Langsung</button>
+        </form>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

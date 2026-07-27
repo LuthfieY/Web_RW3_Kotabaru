@@ -1,0 +1,157 @@
+---
+import { Search } from "lucide-astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import UmkmCard from "../../components/UmkmCard.astro";
+import { UMKM } from "../../data/umkm";
+
+const categories = ["Semua", ...new Set(UMKM.map((umkm) => umkm.category))];
+const marketImage = "https://lh3.googleusercontent.com/aida-public/AB6AXuCqPkuxFUzLIsbifcSD67xx9Be-qawXRhHOPvHXahucFDqp0McKrb23gKahs1Ynjhup1Ym9X1H2MeFDPvTtf4tpEis-x7jJjxwYXAi6EO_nBYFdd5kV1BW0Mj9neKHj70-IzYy8qD80j0yLvEEUfuQH4GzCH6xwtctGKZ5E5bFNhOBXNAz_RRSDI0ygJhKw8cfvOFBjCsH6k619uyDO67rdxVSbrQoKGjd_M6oQ_mcg9-negdZKcNsJIw";
+const showcaseFood = "/images/umkm/umkm_before.webp";
+---
+
+<BaseLayout title="Direktori UMKM" description="Temukan usaha dan karya warga RW 3 Kotabaru melalui direktori UMKM.">
+  <div data-umkm-page>
+  <section class="bg-[#f7f4ee] px-4 py-12 sm:py-16 md:px-12 md:py-20">
+    <div class="container-shell">
+      <div class="relative flex min-h-[20rem] items-center overflow-hidden rounded-2xl bg-rw-green shadow-[0_4px_20px_rgba(27,67,50,0.08)]">
+        <img src={marketImage} alt="Suasana kawasan dan aktivitas ekonomi warga Kotabaru" class="absolute inset-0 h-full w-full object-cover opacity-30 mix-blend-multiply" fetchpriority="high" />
+        <div class="absolute inset-0 bg-rw-green/75"></div>
+        <div class="relative z-10 max-w-3xl p-7 sm:p-10 md:p-12">
+          <p class="eyebrow text-rw-mint">Ekonomi warga</p>
+          <h1 class="mt-4 font-display text-4xl font-bold leading-tight text-rw-parchment sm:text-5xl">UMKM Warga RW 3</h1>
+          <p class="mt-4 max-w-2xl text-sm leading-7 text-rw-mint/95 sm:text-base">Dukung ekonomi lokal. Temukan usaha kecil dan menengah milik warga Kotabaru, dari kuliner rumahan hingga karya kreatif yang tumbuh di sekitar kita.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-[#f7f4ee] px-4 py-8 sm:py-10 md:px-12">
+    <div class="container-shell flex flex-col items-center justify-between gap-4 rounded-xl border border-black/5 bg-[#efeeea] p-3 shadow-[0_4px_20px_rgba(27,67,50,0.04)] md:flex-row">
+      <label class="relative w-full md:w-96">
+        <span class="sr-only">Cari nama usaha atau produk</span>
+        <Search size={17} class="absolute left-4 top-1/2 -translate-y-1/2 text-rw-muted" aria-hidden="true" />
+        <input id="umkm-search" class="w-full rounded-full border-0 bg-white py-3 pl-11 pr-4 text-sm text-rw-ink shadow-inner outline-none ring-rw-forest placeholder:text-rw-muted focus:ring-2" placeholder="Cari nama usaha atau produk..." />
+      </label>
+      <div class="flex w-full gap-2 overflow-x-auto pb-1 md:justify-end" role="group" aria-label="Filter kategori UMKM">
+        {categories.map((category, index) => (
+          <button type="button" data-category={category} aria-pressed={index === 0 ? "true" : "false"} class:list={["umkm-category shrink-0 rounded-full border px-4 py-2 text-xs font-bold transition", index === 0 ? "border-rw-forest bg-rw-forest text-white" : "border-black/5 bg-white text-rw-forest hover:bg-rw-mint/40"]}>{category}</button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-[#f7f4ee] px-4 pb-16 sm:pb-20 md:px-12">
+    <div id="umkm-grid" class="container-shell grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {UMKM.map((umkm) => <div data-umkm-card data-name={`${umkm.name} ${umkm.description}`} data-umkm-category={umkm.category}><UmkmCard umkm={umkm} /></div>)}
+    </div>
+    <div id="umkm-empty" class="container-shell mt-5 hidden rounded-xl border border-dashed border-rw-line bg-rw-parchment p-10 text-center text-sm text-rw-muted">Belum ada UMKM yang sesuai dengan pencarian.</div>
+  </section>
+
+  <section class="bg-[#f5f1ea] px-4 py-16 sm:py-20 md:px-12">
+    <div class="container-shell">
+      <div class="mb-10 max-w-3xl">
+        <p class="eyebrow">Visi pengembangan warga</p>
+        <h2 class="mt-4 font-display text-4xl leading-tight text-rw-forest sm:text-5xl">Rencana Pengembangan UMKM</h2>
+        <p class="mt-4 max-w-2xl text-sm leading-7 text-rw-muted sm:text-base">Rancangan konseptual untuk meningkatkan identitas usaha, kenyamanan pelanggan, dan daya tarik visual. Contoh ini menjadi bahan diskusi, bukan data usaha yang sudah direalisasikan.</p>
+      </div>
+      <div class="grid w-full overflow-hidden rounded-3xl border border-rw-forest/5 bg-[#f7f4ee] shadow-sm lg:grid-cols-[1.35fr_0.9fr]">
+        <div class="grid min-h-[22rem] grid-cols-2 gap-1 bg-rw-line p-1">
+          <div class="relative min-h-[15rem] overflow-hidden rounded-l-[1.35rem]"><img src={showcaseFood} alt="Contoh tampilan produk kuliner warga saat ini" class="absolute inset-0 h-full w-full object-cover transition duration-500 hover:scale-105" /><span class="absolute bottom-4 left-4 rounded-full bg-black/60 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">Saat ini</span></div>
+          <div class="relative min-h-[15rem] overflow-hidden rounded-r-[1.35rem]"><img src={marketImage} alt="Contoh arah pengembangan identitas visual UMKM" class="absolute inset-0 h-full w-full object-cover transition duration-500 hover:scale-105" /><span class="absolute bottom-4 left-4 rounded-full bg-rw-forest/85 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">Rencana</span></div>
+        </div>
+        <div class="flex flex-col justify-center p-7 sm:p-10">
+          <div class="mb-6 flex flex-wrap items-center gap-3"><span class="rounded-full bg-[#e9dab4] px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-rw-forest">Dalam perencanaan</span><span class="text-xs text-rw-muted">Desain konseptual</span></div>
+          <span class="mb-2 block text-xs uppercase tracking-widest text-rw-terracotta-dark">Kolaborasi warga</span>
+          <h3 class="font-display text-3xl leading-tight text-rw-forest">Membuat usaha lokal lebih mudah dikenali.</h3>
+          <p class="mt-5 text-sm leading-7 text-rw-muted">Pendataan, foto produk, papan nama, dan pengalaman pelanggan dapat dirancang bersama pemilik usaha agar sesuai dengan kebutuhan nyata di lapangan.</p>
+          <div class="mt-7 flex flex-wrap gap-2"><span class="rounded-full bg-rw-mint px-3 py-1 text-xs text-rw-forest">Identitas</span><span class="rounded-full bg-rw-mint px-3 py-1 text-xs text-rw-forest">Kenyamanan</span><span class="rounded-full bg-rw-mint px-3 py-1 text-xs text-rw-forest">Akses informasi</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  </div>
+</BaseLayout>
+
+<script>
+  const search = document.querySelector<HTMLInputElement>("#umkm-search");
+  const categoryButtons = [...document.querySelectorAll<HTMLButtonElement>("[data-category]")];
+  const cards = [...document.querySelectorAll<HTMLElement>("[data-umkm-card]")];
+  const empty = document.querySelector<HTMLElement>("#umkm-empty");
+  let activeCategory = "Semua";
+
+  const render = () => {
+    const query = search?.value.trim().toLowerCase() ?? "";
+    let visible = 0;
+    cards.forEach((card) => {
+      const matchesCategory = activeCategory === "Semua" || card.dataset.umkmCategory === activeCategory;
+      const matchesQuery = (card.dataset.name ?? "").toLowerCase().includes(query);
+      const show = matchesCategory && matchesQuery;
+      card.classList.toggle("hidden", !show);
+      if (show) visible += 1;
+    });
+    empty?.classList.toggle("hidden", visible !== 0);
+  };
+
+  search?.addEventListener("input", render);
+  categoryButtons.forEach((button) => button.addEventListener("click", () => {
+    activeCategory = button.dataset.category ?? "Semua";
+    categoryButtons.forEach((item) => {
+      const active = item === button;
+      item.setAttribute("aria-pressed", String(active));
+      item.classList.toggle("border-rw-forest", active);
+      item.classList.toggle("bg-rw-forest", active);
+      item.classList.toggle("text-white", active);
+      item.classList.toggle("border-black/5", !active);
+      item.classList.toggle("bg-white", !active);
+      item.classList.toggle("text-rw-forest", !active);
+    });
+    render();
+  }));
+</script>
+
+<script>
+  const umkmPage = document.querySelector<HTMLElement>("[data-umkm-page]");
+  const revealTargets = [...(umkmPage?.querySelectorAll<HTMLElement>(":scope > section") ?? [])];
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (umkmPage && revealTargets.length) {
+    umkmPage.classList.add("umkm-reveal-enabled");
+    const reveal = (element: HTMLElement) => element.classList.add("is-visible");
+
+    if (reducedMotion || !("IntersectionObserver" in window)) {
+      revealTargets.forEach(reveal);
+    } else {
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            reveal(entry.target as HTMLElement);
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: "0px 0px -10% 0px" });
+
+      revealTargets.forEach((target) => revealObserver.observe(target));
+    }
+  }
+</script>
+
+<style>
+  .umkm-reveal-enabled > section > * {
+    opacity: 0;
+    transform: translate3d(0, 1.5rem, 0);
+    transition: opacity 700ms ease, transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .umkm-reveal-enabled > section.is-visible > * {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .umkm-reveal-enabled > section > * {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

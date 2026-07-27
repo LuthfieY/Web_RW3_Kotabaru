@@ -1,0 +1,36 @@
+---
+import { ArrowUpRight, Check, Clock3, MapPin, QrCode } from "lucide-astro";
+import type { Poi } from "../data/pois";
+import { POI_CATEGORY_LABELS } from "../data/pois";
+
+interface Props {
+  poi: Poi;
+  compact?: boolean;
+}
+
+const { poi, compact = false } = Astro.props;
+---
+
+<article class:list={["group overflow-hidden border border-rw-line bg-white", compact ? "rounded-lg" : "rounded-xl"]}>
+  <a href={`/poi/${poi.slug}`} class="block">
+    <div class:list={["relative overflow-hidden", compact ? "aspect-[4/3]" : "aspect-[16/10]"]}>
+      <img src={poi.photo} alt={poi.name} class="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
+      <span class="absolute left-4 top-4 bg-rw-cream/95 px-3 py-1.5 text-[0.68rem] font-extrabold uppercase tracking-[0.1em] text-rw-forest">
+        {POI_CATEGORY_LABELS[poi.category]}
+      </span>
+      {poi.qrEnabled && <span class="absolute right-4 top-4 grid size-9 place-items-center rounded-full bg-rw-forest/90 text-white" title="Siap menjadi tujuan QR lokasi"><QrCode size={16} aria-hidden="true" /></span>}
+    </div>
+    <div class="p-5">
+      <div class="flex items-start justify-between gap-4">
+        <h3 class="font-display text-xl font-bold leading-tight text-rw-forest">{poi.name}</h3>
+        <ArrowUpRight class="mt-1 shrink-0 text-rw-terracotta transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" size={19} aria-hidden="true" />
+      </div>
+      {!compact && <p class="mt-3 line-clamp-3 text-sm leading-6 text-rw-muted">{poi.description}</p>}
+      <div class="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xs text-rw-muted">
+        {poi.address && <span class="inline-flex items-center gap-1.5"><MapPin size={14} aria-hidden="true" />{poi.address}</span>}
+        {poi.openingHours && <span class="inline-flex items-center gap-1.5"><Clock3 size={14} aria-hidden="true" />{poi.openingHours}</span>}
+        {poi.status === "verified" ? <span class="inline-flex items-center gap-1.5 text-rw-green"><Check size={14} aria-hidden="true" />Terverifikasi</span> : <span class="text-rw-terracotta-dark">Data perlu verifikasi</span>}
+      </div>
+    </div>
+  </a>
+</article>

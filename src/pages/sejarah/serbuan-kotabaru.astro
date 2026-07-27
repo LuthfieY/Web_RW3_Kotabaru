@@ -1,0 +1,751 @@
+---
+import {
+  ArrowRight,
+  ExternalLink,
+  MapPin,
+} from "lucide-astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const monumentImage = "/images/sejarah/monumen_samping.webp";
+const detailImage = "/images/sejarah/monumen.webp";
+const plangImage = "/images/galeri/plang_monumen.webp";
+
+const summaryFacts = [
+  { label: "Waktu", value: "6–7 Oktober 1945" },
+  { label: "Lokasi", value: "Kompleks asrama militer Kotabaru" },
+  { label: "Pejuang gugur", value: "21 orang" },
+  { label: "Tentara Jepang ditawan", value: "Sekitar 360 orang" },
+];
+
+const backgroundStories = [
+  {
+    number: "01",
+    title: "Kekuasaan Belum Sepenuhnya Beralih",
+    text: "Meskipun kemerdekaan Indonesia telah diproklamasikan, pemerintahan militer Jepang di Yogyakarta masih mempertahankan kendali atas sejumlah markas dan persenjataan. Kondisi tersebut menimbulkan ketegangan dengan rakyat dan pemerintahan Republik.",
+  },
+  {
+    number: "02",
+    title: "Gerakan Pelucutan Senjata",
+    text: "Pada September 1945, pemuda dan Polisi Istimewa mulai melakukan aksi untuk mengambil kembali persenjataan Jepang. Keberhasilan pelucutan senjata di Gayam pada 23 September 1945 memperkuat semangat perjuangan di Yogyakarta.",
+  },
+  {
+    number: "03",
+    title: "Perundingan yang Gagal",
+    text: "Pada 6 Oktober 1945, Moh. Saleh Bardosono selaku Ketua Umum Komite Nasional Indonesia melakukan perundingan dengan Mayor Otsuka mengenai penyerahan senjata Jepang. Perundingan berlangsung di bangunan yang kini dikenal sebagai Gedung PT Asuransi Jiwasraya, tetapi tidak menghasilkan kesepakatan.",
+  },
+];
+
+const timeline = [
+  {
+    date: "23 September 1945",
+    title: "Perebutan Senjata di Gayam",
+    text: "Polisi Istimewa dan massa rakyat mengepung markas serta gudang senjata Jepang di Gayam. Keberhasilan aksi tersebut menjadi salah satu pendorong gerakan pelucutan senjata di tempat lain.",
+  },
+  {
+    date: "6 Oktober 1945",
+    title: "Perundingan Penyerahan Senjata",
+    text: "Moh. Saleh Bardosono melakukan perundingan dengan Mayor Otsuka untuk meminta penyerahan persenjataan Jepang. Perundingan tersebut tidak mencapai kesepakatan.",
+  },
+  {
+    date: "Malam 6 Oktober 1945",
+    title: "Pengepungan Markas Jepang",
+    text: "Pemuda, BKR, Polisi Istimewa, dan masyarakat mulai berkumpul dan mengepung kompleks markas tentara Jepang di Kotabaru. Ketegangan semakin meningkat menjelang dini hari.",
+  },
+  {
+    date: "Dini Hari 7 Oktober 1945",
+    title: "Serbuan Kotabaru",
+    text: "Kontak senjata pecah antara para pejuang Indonesia dan pasukan Jepang. Pertempuran berlangsung sengit di sekitar kompleks asrama militer Kotabaru.",
+  },
+  {
+    date: "7 Oktober 1945 · Sekitar 10.30",
+    title: "Pasukan Jepang Menyerah",
+    text: "Pasukan Jepang mengibarkan bendera putih. Sekitar 360 serdadu Jepang ditawan, sedangkan persenjataannya kemudian diserahkan kepada Sri Sultan Hamengku Buwono IX dan selanjutnya digunakan untuk memperkuat Tentara Keamanan Rakyat.",
+  },
+];
+
+const fallenLeft = [
+  "ATMOSUKARTO",
+  "AHMAD DJAZULI",
+  "ACHMAD ZAKIR",
+  "ABU BAKAR ALI",
+  "DJOEMADI",
+  "DJUHAR NURHADI",
+  "FARIDAN M NOTO, BEKAS SO DAN TJO",
+  "HADI DARSONO",
+  "I DEWA NYOMAN OKA, INSPEKTUR POLISI",
+  "KALIPAN",
+  "NGADIKAN",
+];
+
+const fallenRight = [
+  "SAREH",
+  "SADJIYONO",
+  "SABIRIN",
+  "SOENARYO",
+  "SOEROTO",
+  "SOEPADI",
+  "SOEHODO",
+  "SOEHARTONO",
+  "TRIMO",
+  "WARDANI",
+];
+
+const sources = [
+  {
+    institution: "Dinas Kebudayaan Kota Yogyakarta",
+    title: "Peristiwa Serbuan Kotabaru 7 Oktober 1945",
+    href: "https://kebudayaan.jogjakota.go.id/page/index/serbuan-kotabaru",
+  },
+  {
+    institution: "Museum Benteng Vredeburg Yogyakarta",
+    title: "Diorama Pertempuran Kotabaru",
+    href: "https://vredeburg.id/talk-show-radio-tema-wisata-titik-nol/post/diorama-pertempuran-kotabaru-diorama-ii-museum-benteng-vredeburg-yogyakarta",
+  },
+  {
+    institution: "Sistem Informasi Cagar Budaya Daerah Istimewa Yogyakarta",
+    title: "Gedung PT Asuransi Jiwasraya",
+    href: "https://budaya.data.kemdikbud.go.id/cagarbudaya/objek/KB001564",
+  },
+  {
+    institution: "Sistem Informasi Cagar Budaya Daerah Istimewa Yogyakarta",
+    title: "Asrama Kompi Kotabaru",
+    href: "https://jogjacagar.jogjaprov.go.id/detail/407/asrama-kompi-kotabaru",
+  },
+  {
+    institution: "Sistem Informasi Cagar Budaya Daerah Istimewa Yogyakarta",
+    title: "Lokasi Kota Baru Timur",
+    href: "https://jogjacagar.jogjaprov.go.id/detail/1072/kawasan-kotabaru",
+  },
+  {
+    institution: "Dinas Kebudayaan Kota Yogyakarta",
+    title: "Tetenger Serbuan Kotabaru",
+    href: "https://kebudayaan.jogjakota.go.id/detail/index/718",
+  },
+];
+---
+
+<BaseLayout title="Sejarah Serbuan Kotabaru" description="Menelusuri konteks, kronologi, dampak, dan tetenger Pertempuran Kotabaru pada 6–7 Oktober 1945.">
+  <main data-history-page class="history-page">
+    <section class="history-band history-band--cream">
+      <div class="container-shell history-hero">
+        <div class="history-hero__copy">
+          <p class="eyebrow">Sejarah kawasan · 6–7 Oktober 1945</p>
+          <h1 class="history-display">Jejak Sejarah<br />Serbuan Kotabaru</h1>
+          <p class="history-lead">Menelusuri perjuangan rakyat Yogyakarta dalam mengambil alih kekuasaan dan persenjataan Jepang, serta mengenang para pejuang yang gugur dalam Pertempuran Kotabaru.</p>
+          <div class="history-actions">
+            <a href="#kronologi" class="history-button history-button--primary">Ikuti Kronologi <ArrowRight size={17} aria-hidden="true" /></a>
+            <a href="/peta" class="history-button history-button--secondary"><MapPin size={17} aria-hidden="true" />Lihat Lokasi</a>
+          </div>
+        </div>
+        <figure class="history-hero__figure" data-reveal>
+          <img src={monumentImage} alt="Tetenger Serbuan Kotabaru" class="history-photo" fetchpriority="high" />
+          <figcaption>Tetenger Serbuan Kotabaru</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="history-band history-band--sand">
+      <div class="container-shell history-summary" data-reveal>
+        <div class="history-summary__copy">
+          <p class="eyebrow">Konteks peristiwa</p>
+          <h2 class="history-heading">Pertempuran yang Menandai Peralihan Kekuasaan</h2>
+          <p>Setelah Proklamasi Kemerdekaan Indonesia, kekuasaan dan persenjataan militer Jepang di Yogyakarta belum sepenuhnya diserahkan kepada Republik. Ketegangan meningkat ketika upaya pelucutan senjata melalui perundingan tidak mencapai kesepakatan. Pada malam 6 Oktober hingga pagi 7 Oktober 1945, pemuda, Badan Keamanan Rakyat, Polisi Istimewa, dan masyarakat bergerak menghadapi pasukan Jepang di kawasan Kotabaru.</p>
+        </div>
+        <div class="history-facts" aria-label="Informasi utama peristiwa">
+          {summaryFacts.map((fact) => (
+            <div class="history-fact">
+              <span>{fact.label}</span>
+              <strong>{fact.value}</strong>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="history-band history-band--cream">
+      <div class="container-shell" data-reveal>
+        <p class="eyebrow">Sebelum pertempuran</p>
+        <h2 class="history-heading history-heading--wide">Yogyakarta Setelah Proklamasi</h2>
+        <div class="history-stories">
+          {backgroundStories.map((story) => (
+            <article class="history-story">
+              <span class="history-story__number">{story.number}</span>
+              <h3>{story.title}</h3>
+              <p>{story.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="kronologi" data-chronology class="history-band history-band--sand">
+      <div class="container-shell">
+        <div class="history-section-intro" data-reveal>
+          <p class="eyebrow">Rangkaian peristiwa</p>
+          <h2 class="history-heading">Kronologi Serbuan Kotabaru</h2>
+          <p>Rangkaian peristiwa yang mengantarkan Yogyakarta menuju pengambilalihan kekuasaan dari pihak Jepang.</p>
+        </div>
+        <div data-chronology-flow class="history-timeline">
+          <div data-timeline-track class="history-timeline__track"><span data-timeline-progress></span></div>
+          <div class="history-timeline__items">
+            {timeline.map((item, index) => (
+              <article data-timeline-item data-card-side={index % 2 === 0 ? "right" : "left"} class:list={["history-timeline__item", index % 2 === 1 && "history-timeline__item--reverse"]}>
+                <div data-timeline-node class="history-timeline__node" aria-hidden="true"></div>
+                <div data-timeline-date class="history-timeline__date"><span>{item.date}</span></div>
+                <div data-timeline-card class="history-timeline__card">
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="history-band history-band--sand history-peak" data-peak-section>
+      <div class="container-shell history-peak__grid">
+        <div class="history-peak__image" data-peak-image>
+          <img src={plangImage} alt="Plang Monumen Serbuan Kotabaru" class="history-photo" data-peak-image-media loading="lazy" />
+        </div>
+        <div class="history-peak__copy">
+          <p class="eyebrow" data-peak-copy-item="label">Puncak peristiwa</p>
+          <h2 class="history-display history-display--small" data-peak-copy-item="heading">7 Oktober 1945</h2>
+          <p class="history-subtitle" data-peak-copy-item="subtitle">Ketika rakyat Yogyakarta bergerak mengambil alih kekuasaan.</p>
+          <p data-peak-copy-item="body">Pertempuran Kotabaru menjadi puncak usaha rakyat dan pejuang Indonesia untuk melucuti pasukan Jepang di Yogyakarta. Pertempuran tersebut tidak hanya bertujuan memperoleh persenjataan, tetapi juga menegaskan bahwa kekuasaan di Yogyakarta telah beralih kepada Negara Republik Indonesia.</p>
+          <blockquote data-peak-quote data-peak-copy-item="quote">
+            <span data-peak-quote-rule aria-hidden="true"></span>
+            <span data-peak-quote-line>“Tetenger ini didirikan untuk memperingati</span>
+            <span data-peak-quote-line>puncak pengambilalihan kekuasaan dari pihak Jepang di Yogyakarta</span>
+            <span data-peak-quote-line>dengan serbuan bersenjata dan pertumpahan darah,</span>
+            <span data-peak-quote-line>yang dikenal sebagai Pertempuran Kota Baru pada tanggal 7 Oktober 1945.”</span>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <section class="history-band history-band--cream">
+      <div class="container-shell" data-reveal>
+        <div class="history-section-intro history-section-intro--left">
+          <p class="eyebrow">Hasil dan dampak</p>
+          <h2 class="history-heading">Setelah Pertempuran</h2>
+        </div>
+        <div class="history-impact">
+          <article>
+            <span class="history-impact__number" aria-hidden="true">01</span>
+            <h3>Penyerahan Pasukan Jepang</h3>
+            <p>Pasukan Jepang di markas Kotabaru menyerah setelah pertempuran berlangsung selama beberapa jam. Sekitar 360 serdadu Jepang kemudian ditawan.</p>
+          </article>
+          <article>
+            <span class="history-impact__number" aria-hidden="true">02</span>
+            <h3>Persenjataan untuk Republik</h3>
+            <p>Senjata Jepang diserahkan kepada Sri Sultan Hamengku Buwono IX, disimpan di Bangsal Pracimosono, dan selanjutnya digunakan untuk memperkuat Tentara Keamanan Rakyat.</p>
+          </article>
+          <article>
+            <span class="history-impact__number" aria-hidden="true">03</span>
+            <h3>Yogyakarta di Bawah Republik</h3>
+            <p>Berakhirnya pertempuran menandai berakhirnya kekuasaan pemerintahan militer Jepang di Yogyakarta dan memperkuat kedudukan pemerintahan Republik Indonesia.</p>
+          </article>
+        </div>
+        <p class="history-impact__statement">21 pejuang Indonesia gugur dalam Pertempuran Kotabaru.</p>
+      </div>
+    </section>
+
+    <section class="history-band history-band--forest">
+      <div class="container-shell history-fallen" data-reveal>
+        <p class="eyebrow history-eyebrow--light">Nama yang dikenang</p>
+        <h2 class="history-heading history-heading--light">Nama Mereka Tetap Dikenang</h2>
+        <p class="history-fallen__intro">Nama para pejuang yang gugur dicantumkan pada dua plat Tetenger Serbuan Kotabaru. Sejumlah nama tersebut kemudian diabadikan menjadi nama jalan di kawasan Kotabaru dan sekitarnya.</p>
+        <div class="history-plates">
+          <div class="history-plate">
+            <ul>
+              {fallenLeft.map((name) => <li>{name}</li>)}
+            </ul>
+          </div>
+          <div class="history-plate">
+            <ul>
+              {fallenRight.map((name) => <li>{name}</li>)}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="history-band history-band--cream">
+      <div class="container-shell history-tetenger" data-reveal>
+        <div class="history-tetenger__copy">
+          <p class="eyebrow">Penanda sejarah</p>
+          <h2 class="history-heading">Tetenger Serbuan Kotabaru</h2>
+          <h3>Penanda Sejarah dan Penghormatan</h3>
+          <p>Tetenger Serbuan Kotabaru berada di dalam kompleks Asrama Korem di Kotabaru. Monumen ini diresmikan oleh Sri Sultan Hamengku Buwono IX pada 7 Oktober 1988 untuk memperingati Pertempuran Kotabaru dan mengenang para pejuang yang gugur.</p>
+          <p>Bagian utama tetenger memuat prasasti mengenai pengambilalihan kekuasaan dari pihak Jepang. Dua plat di sisi monumen mencantumkan nama para pejuang yang gugur dalam pertempuran.</p>
+          <dl class="history-details">
+            <div><dt>Diresmikan</dt><dd>7 Oktober 1988</dd></div>
+            <div><dt>Peresmian</dt><dd>Sri Sultan Hamengku Buwono IX</dd></div>
+            <div><dt>Lokasi</dt><dd>Kompleks Asrama Korem Kotabaru</dd></div>
+          </dl>
+          <a href="/peta" class="history-button history-button--primary">Lihat Lokasi di Peta <MapPin size={17} aria-hidden="true" /></a>
+        </div>
+        <div class="history-tetenger__image">
+          <img src={detailImage} alt="Detail Tetenger Serbuan Kotabaru di kompleks Asrama Korem" class="history-photo" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <section class="history-band history-band--sand">
+      <div class="container-shell history-sources" data-reveal>
+        <div class="history-section-intro history-section-intro--left">
+          <p class="eyebrow">Bacaan lanjutan</p>
+          <h2 class="history-heading">Referensi dan Sumber</h2>
+          <p>Materi sejarah pada halaman ini dirangkum dari publikasi resmi pemerintah daerah, sistem informasi cagar budaya, dan Museum Benteng Vredeburg Yogyakarta.</p>
+        </div>
+        <ol class="history-source-list">
+          {sources.map((source, index) => (
+            <li>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <a href={source.href} target="_blank" rel="noreferrer">
+                <strong>{source.institution}</strong>
+                <em>{source.title}</em>
+                <ExternalLink size={15} aria-hidden="true" />
+              </a>
+            </li>
+          ))}
+        </ol>
+        <p class="history-sources__note">Diakses untuk penyusunan materi sejarah RW 3 Kotabaru.</p>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<script>
+  const historyPage = document.querySelector<HTMLElement>("[data-history-page]");
+  const revealItems = [...(historyPage?.querySelectorAll<HTMLElement>("[data-reveal]") ?? [])];
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (historyPage && revealItems.length) {
+    historyPage.classList.add("reveal-enabled");
+    const reveal = (element: HTMLElement) => element.classList.add("is-visible");
+
+    if (reducedMotion || !("IntersectionObserver" in window)) {
+      revealItems.forEach(reveal);
+    } else {
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            reveal(entry.target as HTMLElement);
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+      revealItems.forEach((item) => revealObserver.observe(item));
+    }
+  }
+
+  const chronology = document.querySelector<HTMLElement>("[data-chronology]");
+  const chronologyFlow = chronology?.querySelector<HTMLElement>("[data-chronology-flow]");
+  const chronologyProgress = chronology?.querySelector<HTMLElement>("[data-timeline-progress]");
+  const chronologyItems = [...(chronology?.querySelectorAll<HTMLElement>("[data-timeline-item]") ?? [])];
+
+  if (chronology && chronologyFlow && chronologyProgress) {
+    chronologyFlow.classList.add("chronology-enhanced");
+    const revealTimelineItem = (item: HTMLElement) => item.classList.add("is-visible");
+
+    if (reducedMotion) {
+      chronologyProgress.style.transform = "scaleY(1)";
+      chronologyItems.forEach(revealTimelineItem);
+    } else {
+      let framePending = false;
+      let previousScrollY = window.scrollY;
+      const updateTimeline = () => {
+        framePending = false;
+        const currentScrollY = window.scrollY;
+        const scrollingUp = currentScrollY < previousScrollY;
+        previousScrollY = currentScrollY;
+        const flowRect = chronologyFlow.getBoundingClientRect();
+        const triggerY = window.innerHeight * 0.4;
+        const flowHeight = Math.max(1, chronologyFlow.offsetHeight);
+        const ratio = Math.min(1, Math.max(0, (triggerY - flowRect.top) / flowHeight));
+        chronologyProgress.style.transform = "scaleY(" + ratio + ")";
+        chronologyItems.forEach((item) => {
+          const itemRect = item.getBoundingClientRect();
+          if (scrollingUp && itemRect.top > triggerY) {
+            item.classList.remove("is-visible");
+          } else if (!scrollingUp && itemRect.top <= triggerY) {
+            revealTimelineItem(item);
+          }
+        });
+      };
+      const requestTimelineUpdate = () => {
+        if (framePending) return;
+        framePending = true;
+        window.requestAnimationFrame(updateTimeline);
+      };
+      window.addEventListener("scroll", requestTimelineUpdate, { passive: true });
+      window.addEventListener("resize", requestTimelineUpdate);
+      updateTimeline();
+    }
+  }
+
+  const peakSection = document.querySelector<HTMLElement>("[data-peak-section]");
+  const peakImage = peakSection?.querySelector<HTMLElement>("[data-peak-image]");
+  const peakImageMedia = peakSection?.querySelector<HTMLElement>("[data-peak-image-media]");
+  const peakQuote = peakSection?.querySelector<HTMLElement>("[data-peak-quote]");
+  const peakQuoteRule = peakSection?.querySelector<HTMLElement>("[data-peak-quote-rule]");
+  const peakQuoteLines = [...(peakSection?.querySelectorAll<HTMLElement>("[data-peak-quote-line]") ?? [])];
+
+  if (peakSection && peakImage && peakImageMedia && peakQuote && peakQuoteRule && peakQuoteLines.length) {
+    const revealPeakImmediately = () => {
+      peakSection.classList.add("is-visible");
+      peakQuoteRule.style.transform = "scaleY(1)";
+      peakQuoteLines.forEach((line) => line.classList.add("is-visible"));
+    };
+
+    peakQuoteLines.forEach((line, index) => line.style.setProperty("--peak-line-index", String(index)));
+
+    if (reducedMotion || !("IntersectionObserver" in window)) {
+      revealPeakImmediately();
+    } else {
+      peakSection.classList.add("peak-anim-enabled");
+      const peakObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            peakSection.classList.add("is-visible");
+            peakObserver.unobserve(peakSection);
+          }
+        });
+      }, { threshold: 0, rootMargin: "0px 0px -25% 0px" });
+      peakObserver.observe(peakSection);
+
+      let peakFramePending = false;
+      const updatePeakScroll = () => {
+        peakFramePending = false;
+        if (!peakSection.classList.contains("is-visible")) return;
+
+        const viewportHeight = Math.max(1, window.innerHeight);
+        const quoteRect = peakQuote.getBoundingClientRect();
+        const quoteStart = viewportHeight * 0.7;
+        const quoteEnd = viewportHeight * 0.4;
+        const quoteProgress = Math.min(1, Math.max(0, (quoteStart - quoteRect.top) / (quoteStart - quoteEnd)));
+        peakQuoteRule.style.transform = `scaleY(${quoteProgress})`;
+
+        peakQuoteLines.forEach((line, index) => {
+          const threshold = index === 0 ? 0.15 : 0.15 + (0.85 * index) / peakQuoteLines.length;
+          line.classList.toggle("is-visible", quoteProgress >= threshold);
+        });
+
+        const sectionRect = peakSection.getBoundingClientRect();
+        const sectionProgress = Math.min(1, Math.max(0, (viewportHeight - sectionRect.top) / (viewportHeight + sectionRect.height)));
+        const photoShift = (0.5 - sectionProgress) * 10;
+        peakImageMedia.style.setProperty("--peak-photo-shift", `${photoShift.toFixed(2)}px`);
+      };
+      const requestPeakUpdate = () => {
+        if (peakFramePending) return;
+        peakFramePending = true;
+        window.requestAnimationFrame(updatePeakScroll);
+      };
+
+      window.addEventListener("scroll", requestPeakUpdate, { passive: true });
+      window.addEventListener("resize", requestPeakUpdate);
+      updatePeakScroll();
+    }
+  }
+
+</script>
+
+<style>
+  .history-page {
+    --history-forest: #004838;
+    --history-ink: #173d32;
+    --history-muted: #666b67;
+    --history-red: #b84c3d;
+    --history-border: rgba(184, 76, 61, 0.2);
+    color: var(--history-ink);
+  }
+
+  .history-band {
+    padding: 5rem 1rem;
+  }
+
+  .history-band--cream { background: #f7f4ee; }
+  .history-band--sand { background: #f5f1ea; }
+  .history-band--forest { background: var(--history-forest); color: white; }
+
+  .history-hero {
+    display: grid;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .history-hero__copy { max-width: 38rem; }
+
+  .history-display {
+    margin-top: 1.25rem;
+    color: var(--history-forest);
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 5rem);
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.02;
+  }
+
+  .history-display--small { font-size: clamp(3rem, 6vw, 4.5rem); }
+
+  .history-lead,
+  .history-summary__copy > p:last-child,
+  .history-story p,
+  .history-peak__copy > p,
+  .history-impact p,
+  .history-fallen__intro,
+  .history-tetenger__copy > p,
+  .history-section-intro > p:last-child,
+  .history-sources__note {
+    color: var(--history-muted);
+    font-size: 1rem;
+    line-height: 1.85;
+  }
+
+  .history-lead { max-width: 37rem; margin-top: 1.5rem; }
+
+  .history-hero__figure { position: relative; margin: 0; }
+
+  .history-hero__figure img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 4.7;
+    object-fit: cover;
+    border-radius: 4rem 0 4rem 0;
+  }
+
+  .history-hero__figure figcaption {
+    margin-top: 0.75rem;
+    color: var(--history-muted);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .history-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .history-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    transition: transform 220ms ease, background-color 220ms ease, color 220ms ease;
+  }
+
+  .history-button:hover { transform: translateY(-2px); }
+  .history-button--primary { background: var(--history-forest); color: white; }
+  .history-button--primary:hover { background: #173d32; }
+  .history-button--secondary { border: 1px solid var(--history-border); color: var(--history-forest); }
+  .history-button--secondary:hover { background: rgba(184, 76, 61, 0.08); }
+
+  .history-heading {
+    margin-top: 0.75rem;
+    color: var(--history-forest);
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 4vw, 3.4rem);
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.1;
+  }
+
+  .history-heading--wide { max-width: 42rem; }
+
+  .history-summary,
+  .history-peak__grid,
+  .history-tetenger {
+    display: grid;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .history-summary__copy { max-width: 42rem; }
+  .history-summary__copy > p:last-child { margin-top: 1.5rem; }
+
+  .history-facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--history-border);
+  }
+
+  .history-fact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-height: 9rem;
+    padding: 1.5rem 1rem 1.5rem 0;
+    border-bottom: 1px solid var(--history-border);
+  }
+
+  .history-fact:nth-child(odd) { padding-right: 1.5rem; }
+  .history-fact:nth-child(even) { padding-left: 1.5rem; }
+  .history-fact span { color: var(--history-muted); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
+  .history-fact strong { color: var(--history-forest); font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.4rem); line-height: 1.1; }
+
+  .history-section-intro { max-width: 46rem; margin-bottom: 3rem; }
+  .history-section-intro--left { margin-bottom: 2.5rem; }
+  .history-section-intro > p:last-child { margin-top: 1rem; }
+
+  .history-stories {
+    display: grid;
+    gap: 2rem;
+    margin-top: 3.25rem;
+  }
+
+  .history-story { padding-top: 1.25rem; }
+  .history-story__number { color: var(--history-red); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.12em; }
+  .history-story h3 { margin-top: 1rem; color: var(--history-forest); font-family: var(--font-display); font-size: 1.75rem; line-height: 1.15; }
+  .history-story p { margin-top: 1rem; }
+
+  .history-timeline {
+    position: relative;
+    max-width: 64rem;
+    margin: 0 auto;
+    padding-left: 2.5rem;
+  }
+
+  .history-timeline__track {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0.55rem;
+    width: 0.18rem;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgba(80, 105, 95, 0.25);
+  }
+
+  .history-timeline__track > span { position: absolute; inset: 0; transform: scaleY(0); transform-origin: top; border-radius: inherit; background: var(--history-red); }
+  .history-timeline__items { display: flex; flex-direction: column; gap: 2.5rem; }
+  .history-timeline__item { position: relative; display: flex; flex-direction: column; gap: 0.65rem; }
+  .history-timeline__node { position: absolute; top: 0.2rem; left: -2.5rem; z-index: 2; width: 1.15rem; height: 1.15rem; border: 4px solid var(--history-red); border-radius: 50%; background: #f5f1ea; }
+  .history-timeline__date span { display: inline-block; color: var(--history-red); font-size: 0.78rem; font-weight: 800; letter-spacing: 0.08em; line-height: 1.4; text-transform: uppercase; }
+
+  .history-timeline__card {
+    padding: 1.5rem;
+    border: 1px solid var(--history-border);
+    border-radius: 0.75rem;
+    background: #fffdf9;
+  }
+
+  .history-timeline__card h3 { color: var(--history-forest); font-family: var(--font-display); font-size: 1.7rem; line-height: 1.15; }
+  .history-timeline__card p { margin-top: 0.75rem; color: var(--history-muted); font-size: 1rem; line-height: 1.8; }
+
+  .history-peak__image { overflow: hidden; border-radius: 1.5rem 0 1.5rem 0; }
+  .history-peak__image img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .history-peak__copy > p:not(.eyebrow):not(.history-subtitle) { margin-top: 1.25rem; }
+  .history-subtitle { margin-top: 0.75rem; color: var(--history-red); font-size: 1.15rem; font-weight: 700; line-height: 1.5; }
+
+  .history-peak blockquote { position: relative; margin: 2rem 0 0; padding: 1.5rem 0 0 1.25rem; border-left: 0; color: var(--history-forest); font-family: var(--font-display); font-size: clamp(1.3rem, 2.5vw, 1.8rem); font-style: italic; line-height: 1.45; }
+  .history-peak [data-peak-quote-rule] { position: absolute; inset: 0 auto 0 0; width: 4px; transform: scaleY(1); transform-origin: top; border-radius: 999px; background: var(--history-red); }
+  .history-peak [data-peak-quote-line] { display: block; }
+  .history-peak [data-peak-image-media] { transform: translate3d(0, var(--peak-photo-shift, 0px), 0); transition: transform 180ms ease-out; }
+
+  .peak-anim-enabled [data-peak-image] { opacity: 0; transform: translate3d(0, 20px, 0) scale(0.98); transition: opacity 700ms ease, transform 700ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .peak-anim-enabled [data-peak-copy-item] { opacity: 0; transform: translate3d(0, 18px, 0); transition: opacity 560ms ease, transform 620ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .peak-anim-enabled.is-visible [data-peak-image], .peak-anim-enabled.is-visible [data-peak-copy-item] { opacity: 1; transform: translate3d(0, 0, 0); }
+  .peak-anim-enabled.is-visible [data-peak-copy-item="label"] { transition-delay: 620ms; }
+  .peak-anim-enabled.is-visible [data-peak-copy-item="heading"] { transition-delay: 740ms; }
+  .peak-anim-enabled.is-visible [data-peak-copy-item="subtitle"] { transition-delay: 860ms; }
+  .peak-anim-enabled.is-visible [data-peak-copy-item="body"] { transition-delay: 980ms; }
+  .peak-anim-enabled.is-visible [data-peak-copy-item="quote"] { transition-delay: 1.1s; }
+  .peak-anim-enabled [data-peak-quote-rule] { transform: scaleY(0); }
+  .peak-anim-enabled [data-peak-quote-line] { overflow: hidden; opacity: 0; transform: translate3d(0, 14px, 0); transition: opacity 500ms ease, transform 500ms cubic-bezier(0.22, 1, 0.36, 1); transition-delay: calc(var(--peak-line-index, 0) * 100ms); }
+  .peak-anim-enabled [data-peak-quote-line].is-visible { opacity: 1; transform: translate3d(0, 0, 0); }
+
+  .history-impact { display: grid; gap: 2rem; }
+  .history-impact article { padding-top: 1.25rem; }
+  .history-impact__number { display: block; color: var(--history-red); font-size: 0.82rem; font-weight: 800; letter-spacing: 0.12em; line-height: 1; }
+  .history-impact h3 { margin-top: 1.25rem; color: var(--history-forest); font-family: var(--font-display); font-size: 1.7rem; line-height: 1.15; }
+  .history-impact p { margin-top: 0.75rem; }
+  .history-impact__statement { max-width: 54rem; margin: 3rem auto 0; padding: 1.5rem 1rem 0; border-top: 1px solid var(--history-border); color: var(--history-red); font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); line-height: 1.3; text-align: center; }
+
+  .history-eyebrow--light { color: #d7e5dc; }
+  .history-eyebrow--light::before { background: currentColor; }
+  .history-heading--light { color: #fff; }
+  .history-fallen__intro { max-width: 48rem; margin-top: 1.25rem; color: #d7e5dc; }
+  .history-plates { display: grid; gap: 1.25rem; margin-top: 3rem; }
+  .history-plate { padding: 1.5rem; border: 1px solid rgba(225, 205, 144, 0.65); background: #092d24; color: #e5d7a5; }
+  .history-plate ul { display: grid; gap: 0.65rem; margin: 0; padding: 0; list-style: none; }
+  .history-plate li { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; line-height: 1.45; overflow-wrap: anywhere; }
+
+  .history-tetenger__copy h3 { margin-top: 1.25rem; color: var(--history-red); font-family: var(--font-display); font-size: 1.8rem; line-height: 1.15; }
+  .history-tetenger__copy > p { margin-top: 1.25rem; }
+  .history-tetenger__image { overflow: hidden; border-radius: 0 1.5rem 0 1.5rem; }
+  .history-tetenger__image img { display: block; width: 100%; height: auto; object-fit: contain; }
+
+  .history-details { display: grid; gap: 0.85rem; margin: 2rem 0; padding: 1.25rem 0; border-block: 1px solid var(--history-border); }
+  .history-details div { display: grid; grid-template-columns: 7rem 1fr; gap: 1rem; }
+  .history-details dt { color: var(--history-muted); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+  .history-details dd { margin: 0; color: var(--history-forest); font-size: 0.9rem; font-weight: 700; }
+
+  .history-sources { display: grid; gap: 2rem; }
+  .history-source-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--history-border); }
+  .history-source-list li { display: grid; grid-template-columns: 2.5rem 1fr; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--history-border); }
+  .history-source-list li > span { color: var(--history-red); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; }
+  .history-source-list a { display: grid; grid-template-columns: 1fr auto; gap: 0.3rem 0.75rem; align-items: center; color: var(--history-forest); }
+  .history-source-list a:hover strong, .history-source-list a:hover em { color: var(--history-red); }
+  .history-source-list strong { font-size: 0.9rem; line-height: 1.4; }
+  .history-source-list em { grid-column: 1; color: var(--history-muted); font-size: 0.9rem; font-style: normal; line-height: 1.4; }
+  .history-source-list svg { grid-column: 2; grid-row: 1 / span 2; color: var(--history-red); }
+  .history-sources__note { margin: 0; font-size: 0.85rem; }
+
+  .reveal-enabled [data-reveal] { opacity: 0; transform: translate3d(0, 1.25rem, 0); transition: opacity 600ms ease, transform 600ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .reveal-enabled [data-reveal].is-visible { opacity: 1; transform: translate3d(0, 0, 0); }
+  .history-timeline.chronology-enhanced [data-timeline-node] { opacity: 0; transform: scale(0.65); transition: opacity 420ms ease, transform 520ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .history-timeline.chronology-enhanced [data-timeline-date], .history-timeline.chronology-enhanced [data-timeline-card] { opacity: 0; transition: opacity 500ms ease, transform 600ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 220ms ease; }
+  .history-timeline.chronology-enhanced [data-timeline-card] { will-change: opacity, transform; transition-delay: 0ms; }
+  .history-timeline.chronology-enhanced [data-timeline-date] { transform: translate3d(1rem, 0, 0); }
+  .history-timeline.chronology-enhanced [data-card-side="left"] [data-timeline-date] { transform: translate3d(-1rem, 0, 0); }
+  .history-timeline.chronology-enhanced [data-timeline-card] { transform: translate3d(1.5rem, 1rem, 0); }
+  .history-timeline.chronology-enhanced [data-card-side="left"] [data-timeline-card] { transform: translate3d(-1.5rem, 1rem, 0); }
+  .history-timeline.chronology-enhanced [data-timeline-item].is-visible [data-timeline-node], .history-timeline.chronology-enhanced [data-timeline-item].is-visible [data-timeline-date], .history-timeline.chronology-enhanced [data-timeline-item].is-visible [data-timeline-card] { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+  .history-timeline.chronology-enhanced [data-timeline-item].is-visible [data-timeline-card] { box-shadow: 0 0.6rem 1.8rem rgba(23, 61, 50, 0.07); }
+  .history-timeline.chronology-enhanced [data-timeline-card]:hover { transform: translate3d(0, -3px, 0) !important; box-shadow: 0 0.85rem 2rem rgba(23, 61, 50, 0.1); }
+
+  @media (min-width: 768px) {
+    .history-band { padding: 6.5rem 3rem; }
+    .history-hero, .history-summary, .history-peak__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: 5rem; }
+    .history-tetenger { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 4rem; }
+    .history-hero__figure { max-width: 34rem; justify-self: end; }
+    .history-stories, .history-impact { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
+    .history-story + .history-story, .history-impact article + article { padding-left: 2rem; border-left: 1px solid var(--history-border); }
+    .history-timeline { padding-left: 0; }
+    .history-timeline__track { left: 50%; transform: translateX(-50%); }
+    .history-timeline__items { gap: 2rem; }
+    .history-timeline__item { display: grid; grid-template-columns: minmax(0, 1fr) 4rem minmax(0, 1fr); align-items: start; gap: 0; }
+    .history-timeline__node { position: relative; top: 0.25rem; left: auto; grid-column: 2; grid-row: 1; justify-self: center; }
+    .history-timeline__date { grid-column: 1; grid-row: 1; padding: 0.2rem 2rem 0 0; text-align: right; }
+    .history-timeline__card { grid-column: 3; grid-row: 1; padding: 1.5rem; }
+    .history-timeline__item--reverse .history-timeline__date { grid-column: 3; padding-right: 0; padding-left: 2rem; text-align: left; }
+    .history-timeline__item--reverse .history-timeline__card { grid-column: 1; grid-row: 1; text-align: right; }
+    .history-plates { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; }
+    .history-plate { padding: 2rem; }
+  }
+
+  @media (min-width: 1024px) { .history-band { padding-block: 7.5rem; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .history-button, .reveal-enabled [data-reveal], .history-timeline.chronology-enhanced [data-timeline-node], .history-timeline.chronology-enhanced [data-timeline-date], .history-timeline.chronology-enhanced [data-timeline-card] { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+    .history-timeline.chronology-enhanced [data-timeline-card] { transition-delay: 0ms !important; }
+    .reveal-enabled [data-reveal], .history-timeline.chronology-enhanced [data-timeline-node], .history-timeline.chronology-enhanced [data-timeline-date], .history-timeline.chronology-enhanced [data-timeline-card] { opacity: 1; transform: none; }
+  }
+
+  @media (max-width: 767px) {
+    .history-actions .history-button { width: 100%; }
+    .history-fact { min-height: 8rem; }
+    .history-fact strong { font-size: 1.45rem; }
+    .history-details div { grid-template-columns: 6.5rem 1fr; }
+  }
+</style>

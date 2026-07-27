@@ -1,0 +1,52 @@
+---
+import { ArrowLeft, ExternalLink, MapPin, QrCode, ShieldAlert } from "lucide-astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PoiCard from "../../components/PoiCard.astro";
+import { POI_CATEGORY_LABELS, POIS } from "../../data/pois";
+
+export function getStaticPaths() {
+  return POIS.map((poi) => ({ params: { slug: poi.slug }, props: { poi } }));
+}
+
+const { poi } = Astro.props;
+const related = POIS.filter((item) => item.slug !== poi.slug && item.category === poi.category).slice(0, 2);
+const directionsUrl = poi.latitude && poi.longitude ? `https://www.google.com/maps/search/?api=1&query=${poi.latitude},${poi.longitude}` : undefined;
+---
+
+<BaseLayout title={poi.name} description={poi.description} image={poi.photo}>
+  <section class="texture-paper border-b border-rw-line">
+    <div class="container-shell section-space pb-10">
+      <a href="/peta" class="inline-flex items-center gap-2 text-sm font-bold text-rw-terracotta-dark transition hover:text-rw-forest"><ArrowLeft size={17} aria-hidden="true" />Kembali ke peta</a>
+      <div class="mt-8 grid items-end gap-10 lg:grid-cols-[1fr_0.8fr]">
+        <div>
+          <p class="eyebrow">{POI_CATEGORY_LABELS[poi.category]}</p>
+          <h1 class="mt-4 max-w-3xl font-display text-4xl font-bold leading-tight text-rw-forest sm:text-5xl lg:text-6xl">{poi.name}</h1>
+          <p class="mt-5 max-w-2xl text-base leading-8 text-rw-muted">{poi.description}</p>
+        </div>
+        <div class="flex flex-wrap gap-3 lg:justify-end">
+          {poi.qrEnabled && <span class="inline-flex items-center gap-2 rounded-full bg-rw-mint/60 px-4 py-2 text-xs font-bold text-rw-forest"><QrCode size={15} aria-hidden="true" />Siap menjadi tujuan QR</span>}
+          {poi.status === "verified" ? <span class="rounded-full bg-rw-green px-4 py-2 text-xs font-bold text-white">Terverifikasi</span> : <span class="inline-flex items-center gap-2 rounded-full bg-rw-terracotta/10 px-4 py-2 text-xs font-bold text-rw-terracotta-dark"><ShieldAlert size={15} aria-hidden="true" />Draft pendataan</span>}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space">
+    <div class="container-shell grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+      <div class="overflow-hidden rounded-xl border-8 border-white bg-rw-parchment shadow-[0_20px_50px_rgba(27,67,50,0.12)]">
+        <img src={poi.photo} alt={poi.name} class="aspect-[4/3] w-full object-cover" />
+      </div>
+      <div>
+        <div class="space-y-5 border-y border-rw-line py-6">
+          {poi.address && <div class="flex gap-4"><MapPin class="mt-0.5 shrink-0 text-rw-terracotta" size={21} aria-hidden="true" /><div><p class="text-xs font-extrabold uppercase tracking-[0.1em] text-rw-terracotta-dark">Lokasi</p><p class="mt-1 text-sm leading-6 text-rw-muted">{poi.address}</p></div></div>}
+          {poi.openingHours && <div><p class="text-xs font-extrabold uppercase tracking-[0.1em] text-rw-terracotta-dark">Waktu akses</p><p class="mt-1 text-sm leading-6 text-rw-muted">{poi.openingHours}</p></div>}
+          {directionsUrl && <a href={directionsUrl} target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 rounded-full bg-rw-forest px-5 py-3 text-sm font-bold text-white transition hover:bg-rw-green">Buka navigasi <ExternalLink size={16} aria-hidden="true" /></a>}
+        </div>
+        {poi.note && <div class="mt-6 border-l-4 border-rw-terracotta bg-rw-terracotta/8 p-4 text-sm leading-6 text-rw-terracotta-dark"><strong>Catatan pendataan:</strong> {poi.note}</div>}
+        <p class="mt-6 text-sm leading-7 text-rw-muted">Halaman ini disiapkan sebagai tujuan informasi yang dapat dibuka dari peta dan, setelah data diverifikasi, ditempelkan pada QR fisik di lokasi.</p>
+      </div>
+    </div>
+  </section>
+
+  {related.length > 0 && <section class="section-space bg-rw-parchment"><div class="container-shell"><p class="eyebrow">Lokasi serupa</p><h2 class="mt-3 font-display text-3xl font-bold text-rw-forest">Jelajahi titik lain</h2><div class="mt-8 grid gap-5 sm:grid-cols-2">{related.map((item) => <PoiCard poi={item} compact />)}</div></div></section>}
+</BaseLayout>
