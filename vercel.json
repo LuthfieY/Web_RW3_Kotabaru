@@ -2,14 +2,14 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     {
-      "source": "/",
+      "source": "/:path*",
       "has": [
         {
           "type": "host",
           "value": "kompitu.rw3kotabaru.site"
         }
       ],
-      "destination": "/kompitu"
+      "destination": "/kompitu/:path*"
     }
   ]
 }
