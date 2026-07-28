@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "rewrites": [
+  "redirects": [
     {
       "source": "/",
       "has": [
@@ -9,17 +9,8 @@
           "value": "kompitu.rw3kotabaru.site"
         }
       ],
-      "destination": "/kompitu/index.html"
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "kompitu.rw3kotabaru.site"
-        }
-      ],
-      "destination": "/kompitu/:path*"
+      "destination": "/kompitu",
+      "permanent": false
     }
   ]
 }
