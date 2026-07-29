@@ -1,0 +1,63 @@
+---
+import { Check, X } from "lucide-astro";
+import GuideBlocks from "./GuideBlocks.astro";
+
+type MaterialStep = {
+  id: string;
+  title: string;
+  description: string;
+  photo?: string;
+  alt?: string;
+  layout?: "image" | "split" | "text";
+  reverse?: boolean;
+  tips?: string;
+  attention?: string;
+  good?: string[];
+  avoid?: string[];
+  checklist?: string[];
+  diagram?: boolean;
+  blocks?: {
+    title: string;
+    text?: string;
+    items?: string[];
+    tone?: "default" | "avoid" | "tip";
+  }[];
+};
+
+interface Props {
+  step: MaterialStep;
+  index: number;
+}
+
+const { step, index } = Astro.props;
+---
+
+<section data-guide-section id={step.id} class="overflow-hidden rounded-[20px] border border-rw-forest/15 bg-white shadow-[0_4px_20px_rgba(27,67,50,0.06)]">
+  {step.layout === "split" ? (
+    <div class:list={["grid md:grid-cols-2", step.reverse ? "md:flex md:flex-row-reverse" : ""]}>
+      {step.photo && <div class="h-64 bg-rw-mint/25 md:h-auto"><img src={step.photo} alt={step.alt ?? ""} class="h-full w-full object-cover" loading="lazy" /></div>}
+      <div class="p-6 sm:p-8">
+        <span class="text-[11px] font-bold uppercase tracking-widest text-rw-terracotta-dark">Langkah {String(index + 1).padStart(2, "0")}</span>
+        <h2 class="mt-2 font-display text-3xl leading-tight text-rw-forest">{step.title}</h2>
+        <p class="mt-4 text-sm leading-7 text-rw-muted sm:text-base">{step.description}</p>
+        {step.blocks && <GuideBlocks blocks={step.blocks} />}
+        {step.tips && <div class="mt-5 rounded-r-lg border-l-4 border-rw-mint bg-rw-cream p-4"><h3 class="text-xs font-bold uppercase tracking-wider text-rw-forest">Tips Kompitu</h3><p class="mt-2 text-sm leading-6 text-rw-muted">{step.tips}</p></div>}
+        {step.attention && <div class="mt-5 rounded-r-lg border-l-4 border-rw-terracotta bg-[#fbf1ed] p-4"><h3 class="text-xs font-bold uppercase tracking-wider text-rw-terracotta-dark">Perhatian</h3><p class="mt-2 text-sm leading-6 text-rw-muted">{step.attention}</p></div>}
+        {step.checklist && <div class="mt-5 rounded-lg border border-rw-line bg-rw-cream p-4"><h3 class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-rw-forest"><Check size={15} aria-hidden="true" />Yang perlu diperhatikan</h3><ul class="mt-3 space-y-2 text-sm leading-6 text-rw-muted">{step.checklist.map((item) => <li class="flex items-start gap-2"><span class="mt-[0.55rem] size-1.5 shrink-0 rounded-full bg-rw-forest" aria-hidden="true"></span>{item}</li>)}</ul></div>}
+      </div>
+    </div>
+  ) : (
+    <>
+      {step.layout !== "text" && step.photo && <div class="h-64 bg-rw-mint/25"><img src={step.photo} alt={step.alt ?? ""} class="h-full w-full object-cover" loading="lazy" /></div>}
+      <div class="p-6 sm:p-8">
+        <span class="text-[11px] font-bold uppercase tracking-widest text-rw-terracotta-dark">Langkah {String(index + 1).padStart(2, "0")}</span>
+        <h2 class="mt-2 font-display text-3xl leading-tight text-rw-forest">{step.title}</h2>
+        <p class="mt-4 text-sm leading-7 text-rw-muted sm:text-base">{step.description}</p>
+        {step.blocks && <GuideBlocks blocks={step.blocks} />}
+        {step.good && step.avoid && <div class="mt-5 grid gap-4 rounded-lg border border-rw-line bg-rw-cream p-5 sm:grid-cols-2"><div><h3 class="flex items-center gap-1 text-xs font-bold text-rw-forest"><Check size={15} aria-hidden="true" />Yang dapat digunakan</h3><ul class="mt-3 list-disc space-y-1 pl-5 text-sm leading-6 text-rw-muted">{step.good.map((item) => <li>{item}</li>)}</ul></div><div><h3 class="flex items-center gap-1 text-xs font-bold text-rw-terracotta-dark"><X size={15} aria-hidden="true" />Hindari</h3><ul class="mt-3 list-disc space-y-1 pl-5 text-sm leading-6 text-rw-muted">{step.avoid.map((item) => <li>{item}</li>)}</ul></div></div>}
+        {step.attention && <div class="mt-5 rounded-r-lg border-l-4 border-rw-terracotta bg-[#fbf1ed] p-4"><h3 class="text-xs font-bold uppercase tracking-wider text-rw-terracotta-dark">Perhatian</h3><p class="mt-2 text-sm leading-6 text-rw-muted">{step.attention}</p></div>}
+        {step.diagram && <div class="mt-5 rounded-lg border border-rw-line bg-rw-cream p-5"><h3 class="text-center text-xs font-bold uppercase tracking-wider text-rw-forest">Diagram lapisan kompos</h3><div class="mt-4 space-y-2 text-center text-xs font-semibold"><div class="rounded bg-[#8b5a2b] p-2 text-white">1. Tanah / kompos lama</div><div class="rounded bg-[#4caf50] p-2 text-white">2. Material hijau</div><div class="rounded bg-[#d2b48c] p-2 text-rw-ink">3. Daun kering</div><div class="rounded bg-[#654321] p-2 text-white">4. Ranting kayu</div></div></div>}
+      </div>
+    </>
+  )}
+</section>

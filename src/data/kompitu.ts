@@ -22,15 +22,21 @@ export const KOMPITU_IMAGES = {
   komposSort: "/images/edukasi/pilah_sampah_kompos.webp",
   komposBin: "/images/edukasi/komposter.webp",
   komposMix: "/images/edukasi/aduk_kompos.webp",
+  komposMoisture: "/images/edukasi/tambah_air.webp",
+  komposMonitoring: "/images/edukasi/pantau_kompos.webp",
   komposMatureCheck: "/images/edukasi/periksa_kompos.webp",
+  komposUse: "/images/edukasi/gunakan_kompos.webp",
   pesticideInspection: "/images/edukasi/identifikasi_hama.webp",
+  pesticideTools: "/images/edukasi/siapkan_alat_label.webp",
   pesticideSolution: "/images/edukasi/larutan_bawang.webp",
   pesticideFormula: "/images/edukasi/siapkan_formula_kombinasi.webp",
   pesticideTest: "/images/edukasi/uji_semprot.webp",
+  pesticideStorage: "/images/edukasi/simpan_evaluasi.webp",
   irrigationComponents: "/images/edukasi/kenali_komponen.webp",
   irrigationFlush: "/images/edukasi/pasang_bilas.webp",
   irrigationFlow: "/images/edukasi/uji_debit.webp",
   irrigationMaintenance: "/images/edukasi/periksa_rawat.webp",
+  shredderFunction: "/images/edukasi/kenali_fungsi.webp",
   shredderLocation: "/images/edukasi/lokasi_operator.webp",
   shredderInspection: "/images/edukasi/periksa_alat.webp",
   shredderFeeding: "/images/edukasi/masukkan_bahan.webp",
@@ -67,8 +73,8 @@ export const PLANT_CATALOG: PlantCatalogItem[] = [
 ];
 
 export const MATERIAL_IMAGES = {
-  kompos: [KOMPITU_IMAGES.komposSort, KOMPITU_IMAGES.komposBin, KOMPITU_IMAGES.komposMix, KOMPITU_IMAGES.komposMatureCheck],
-  "pestisida-nabati": [KOMPITU_IMAGES.pesticideInspection, KOMPITU_IMAGES.pesticideSolution, KOMPITU_IMAGES.pesticideFormula, KOMPITU_IMAGES.pesticideTest],
+  kompos: [KOMPITU_IMAGES.komposSort, KOMPITU_IMAGES.komposBin, KOMPITU_IMAGES.komposMix, KOMPITU_IMAGES.komposMoisture, KOMPITU_IMAGES.komposMonitoring, KOMPITU_IMAGES.komposUse],
+  "pestisida-nabati": [KOMPITU_IMAGES.pesticideInspection, KOMPITU_IMAGES.pesticideTools, KOMPITU_IMAGES.pesticideSolution, KOMPITU_IMAGES.pesticideFormula, KOMPITU_IMAGES.pesticideTest, KOMPITU_IMAGES.pesticideStorage],
   "irigasi-tetes": [KOMPITU_IMAGES.irrigationComponents, KOMPITU_IMAGES.irrigationFlush, KOMPITU_IMAGES.irrigationFlow, KOMPITU_IMAGES.irrigationMaintenance],
-  "pencacah-daun": [KOMPITU_IMAGES.shredderLocation, KOMPITU_IMAGES.shredderInspection, KOMPITU_IMAGES.shredderFeeding, KOMPITU_IMAGES.shredderMaintenance],
+  "pencacah-daun": [KOMPITU_IMAGES.shredderFunction, KOMPITU_IMAGES.shredderLocation, KOMPITU_IMAGES.shredderInspection, KOMPITU_IMAGES.shredderFeeding, KOMPITU_IMAGES.shredderMaintenance, KOMPITU_IMAGES.shredderMaintenance],
 } as const;

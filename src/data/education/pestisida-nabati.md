@@ -3,69 +3,182 @@ title: "Pestisida Nabati"
 excerpt: "Panduan membuat, menguji, dan menggunakan larutan nabati secara terbatas sebagai bagian dari pengendalian hama terpadu."
 category: "Perawatan tanaman"
 icon: "bug"
-duration: "8 menit membaca"
+duration: "10 menit membaca"
 order: 3
 status: "published"
 ---
 
 ## Pahami sebelum meracik
 
-Pestisida nabati dibuat dari bagian tumbuhan untuk membantu menekan organisme pengganggu tanaman. Senyawa alaminya dapat berperan sebagai penolak, penghambat makan, pengganggu pertumbuhan, atau penghambat perkembangan patogen. Hasilnya dapat berbeda-beda karena dipengaruhi bahan, kesegaran, takaran, cara ekstraksi, cuaca, dan jenis hama.
+Pestisida nabati digunakan secara terbatas sebagai bagian dari pengendalian hama terpadu. Dahulukan sanitasi kebun, pemangkasan bagian yang terserang, pengamatan rutin, keberadaan musuh alami, dan perbaikan budidaya.
 
-Pestisida nabati bukan berarti bebas risiko dan bukan pengganti seluruh pengelolaan tanaman. Dahulukan sanitasi kebun, pemangkasan bagian terserang, pengamatan rutin, musuh alami, dan perbaikan budidaya. Gunakan larutan hanya setelah hama sasaran dikenali dan selalu lakukan uji pada bagian kecil tanaman.
+Amati tanaman dan kenali hama atau gejalanya sebelum memilih larutan. Pestisida nabati bukan berarti bebas risiko. Selalu lakukan uji pada bagian kecil tanaman dan jangan langsung memperpekat larutan.
 
-## Bahan dan formula
+## Langkah 01 - Kenali Hama Sasaran
 
-### Larutan kulit bawang merah
+Amati tanaman dan catat jenis hama atau gejala, bagian tanaman yang terdampak, serta tingkat serangannya sebelum memilih larutan.
 
-- 2 genggam kulit bawang merah yang bersih dan tidak berjamur.
+### Yang dapat dilakukan
+
+- Dahulukan sanitasi kebun.
+- Pangkas bagian yang terserang bila perlu.
+- Perhatikan keberadaan musuh alami.
+- Catat kondisi awal tanaman.
+- Ambil foto pembanding bila memungkinkan.
+
+### Hindari
+
+- Menyemprot tanpa sasaran yang jelas.
+- Menganggap semua kerusakan disebabkan hama.
+- Mengabaikan musuh alami.
+- Menganggap larutan nabati selalu aman.
+- Menambah kepekatan tanpa pengujian.
+
+> **Perhatian:** Pisahkan tanaman yang menunjukkan gejala berat. Jika penyebab kerusakan tidak jelas atau serangannya berat, mintalah pendampingan penyuluh atau petugas tanaman. Jangan langsung memperpekat larutan.
+
+## Langkah 02 - Siapkan Alat dan Label
+
+Gunakan peralatan bersih yang dikhususkan untuk bahan pertanian. Jangan menggunakan wadah makanan atau minuman untuk membuat dan menyimpan larutan pestisida nabati.
+
+### Peralatan
+
+- Ember atau baskom.
+- Pisau.
+- Blender atau ulekan khusus.
+- Saringan halus.
+- Sendok pengaduk.
+- Gelas ukur.
+- Corong.
+- Botol semprot.
+- Sarung tangan.
+- Pelindung mata dan masker bila diperlukan.
+
+### Informasi pada label
+
+- Nama formula.
+- Bahan yang digunakan.
+- Tanggal pembuatan.
+- Nama pembuat.
+- Sasaran penggunaan.
+- Tulisan **“PESTISIDA NABATI - BUKAN UNTUK DIMINUM”**.
+
+Simpan alat dan larutan jauh dari anak-anak, hewan peliharaan, makanan, minuman, benih, dan sumber air bersih.
+
+## Langkah 03 - Buat Larutan Kulit Bawang
+
+Masukkan 2 genggam kulit bawang merah bersih ke dalam wadah, kemudian tambahkan 1 liter air bersih.
+
+Tutup wadah secara longgar dan rendam selama 24-48 jam di tempat teduh. Setelah itu, saring menggunakan kain atau saringan halus agar nozel botol tidak tersumbat.
+
+Masukkan larutan ke dalam botol semprot yang telah diberi label. Buat dalam jumlah secukupnya dan gunakan sesegera mungkin.
+
+> **Tips KOMPITU:** Gunakan kulit bawang yang bersih, tidak berjamur, dan tidak tercampur plastik atau bahan lain. Larutan ini digunakan secara terbatas dan hasilnya tetap perlu diamati.
+
+## Langkah 04 - Siapkan Formula Kombinasi
+
+Siapkan bahan berikut sebagai formula awal pelatihan:
+
+- 1 genggam bawang putih.
+- 2-3 batang serai.
+- 10 lembar daun pepaya.
+- Cabai sesuai takaran yang telah diuji dan disepakati.
 - 1 liter air bersih.
-- Tujuan awal: uji terbatas untuk membantu menekan gangguan hama kecil seperti kutu daun. Hasil terhadap hama lain tidak dianggap pasti tanpa uji lapangan.
 
-### Larutan kombinasi
+Cuci seluruh bahan hingga bersih. Potong menjadi ukuran kecil, lalu haluskan menggunakan alat khusus. Gunakan sarung tangan, terutama saat menangani cabai.
 
-Gunakan bawang putih, serai, daun pepaya, cabai, dan 1 liter air bersih untuk formula kombinasi. Aroma tajam, minyak atsiri, senyawa pahit, dan capsaicin berpotensi mengganggu atau menolak sebagian hama.
+Masukkan bahan ke dalam wadah, tambahkan 1 liter air, dan aduk hingga merata. Rendam selama 24-48 jam di tempat teduh. Jangan menutup wadah terlalu rapat apabila terjadi pembentukan gas.
 
-Takaran masing-masing bahan kombinasi **belum ditentukan**. Jangan mengarang takaran atau membuat larutan terlalu pekat. Formula harus diisi berdasarkan bahan yang benar-benar dipraktikkan, diuji pada tanaman, dan disepakati pengelola Kompitu.
+Saring larutan dua kali bila diperlukan, pindahkan ke botol berlabel, dan catat tanggal pembuatannya.
 
-## SOP pembuatan
+> **Perhatian:** Takaran cabai harus diisi berdasarkan formula yang benar-benar telah dipraktikkan dan diuji. Jangan membuat larutan terlalu pekat atau menambahkan bahan lain tanpa uji keamanan tanaman.
 
-### Larutan kulit bawang merah
+## Langkah 05 - Uji dan Semprot
 
-1. Siapkan kulit bawang yang bersih dan bebas jamur.
-2. Masukkan 2 genggam kulit bawang ke wadah bersih, lalu tambahkan 1 liter air.
-3. Tutup wadah secara longgar dan rendam 24–48 jam di tempat teduh.
-4. Saring dengan kain atau saringan halus agar nozel tidak tersumbat.
-5. Masukkan ke botol semprot khusus bahan pertanian yang sudah diberi label. Buat secukupnya dan gunakan sesegera mungkin.
+Sebelum digunakan secara luas, semprotkan larutan pada 2-3 daun atau 1 tanaman terlebih dahulu. Tunggu selama 24-48 jam dan periksa apakah muncul bercak, daun terbakar, layu, keriting, atau perubahan warna.
 
-### Larutan kombinasi
+Jika tanaman tidak menunjukkan kerusakan:
 
-1. Cuci bawang putih, serai, daun pepaya, dan cabai hingga bersih. Gunakan sarung tangan, terutama saat menangani cabai.
-2. Potong bahan menjadi ukuran kecil, kemudian haluskan dengan alat khusus.
-3. Masukkan takaran yang telah disepakati pada formulir batch, tambahkan 1 liter air, lalu aduk merata.
-4. Rendam 24–48 jam di tempat teduh. Jangan menggunakan wadah tertutup rapat apabila terjadi pembentukan gas.
-5. Saring dua kali bila perlu, masukkan ke botol berlabel, dan catat tanggal pembuatan.
+- Kocok larutan sebelum digunakan.
+- Semprot pada pagi sebelum terik atau sore hari.
+- Semprot tipis dan merata pada bagian atas serta bawah daun.
+- Utamakan bagian tanaman yang menunjukkan serangan.
+- Jangan menyemprot hingga larutan menetes berlebihan.
+- Hindari hujan, angin kencang, dan waktu ketika lebah atau polinator aktif pada bunga.
 
-## Uji dan aplikasi
+Catat hasilnya setelah 24-48 jam. Pengulangan dapat dilakukan sekitar 5-7 hari kemudian hanya jika diperlukan dan tanaman tidak menunjukkan kerusakan.
 
-1. **Identifikasi:** kenali hama atau gejala dan catat bagian tanaman yang terserang. Jangan menyemprot tanpa sasaran jelas.
-2. **Uji terbatas:** semprot 2–3 daun atau 1 tanaman terlebih dahulu. Tunggu 24–48 jam untuk melihat bercak, terbakar, layu, atau keriting.
-3. **Waktu aplikasi:** gunakan pagi sebelum terik atau sore hari. Hindari hujan, angin kencang, dan saat lebah atau polinator aktif pada bunga.
-4. **Penyemprotan:** kocok larutan, semprot tipis dan merata pada bagian atas serta bawah daun yang menunjukkan serangan. Jangan sampai menetes berlebihan.
-5. **Evaluasi:** catat hasil setelah 24–48 jam. Ulangi sekitar 5–7 hari kemudian hanya bila diperlukan dan tanaman tidak menunjukkan kerusakan.
+### Hentikan penggunaan apabila
 
-Hentikan penggunaan bila daun terbakar, layu, berubah warna secara luas, atau tanaman memburuk. Bila aman dilakukan, bilas daun dengan air bersih dan konsultasikan dengan pendamping pertanian sebelum mencoba kembali.
+- Daun terbakar.
+- Tanaman layu atau keriting.
+- Terjadi perubahan warna yang luas.
+- Kondisi tanaman semakin memburuk.
 
-## Penyimpanan dan keselamatan
+Bilas daun dengan air bersih bila aman dilakukan. Catat formula yang digunakan dan jangan mencoba kembali sebelum formula diencerkan dan diuji ulang pada bagian kecil.
 
-Larutan berbasis air mudah terkontaminasi. Sebaiknya dibuat dalam jumlah kecil dan digunakan pada hari yang sama. Jika harus disimpan, gunakan botol bersih, tertutup, berlabel, dan letakkan di tempat sejuk serta teduh. Gunakan paling lambat 3–7 hari hanya jika tidak ada perubahan mutu.
+## Langkah 06 - Simpan, Pantau, dan Evaluasi
 
-- Jangan gunakan larutan yang berbau busuk, berlendir, berjamur, botolnya menggembung, atau berubah warna secara mencolok.
-- Gunakan ember, baskom, saringan, dan botol semprot khusus bahan pertanian. Jangan memakai kembali wadah makanan atau minuman.
-- Labeli nama formula, bahan, tanggal pembuatan, pembuat, sasaran, dan tulisan **“PESTISIDA NABATI - BUKAN UNTUK DIMINUM”**.
+Larutan berbasis air mudah terkontaminasi dan mengalami perubahan. Sebaiknya buat dalam jumlah kecil dan gunakan pada hari yang sama.
+
+Apabila harus disimpan:
+
+- Gunakan botol yang bersih dan tertutup.
+- Pastikan botol memiliki label.
+- Simpan di tempat sejuk dan teduh.
+- Jauhkan dari anak-anak, makanan, dan sumber air.
+- Gunakan paling lambat 3-7 hari, hanya jika tidak terjadi perubahan mutu.
+
+### Periksa kondisi larutan
+
+**Masih dapat digunakan**
+
+- Aromanya masih khas bahan.
+- Tidak berlendir.
+- Tidak berjamur.
+- Tidak terjadi perubahan warna mencolok.
+- Telah dikocok dan lolos uji terbatas.
+
+**Jangan digunakan**
+
+- Berbau busuk atau menyengat tidak wajar.
+- Botol menggembung.
+- Terdapat jamur berlebihan.
+- Larutan berlendir.
+- Muncul endapan aneh.
+- Warna berubah secara mencolok.
+
+Apabila nozel tersumbat, saring ulang larutan. Jangan memperbesar lubang nozel dengan benda tajam ketika botol masih berisi.
+
+## Pestisida Nabati Bermasalah?
+
+### Hama masih banyak
+
+Kemungkinan penyebab: formula kurang sesuai, semprotan tidak mengenai sasaran, atau serangan sudah berat.
+
+Tindakan: identifikasi ulang, perbaiki sanitasi, dan jangan langsung memperpekat larutan. Mintalah pendampingan apabila serangannya berat.
+
+### Daun rusak setelah aplikasi
+
+Kemungkinan penyebab: larutan terlalu pekat, tanaman sensitif, atau aplikasi dilakukan saat cuaca panas.
+
+Tindakan: hentikan penggunaan, bilas bila memungkinkan, catat formula, encerkan, dan lakukan uji ulang pada bagian kecil.
+
+### Larutan cepat rusak
+
+Kemungkinan penyebab: wadah atau peralatan kotor dan penyimpanan terlalu panas.
+
+Tindakan: buang larutan, bersihkan alat, buat batch lebih kecil, dan gunakan segera.
+
+### Terjadi iritasi kulit atau mata
+
+Kemungkinan penyebab: kontak dengan cabai atau ekstrak pekat.
+
+Tindakan: hentikan pekerjaan dan bilas dengan banyak air. Cari bantuan medis apabila keluhan menetap atau berat.
+
+## Keselamatan penggunaan
+
 - Gunakan sarung tangan serta pelindung mata dan masker bila bahan mudah terciprat atau berdebu.
-- Jangan makan, minum, merokok, atau menyentuh wajah saat membuat dan mengaplikasikan.
+- Jangan makan, minum, merokok, atau menyentuh wajah selama pembuatan dan aplikasi.
+- Cuci tangan, alat, serta pakaian kerja setelah selesai.
+- Jangan membuang larutan pekat ke selokan, kolam, atau sumber air.
 - Jangan mencampur pestisida nabati dengan pestisida kimia atau produk lain tanpa petunjuk yang jelas.
-- Jangan membuang konsentrat ke selokan, kolam, atau sumber air.
-
-> Takaran batch kombinasi harus divalidasi sebelum dipakai sebagai resep resmi.
