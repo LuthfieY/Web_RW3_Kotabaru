@@ -1,0 +1,119 @@
+---
+import { ArrowLeft, Maximize2 } from "lucide-astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const renderAssets = [
+  { label: "Render utama", src: "/images/umkm/fix%201.webp", alt: "Render utama desain revitalisasi UMKM RW 03 Kotabaru" },
+  { label: "Sudut pandang 02", src: "/images/umkm/fix%202.webp", alt: "Sudut pandang kedua desain revitalisasi UMKM RW 03 Kotabaru" },
+  { label: "Sudut pandang 03", src: "/images/umkm/fix%203.webp", alt: "Sudut pandang ketiga desain revitalisasi UMKM RW 03 Kotabaru" },
+];
+
+const revitalizationPoints = [
+  { title: "Optimalisasi Tata Letak UMKM", text: "Penataan ulang area UMKM untuk memaksimalkan lahan yang sudah tersedia dan membuat setiap titik usaha lebih mudah dikenali." },
+  { title: "Penambahan Fasilitas Pendukung UMKM", text: "Penambahan etalase, rak, gerobak, serta tempat duduk untuk mendukung aktivitas jual beli dan kegiatan UMKM warga." },
+  { title: "Menciptakan Ruang Publik yang Nyaman", text: "Ruang yang lebih tertata dan nyaman dari sisi estetika sehingga dapat mendukung kegiatan UMKM sekaligus menjadi ruang bersama warga." },
+];
+
+const designComponents = [
+  { title: "Pojok Zero Waste / Bank Sampah RW 03", text: "Titik pengumpulan sampah yang tertata di bagian pojok area UMKM untuk mendukung kebersihan dan pengelolaan lingkungan." },
+  { title: "Stand Jus dan Aneka Minuman", text: "Fasilitas usaha minuman dengan area duduk dan meja untuk menambah pilihan produk serta memperkuat aktivitas ekonomi warga." },
+  { title: "Angkringan Pojok Warga", text: "Ruang usaha dan berkumpul yang membantu menghidupkan kembali area UMKM sekaligus membuka peluang pendapatan lokal." },
+];
+
+const posterImage = "/images/umkm/poster_umkm.jpeg";
+---
+
+<BaseLayout
+  title="Desain Revitalisasi UMKM RW 03 Kotabaru"
+  description="Presentasi konsep revitalisasi tata letak, fasilitas pendukung, dan ruang publik UMKM RW 03 Kotabaru."
+  image={renderAssets[0].src}
+>
+  <main class="bg-[#f7f4ee]">
+    <section class="px-4 py-12 sm:py-16 md:px-12 md:py-20">
+      <div class="container-shell">
+        <a href="/umkm" class="inline-flex items-center gap-2 text-sm font-bold text-rw-forest transition hover:text-rw-terracotta-dark"><ArrowLeft size={16} aria-hidden="true" />Kembali ke Direktori UMKM</a>
+        <header class="mt-12 max-w-4xl">
+          <p class="eyebrow">Visualisasi UMKM</p>
+          <h1 class="mt-4 font-display text-4xl font-bold leading-tight text-rw-forest sm:text-5xl md:text-6xl">Desain Revitalisasi UMKM RW 03 Kotabaru</h1>
+          <p class="mt-5 max-w-3xl text-sm leading-7 text-rw-muted sm:text-base">Konsep penataan ulang area UMKM untuk memaksimalkan fungsi ruang, menambah fasilitas pendukung, dan menciptakan ruang publik yang nyaman bagi warga Kotabaru.</p>
+          <p class="mt-4 text-xs font-bold uppercase tracking-widest text-rw-terracotta-dark">Status: konsep awal, belum direalisasikan</p>
+        </header>
+
+        <figure class="mt-12 overflow-hidden rounded-2xl border border-rw-forest/10 bg-white shadow-[0_10px_32px_rgba(27,67,50,0.08)]">
+          <a href={renderAssets[0].src} target="_blank" rel="noreferrer" aria-label="Buka ukuran penuh render utama" class="group relative block bg-[#eef0e9]">
+            <img src={renderAssets[0].src} alt={renderAssets[0].alt} class="block h-auto w-full object-contain transition duration-700 motion-safe:group-hover:scale-[1.015]" fetchpriority="high" />
+            <span class="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-full bg-rw-forest/90 px-3 py-2 text-xs font-bold text-white"><Maximize2 size={14} aria-hidden="true" />Render konsep</span>
+          </a>
+          <figcaption class="p-6 sm:p-8">
+            <p class="text-[11px] font-bold uppercase tracking-widest text-rw-terracotta-dark">Render utama</p>
+            <h2 class="mt-2 font-display text-3xl text-rw-forest">Wajah baru area UMKM RW 03</h2>
+            <p class="mt-3 max-w-3xl text-sm leading-7 text-rw-muted">Tampilan utama memperlihatkan area UMKM yang lebih tertata dengan identitas kawasan, etalase produk, ruang duduk, serta titik usaha kuliner warga.</p>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="bg-[#f5f1ea] px-4 py-16 sm:py-20 md:px-12 md:py-24">
+      <div class="container-shell">
+        <header class="max-w-3xl">
+          <p class="eyebrow">Arah pengembangan</p>
+          <h2 class="mt-4 font-display text-4xl leading-tight text-rw-forest sm:text-5xl">Arah Revitalisasi</h2>
+          <p class="mt-4 text-sm leading-7 text-rw-muted sm:text-base">Konsep ini menggabungkan penataan ruang, fasilitas pendukung, dan ruang bersama agar area UMKM lebih mudah digunakan serta memiliki identitas yang kuat.</p>
+        </header>
+        <div class="mt-10 grid gap-8 md:grid-cols-3">
+          {revitalizationPoints.map((point, index) => <article class="border-t border-rw-line pt-5">
+            <p class="text-xs font-bold tracking-widest text-rw-terracotta-dark">{String(index + 1).padStart(2, "0")}</p>
+            <h3 class="mt-4 font-display text-2xl leading-tight text-rw-forest">{point.title}</h3>
+            <p class="mt-3 text-sm leading-7 text-rw-muted">{point.text}</p>
+          </article>)}
+        </div>
+      </div>
+    </section>
+
+    <section class="px-4 py-16 sm:py-20 md:px-12 md:py-24" aria-labelledby="render-angles-title">
+      <div class="container-shell">
+        <header class="max-w-3xl">
+          <p class="eyebrow">Eksplorasi ruang</p>
+          <h2 id="render-angles-title" class="mt-4 font-display text-4xl leading-tight text-rw-forest sm:text-5xl">Sudut Pandang Lain</h2>
+          <p class="mt-4 text-sm leading-7 text-rw-muted sm:text-base">Dua render tambahan membantu melihat hubungan antara area jual beli, ruang duduk, etalase, dan titik usaha warga dari sudut yang berbeda.</p>
+        </header>
+        <div class="mt-10 grid gap-6 lg:grid-cols-2">
+          {renderAssets.slice(1).map((asset) => <figure class="overflow-hidden rounded-2xl border border-rw-forest/10 bg-white shadow-[0_8px_28px_rgba(27,67,50,0.07)]">
+            <a href={asset.src} target="_blank" rel="noreferrer" aria-label={`Buka ukuran penuh ${asset.label}`} class="group relative block overflow-hidden bg-[#eef0e9]">
+              <img src={asset.src} alt={asset.alt} class="block h-auto min-h-[18rem] w-full object-contain transition duration-700 motion-safe:group-hover:scale-[1.015]" loading="lazy" />
+              <span class="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-full bg-rw-forest/90 px-3 py-2 text-xs font-bold text-white"><Maximize2 size={14} aria-hidden="true" />{asset.label}</span>
+            </a>
+            <figcaption class="p-5 sm:p-6">
+              <p class="text-[11px] font-bold uppercase tracking-widest text-rw-terracotta-dark">Render konsep</p>
+              <h3 class="mt-2 font-display text-2xl text-rw-forest">{asset.label}</h3>
+            </figcaption>
+          </figure>)}
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-[#f5f1ea] px-4 py-16 sm:py-20 md:px-12 md:py-24" aria-labelledby="design-components-title">
+      <div class="container-shell grid items-start gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+        <div>
+          <p class="eyebrow">Materi konsep</p>
+          <h2 id="design-components-title" class="mt-4 font-display text-4xl leading-tight text-rw-forest sm:text-5xl">Komponen Rancangan</h2>
+          <p class="mt-4 text-sm leading-7 text-rw-muted sm:text-base">Poster desain revitalisasi merangkum tiga komponen utama yang menjadi dasar pengembangan area UMKM RW 03 Kotabaru.</p>
+          <ol class="mt-8 space-y-6">
+            {designComponents.map((component, index) => <li class="border-t border-rw-line pt-5">
+              <p class="text-xs font-bold tracking-widest text-rw-terracotta-dark">{String(index + 1).padStart(2, "0")}</p>
+              <h3 class="mt-2 font-display text-2xl text-rw-forest">{component.title}</h3>
+              <p class="mt-2 text-sm leading-7 text-rw-muted">{component.text}</p>
+            </li>)}
+          </ol>
+        </div>
+        <figure class="overflow-hidden rounded-2xl border border-rw-forest/10 bg-white shadow-[0_8px_28px_rgba(27,67,50,0.07)]">
+          <a href={posterImage} target="_blank" rel="noreferrer" aria-label="Buka poster desain revitalisasi UMKM RW 03 ukuran penuh" class="group relative block bg-white">
+            <img src={posterImage} alt="Poster desain revitalisasi UMKM RW 03 Kotabaru" class="block h-auto w-full transition duration-700 motion-safe:group-hover:scale-[1.01]" loading="lazy" />
+            <span class="absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-full bg-rw-forest/90 px-3 py-2 text-xs font-bold text-white"><Maximize2 size={14} aria-hidden="true" />Buka poster</span>
+          </a>
+          <figcaption class="p-5 sm:p-6"><p class="text-[11px] font-bold uppercase tracking-widest text-rw-terracotta-dark">Referensi materi</p><p class="mt-2 text-sm leading-6 text-rw-muted">Desain Revitalisasi UMKM RW 03 Kotabaru</p></figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

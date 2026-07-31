@@ -1,11 +1,11 @@
 ---
-import { Search } from "lucide-astro";
+import { ArrowUpRight, Search } from "lucide-astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import UmkmCard from "../../components/UmkmCard.astro";
 import { UMKM } from "../../data/umkm";
 
 const categories = ["Semua", ...new Set(UMKM.map((umkm) => umkm.category))];
-const marketImage = "https://lh3.googleusercontent.com/aida-public/AB6AXuCqPkuxFUzLIsbifcSD67xx9Be-qawXRhHOPvHXahucFDqp0McKrb23gKahs1Ynjhup1Ym9X1H2MeFDPvTtf4tpEis-x7jJjxwYXAi6EO_nBYFdd5kV1BW0Mj9neKHj70-IzYy8qD80j0yLvEEUfuQH4GzCH6xwtctGKZ5E5bFNhOBXNAz_RRSDI0ygJhKw8cfvOFBjCsH6k619uyDO67rdxVSbrQoKGjd_M6oQ_mcg9-negdZKcNsJIw";
+const marketImage = "/images/umkm/fix%201.webp";
 const showcaseFood = "/images/umkm/umkm_before.webp";
 ---
 
@@ -55,16 +55,16 @@ const showcaseFood = "/images/umkm/umkm_before.webp";
         <p class="mt-4 max-w-2xl text-sm leading-7 text-rw-muted sm:text-base">Rancangan konseptual untuk meningkatkan identitas usaha, kenyamanan pelanggan, dan daya tarik visual. Contoh ini menjadi bahan diskusi, bukan data usaha yang sudah direalisasikan.</p>
       </div>
       <div class="grid w-full overflow-hidden rounded-3xl border border-rw-forest/5 bg-[#f7f4ee] shadow-sm lg:grid-cols-[1.35fr_0.9fr]">
-        <div class="grid min-h-[22rem] grid-cols-2 gap-1 bg-rw-line p-1">
+        <div class="grid min-h-[22rem] grid-cols-2 gap-1 bg-[#f7f4ee] p-1">
           <div class="relative min-h-[15rem] overflow-hidden rounded-l-[1.35rem]"><img src={showcaseFood} alt="Contoh tampilan produk kuliner warga saat ini" class="absolute inset-0 h-full w-full object-cover transition duration-500 hover:scale-105" /><span class="absolute bottom-4 left-4 rounded-full bg-black/60 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">Saat ini</span></div>
-          <div class="relative min-h-[15rem] overflow-hidden rounded-r-[1.35rem]"><img src={marketImage} alt="Contoh arah pengembangan identitas visual UMKM" class="absolute inset-0 h-full w-full object-cover transition duration-500 hover:scale-105" /><span class="absolute bottom-4 left-4 rounded-full bg-rw-forest/85 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">Rencana</span></div>
+          <div class="relative min-h-[15rem] overflow-hidden rounded-none"><img src={marketImage} alt="Render konsep arah pengembangan identitas visual UMKM" class="absolute inset-0 h-full w-full object-cover transition duration-500 hover:scale-105" /><span class="absolute bottom-4 left-4 rounded-full bg-black/60 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">Render</span></div>
         </div>
         <div class="flex flex-col justify-center p-7 sm:p-10">
-          <div class="mb-6 flex flex-wrap items-center gap-3"><span class="rounded-full bg-[#e9dab4] px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-rw-forest">Dalam perencanaan</span><span class="text-xs text-rw-muted">Desain konseptual</span></div>
-          <span class="mb-2 block text-xs uppercase tracking-widest text-rw-terracotta-dark">Kolaborasi warga</span>
-          <h3 class="font-display text-3xl leading-tight text-rw-forest">Membuat usaha lokal lebih mudah dikenali.</h3>
-          <p class="mt-5 text-sm leading-7 text-rw-muted">Pendataan, foto produk, papan nama, dan pengalaman pelanggan dapat dirancang bersama pemilik usaha agar sesuai dengan kebutuhan nyata di lapangan.</p>
-          <div class="mt-7 flex flex-wrap gap-2"><span class="rounded-full bg-rw-mint px-3 py-1 text-xs text-rw-forest">Identitas</span><span class="rounded-full bg-rw-mint px-3 py-1 text-xs text-rw-forest">Kenyamanan</span><span class="rounded-full bg-rw-mint px-3 py-1 text-xs text-rw-forest">Akses informasi</span></div>
+          <div class="mb-6 flex flex-wrap items-center gap-3"><span class="rounded-full bg-[#e9dab4] px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-rw-forest">Render konsep</span><span class="text-xs text-rw-muted">Belum direalisasikan</span></div>
+          <span class="mb-2 block text-xs uppercase tracking-widest text-rw-terracotta-dark">Arah pengembangan UMKM</span>
+          <h3 class="font-display text-3xl leading-tight text-rw-forest">Membayangkan wajah baru UMKM RW 3</h3>
+          <p class="mt-5 text-sm leading-7 text-rw-muted">Render ini menggambarkan kemungkinan pengembangan identitas, papan nama, dan ruang usaha UMKM warga. Seluruh elemen masih berupa konsep yang dapat dibahas bersama pemilik usaha.</p>
+          <a href="/umkm/render" class="mt-7 inline-flex w-fit items-center gap-2 text-sm font-bold text-rw-terracotta-dark transition hover:gap-3 hover:text-rw-forest">Lihat detail render <ArrowUpRight size={16} aria-hidden="true" /></a>
         </div>
       </div>
     </div>
