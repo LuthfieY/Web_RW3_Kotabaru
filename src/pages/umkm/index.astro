@@ -2,100 +2,143 @@
 import { ArrowUpRight, Search } from "lucide-astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import UmkmCard from "../../components/UmkmCard.astro";
+import UmkmListRow from "../../components/UmkmListRow.astro";
 import { UMKM } from "../../data/umkm";
 
-const categories = ["Semua", ...new Set(UMKM.map((umkm) => umkm.category))];
+const featuredUmkm = UMKM.find((umkm) => umkm.profileEnabled && umkm.photo);
+const rtGroups = ["RT 10", "RT 13"] as const;
+const umkmByRt = Object.fromEntries(rtGroups.map((rt) => [rt, UMKM.filter((umkm) => umkm.rt === rt)]));
 const marketImage = "/images/umkm/fix%201.webp";
 const showcaseFood = "/images/umkm/umkm_before.webp";
 ---
 
 <BaseLayout title="Direktori UMKM" description="Temukan usaha dan karya warga RW 3 Kotabaru melalui direktori UMKM.">
   <div data-umkm-page>
-  <section class="bg-[#f7f4ee] px-4 py-12 sm:py-16 md:px-12 md:py-20">
-    <div class="container-shell">
-      <div class="relative flex min-h-[20rem] items-center overflow-hidden rounded-2xl bg-rw-green shadow-[0_4px_20px_rgba(27,67,50,0.08)]">
-        <img src={marketImage} alt="Suasana kawasan dan aktivitas ekonomi warga Kotabaru" class="absolute inset-0 h-full w-full object-cover opacity-30 mix-blend-multiply" fetchpriority="high" />
-        <div class="absolute inset-0 bg-rw-green/75"></div>
-        <div class="relative z-10 max-w-3xl p-7 sm:p-10 md:p-12">
-          <p class="eyebrow text-rw-mint">Ekonomi warga</p>
-          <h1 class="mt-4 font-display text-4xl font-bold leading-tight text-rw-parchment sm:text-5xl">UMKM Warga RW 3</h1>
-          <p class="mt-4 max-w-2xl text-sm leading-7 text-rw-mint/95 sm:text-base">Dukung ekonomi lokal. Temukan usaha kecil dan menengah milik warga Kotabaru, dari kuliner rumahan hingga karya kreatif yang tumbuh di sekitar kita.</p>
+    <section class="bg-[#f7f4ee] px-4 py-12 sm:py-16 md:px-12 md:py-20">
+      <div class="container-shell">
+        <div class="relative flex min-h-[20rem] items-center overflow-hidden rounded-2xl bg-rw-green shadow-[0_4px_20px_rgba(27,67,50,0.08)]">
+          <img src={marketImage} alt="Konsep penataan area UMKM warga Kotabaru" class="absolute inset-0 h-full w-full object-cover opacity-30 mix-blend-multiply" fetchpriority="high" />
+          <div class="absolute inset-0 bg-rw-green/75"></div>
+          <div class="relative z-10 max-w-3xl p-7 sm:p-10 md:p-12">
+            <p class="eyebrow text-rw-mint">Ekonomi warga</p>
+            <h1 class="mt-4 font-display text-4xl font-bold leading-tight text-rw-parchment sm:text-5xl">UMKM Warga RW 3</h1>
+            <p class="mt-4 max-w-2xl text-sm leading-7 text-rw-mint/95 sm:text-base">Dukung ekonomi lokal. Temukan usaha kecil dan menengah milik warga Kotabaru, dari kuliner rumahan hingga karya kreatif yang tumbuh di sekitar kita.</p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="bg-[#f7f4ee] px-4 py-8 sm:py-10 md:px-12">
-    <div class="container-shell flex flex-col items-center justify-between gap-4 rounded-xl border border-black/5 bg-[#efeeea] p-3 shadow-[0_4px_20px_rgba(27,67,50,0.04)] md:flex-row">
-      <label class="relative w-full md:w-96">
-        <span class="sr-only">Cari nama usaha atau produk</span>
-        <Search size={17} class="absolute left-4 top-1/2 -translate-y-1/2 text-rw-muted" aria-hidden="true" />
-        <input id="umkm-search" class="w-full rounded-full border-0 bg-white py-3 pl-11 pr-4 text-sm text-rw-ink shadow-inner outline-none ring-rw-forest placeholder:text-rw-muted focus:ring-2" placeholder="Cari nama usaha atau produk..." />
-      </label>
-      <div class="flex w-full gap-2 overflow-x-auto pb-1 md:justify-end" role="group" aria-label="Filter kategori UMKM">
-        {categories.map((category, index) => (
-          <button type="button" data-category={category} aria-pressed={index === 0 ? "true" : "false"} class:list={["umkm-category shrink-0 rounded-full border px-4 py-2 text-xs font-bold transition", index === 0 ? "border-rw-forest bg-rw-forest text-white" : "border-black/5 bg-white text-rw-forest hover:bg-rw-mint/40"]}>{category}</button>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="bg-[#f7f4ee] px-4 pb-16 sm:pb-20 md:px-12">
-    <div id="umkm-grid" class="container-shell grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-      {UMKM.map((umkm) => <div data-umkm-card data-name={`${umkm.name} ${umkm.description}`} data-umkm-category={umkm.category}><UmkmCard umkm={umkm} /></div>)}
-    </div>
-    <div id="umkm-empty" class="container-shell mt-5 hidden rounded-xl border border-dashed border-rw-line bg-rw-parchment p-10 text-center text-sm text-rw-muted">Belum ada UMKM yang sesuai dengan pencarian.</div>
-  </section>
-
-  <section class="bg-[#f5f1ea] px-4 py-16 sm:py-20 md:px-12">
-    <div class="container-shell">
-      <div class="mb-10 max-w-3xl">
-        <p class="eyebrow">Visi pengembangan warga</p>
-        <h2 class="mt-4 font-display text-4xl leading-tight text-rw-forest sm:text-5xl">Rencana Pengembangan UMKM</h2>
-        <p class="mt-4 max-w-2xl text-sm leading-7 text-rw-muted sm:text-base">Rancangan konseptual untuk meningkatkan identitas usaha, kenyamanan pelanggan, dan daya tarik visual. Contoh ini menjadi bahan diskusi, bukan data usaha yang sudah direalisasikan.</p>
-      </div>
-      <div class="grid w-full overflow-hidden rounded-3xl border border-rw-forest/5 bg-[#f7f4ee] shadow-sm lg:grid-cols-[1.35fr_0.9fr]">
-        <div class="grid min-h-[22rem] grid-cols-2 gap-1 bg-[#f7f4ee] p-1">
-          <div class="relative min-h-[15rem] overflow-hidden rounded-l-[1.35rem]"><img src={showcaseFood} alt="Contoh tampilan produk kuliner warga saat ini" class="absolute inset-0 h-full w-full object-cover transition duration-500 hover:scale-105" /><span class="absolute bottom-4 left-4 rounded-full bg-black/60 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">Saat ini</span></div>
-          <div class="relative min-h-[15rem] overflow-hidden rounded-none"><img src={marketImage} alt="Render konsep arah pengembangan identitas visual UMKM" class="absolute inset-0 h-full w-full object-cover transition duration-500 hover:scale-105" /><span class="absolute bottom-4 left-4 rounded-full bg-black/60 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">Render</span></div>
-        </div>
-        <div class="flex flex-col justify-center p-7 sm:p-10">
-          <div class="mb-6 flex flex-wrap items-center gap-3"><span class="rounded-full bg-[#e9dab4] px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-rw-forest">Render konsep</span><span class="text-xs text-rw-muted">Belum direalisasikan</span></div>
-          <span class="mb-2 block text-xs uppercase tracking-widest text-rw-terracotta-dark">Arah pengembangan UMKM</span>
-          <h3 class="font-display text-3xl leading-tight text-rw-forest">Membayangkan wajah baru UMKM RW 3</h3>
-          <p class="mt-5 text-sm leading-7 text-rw-muted">Render ini menggambarkan kemungkinan pengembangan identitas, papan nama, dan ruang usaha UMKM warga. Seluruh elemen masih berupa konsep yang dapat dibahas bersama pemilik usaha.</p>
-          <a href="/umkm/render" class="mt-7 inline-flex w-fit items-center gap-2 text-sm font-bold text-rw-terracotta-dark transition hover:gap-3 hover:text-rw-forest">Lihat detail render <ArrowUpRight size={16} aria-hidden="true" /></a>
+    <section class="bg-[#f7f4ee] px-4 py-8 sm:py-10 md:px-12">
+      <div class="container-shell flex flex-col items-center justify-between gap-4 rounded-xl border border-black/5 bg-[#efeeea] p-3 shadow-[0_4px_20px_rgba(27,67,50,0.04)] md:flex-row">
+        <label class="relative w-full md:w-96">
+          <span class="sr-only">Cari nama pemilik atau produk</span>
+          <Search size={17} class="absolute left-4 top-1/2 -translate-y-1/2 text-rw-muted" aria-hidden="true" />
+          <input id="umkm-search" class="w-full rounded-full border-0 bg-white py-3 pl-11 pr-4 text-sm text-rw-ink shadow-inner outline-none ring-rw-forest placeholder:text-rw-muted focus:ring-2" placeholder="Cari pemilik atau produk..." />
+        </label>
+        <div class="flex w-full gap-2 overflow-x-auto pb-1 md:justify-end" role="group" aria-label="Filter RT UMKM">
+          {(["Semua", ...rtGroups]).map((rt, index) => <button type="button" data-rt-filter={rt} aria-pressed={index === 0 ? "true" : "false"} class:list={["umkm-rt-filter shrink-0 rounded-full border px-4 py-2 text-xs font-bold transition", index === 0 ? "border-rw-forest bg-rw-forest text-white" : "border-black/5 bg-white text-rw-forest hover:bg-rw-mint/40"]}>{rt}</button>)}
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <section class="bg-[#f7f4ee] px-4 pb-16 sm:pb-20 md:px-12">
+      <div class="container-shell">
+        {featuredUmkm && <section data-umkm-featured data-umkm-rt={featuredUmkm.rt} data-umkm-name={`${featuredUmkm.name} ${featuredUmkm.owner} ${featuredUmkm.description}`} aria-labelledby="featured-umkm-title">
+          <div class="mb-7 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p class="eyebrow">UMKM unggulan</p>
+              <h2 id="featured-umkm-title" class="mt-3 font-display text-4xl leading-tight text-rw-forest sm:text-5xl">Warung Makan Teras Roso</h2>
+            </div>
+            <p class="text-sm text-rw-muted">{featuredUmkm.rt}, RW 3</p>
+          </div>
+          <div><UmkmCard umkm={featuredUmkm} wide /></div>
+        </section>}
+
+        <section class="mt-16" aria-labelledby="umkm-list-title">
+          <header class="max-w-3xl">
+            <p class="eyebrow">Daftar warga</p>
+            <h2 id="umkm-list-title" class="mt-3 font-display text-4xl leading-tight text-rw-forest sm:text-5xl">UMKM Berdasarkan RT</h2>
+            <p class="mt-4 text-sm leading-7 text-rw-muted sm:text-base">Daftar usaha warga RW 3 yang dihimpun berdasarkan lingkungan RT. Informasi kontak dan jam buka akan ditambahkan setelah pendataan lanjutan.</p>
+          </header>
+          <div id="umkm-list" class="mt-8 grid gap-10 lg:grid-cols-2">
+            {rtGroups.map((rt) => <section data-umkm-group={rt} aria-labelledby={`umkm-${rt.replace(" ", "-").toLowerCase()}`}>
+              <div class="flex items-center justify-between gap-4 border-b border-rw-forest/20 pb-3">
+                <h3 id={`umkm-${rt.replace(" ", "-").toLowerCase()}`} class="font-display text-3xl text-rw-forest">UMKM {rt}</h3>
+                <span class="text-xs font-bold uppercase tracking-widest text-rw-terracotta-dark">{umkmByRt[rt].length} usaha</span>
+              </div>
+              <div>
+                {umkmByRt[rt].map((umkm, index) => <UmkmListRow umkm={umkm} number={index + 1} />)}
+              </div>
+            </section>)}
+          </div>
+          <div id="umkm-empty" class="mt-8 hidden rounded-xl border border-dashed border-rw-line bg-rw-parchment p-10 text-center text-sm text-rw-muted">Belum ada UMKM yang sesuai dengan pencarian.</div>
+        </section>
+      </div>
+    </section>
+
+    <section class="bg-[#f5f1ea] px-4 py-16 sm:py-20 md:px-12">
+      <div class="container-shell">
+        <div class="mb-10 max-w-3xl">
+          <p class="eyebrow">Visi pengembangan warga</p>
+          <h2 class="mt-4 font-display text-4xl leading-tight text-rw-forest sm:text-5xl">Rencana Pengembangan UMKM</h2>
+          <p class="mt-4 max-w-2xl text-sm leading-7 text-rw-muted sm:text-base">Rancangan konseptual untuk meningkatkan identitas usaha, kenyamanan pelanggan, dan daya tarik visual. Contoh ini menjadi bahan diskusi, bukan data usaha yang sudah direalisasikan.</p>
+        </div>
+        <div class="grid w-full overflow-hidden rounded-3xl border border-rw-forest/5 bg-[#f7f4ee] shadow-sm lg:grid-cols-[1.35fr_0.9fr]">
+          <div class="grid min-h-[22rem] grid-cols-2 gap-1 bg-[#f7f4ee] p-1">
+            <div class="relative min-h-[15rem] overflow-hidden rounded-l-[1.35rem]"><img src={showcaseFood} alt="Contoh tampilan produk kuliner warga saat ini" class="absolute inset-0 h-full w-full object-cover transition duration-500 hover:scale-105" /><span class="absolute bottom-4 left-4 rounded-full bg-black/60 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">Saat ini</span></div>
+            <div class="relative min-h-[15rem] overflow-hidden rounded-none"><img src={marketImage} alt="Render konsep arah pengembangan identitas visual UMKM" class="absolute inset-0 h-full w-full object-cover transition duration-500 hover:scale-105" /><span class="absolute bottom-4 left-4 rounded-full bg-black/60 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">Render</span></div>
+          </div>
+          <div class="flex flex-col justify-center p-7 sm:p-10">
+            <div class="mb-6 flex flex-wrap items-center gap-3"><span class="rounded-full bg-[#e9dab4] px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-rw-forest">Render konsep</span><span class="text-xs text-rw-muted">Belum direalisasikan</span></div>
+            <span class="mb-2 block text-xs uppercase tracking-widest text-rw-terracotta-dark">Arah pengembangan UMKM</span>
+            <h3 class="font-display text-3xl leading-tight text-rw-forest">Membayangkan wajah baru UMKM RW 3</h3>
+            <p class="mt-5 text-sm leading-7 text-rw-muted">Render ini menggambarkan kemungkinan pengembangan identitas, papan nama, dan ruang usaha UMKM warga. Seluruh elemen masih berupa konsep yang dapat dibahas bersama pemilik usaha.</p>
+            <a href="/umkm/render" class="mt-7 inline-flex w-fit items-center gap-2 text-sm font-bold text-rw-terracotta-dark transition hover:gap-3 hover:text-rw-forest">Lihat detail render <ArrowUpRight size={16} aria-hidden="true" /></a>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </BaseLayout>
 
 <script>
   const search = document.querySelector<HTMLInputElement>("#umkm-search");
-  const categoryButtons = [...document.querySelectorAll<HTMLButtonElement>("[data-category]")];
-  const cards = [...document.querySelectorAll<HTMLElement>("[data-umkm-card]")];
+  const rtButtons = [...document.querySelectorAll<HTMLButtonElement>("[data-rt-filter]")];
+  const rows = [...document.querySelectorAll<HTMLElement>("[data-umkm-row]")];
+  const groups = [...document.querySelectorAll<HTMLElement>("[data-umkm-group]")];
+  const featured = document.querySelector<HTMLElement>("[data-umkm-featured]");
   const empty = document.querySelector<HTMLElement>("#umkm-empty");
-  let activeCategory = "Semua";
+  let activeRt = "Semua";
+
+  const matches = (element: HTMLElement, query: string) => {
+    const name = element.dataset.umkmName?.toLowerCase() ?? "";
+    const rt = element.dataset.umkmRt ?? "";
+    return (activeRt === "Semua" || activeRt === rt) && name.includes(query);
+  };
 
   const render = () => {
     const query = search?.value.trim().toLowerCase() ?? "";
-    let visible = 0;
-    cards.forEach((card) => {
-      const matchesCategory = activeCategory === "Semua" || card.dataset.umkmCategory === activeCategory;
-      const matchesQuery = (card.dataset.name ?? "").toLowerCase().includes(query);
-      const show = matchesCategory && matchesQuery;
-      card.classList.toggle("hidden", !show);
-      if (show) visible += 1;
+    let visibleRows = 0;
+
+    rows.forEach((row) => {
+      const show = matches(row, query);
+      row.classList.toggle("hidden", !show);
+      if (show) visibleRows += 1;
     });
-    empty?.classList.toggle("hidden", visible !== 0);
+
+    groups.forEach((group) => {
+      const hasVisibleRow = group.querySelector<HTMLElement>("[data-umkm-row]:not(.hidden)") !== null;
+      group.classList.toggle("hidden", !hasVisibleRow);
+    });
+
+    if (featured) featured.classList.toggle("hidden", !matches(featured, query));
+    empty?.classList.toggle("hidden", visibleRows !== 0);
   };
 
   search?.addEventListener("input", render);
-  categoryButtons.forEach((button) => button.addEventListener("click", () => {
-    activeCategory = button.dataset.category ?? "Semua";
-    categoryButtons.forEach((item) => {
+  rtButtons.forEach((button) => button.addEventListener("click", () => {
+    activeRt = button.dataset.rtFilter ?? "Semua";
+    rtButtons.forEach((item) => {
       const active = item === button;
       item.setAttribute("aria-pressed", String(active));
       item.classList.toggle("border-rw-forest", active);

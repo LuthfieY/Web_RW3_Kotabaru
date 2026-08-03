@@ -1,0 +1,24 @@
+---
+import type { Umkm } from "../data/umkm";
+
+interface Props {
+  umkm: Umkm;
+  number: number;
+}
+
+const { umkm, number } = Astro.props;
+---
+
+<article
+  data-umkm-row
+  data-umkm-rt={umkm.rt}
+  data-umkm-name={`${umkm.name} ${umkm.owner} ${umkm.description}`}
+  class="grid grid-cols-[2rem_minmax(0,1fr)] gap-4 border-t border-rw-line py-5 sm:grid-cols-[3rem_minmax(0,1fr)_auto] sm:items-center sm:gap-5"
+>
+  <span class="font-display text-xl text-rw-terracotta-dark sm:text-2xl">{String(number).padStart(2, "0")}</span>
+  <div class="min-w-0">
+    <h3 class="font-display text-xl leading-tight text-rw-forest sm:text-2xl">{umkm.owner}</h3>
+    <p class="mt-1 text-sm leading-6 text-rw-muted">{umkm.description}</p>
+  </div>
+  <span class="col-start-2 mt-1 w-fit rounded-full bg-rw-mint/45 px-3 py-1 text-[0.68rem] font-bold uppercase tracking-wider text-rw-forest sm:col-start-auto sm:mt-0">{umkm.rt}</span>
+</article>

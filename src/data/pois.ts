@@ -149,6 +149,30 @@ export const POIS: Poi[] = [
     status: "draft",
     note: "Jangan jadikan titik ini petunjuk operasional sebelum alur pengelolaan disepakati warga.",
   },
+  {
+    slug: "tempat-sampah-pilah-kompitu",
+    name: "Tempat Sampah Pilah - Kompitu",
+    category: "sampah",
+    description: "Titik pemilahan sampah di dekat Kompitu untuk mendukung pengelolaan sampah warga.",
+    latitude: -7.78739,
+    longitude: 110.37635,
+    address: "Dekat Kompitu, RW 3 Kotabaru, Yogyakarta",
+    photo: "/images/galeri/tempat_sampah.webp",
+    status: "draft",
+    note: "Koordinat sementara. Verifikasi posisi dan alur pengelolaan bersama pengelola.",
+  },
+  {
+    slug: "tempat-sampah-pilah-fasum",
+    name: "Tempat Sampah Pilah - Fasilitas Umum",
+    category: "sampah",
+    description: "Titik pemilahan sampah di dekat Fasilitas Umum untuk membantu pemisahan sampah warga.",
+    latitude: -7.787786,
+    longitude: 110.376071,
+    address: "Dekat Fasilitas Umum, RW 3 Kotabaru, Yogyakarta",
+    photo: "/images/galeri/tempat_sampah.webp",
+    status: "draft",
+    note: "Koordinat sementara. Verifikasi posisi dan alur pengelolaan bersama pengelola.",
+  },
 ];
 
 export const MAP_CENTER = [-7.7879, 110.3762] as const;
